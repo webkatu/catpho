@@ -1,0 +1,82 @@
+html {
+  height: 100%; }
+
+body {
+  min-height: 101%; }
+
+#app {
+  width: 90%;
+  margin: 50px auto 0; }
+
+.imageListViewer .imageListViewerNav {
+  height: 30px; }
+  .imageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton {
+    width: 30px;
+    height: 30px;
+    margin: 0; }
+
+.imageListViewer .imageList {
+  margin-top: 20px; }
+
+.imageListViewer .images {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  margin-left: -10px; }
+  .imageListViewer .images .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    flex-basis: 150px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    max-height: 200px;
+    border-radius: 10px;
+    background: #eee; }
+    .imageListViewer .images .image a {
+      display: block;
+      width: 100%;
+      height: 85%; }
+    .imageListViewer .images .image img {
+      width: 100%;
+      height: 100%; }
+
+.imageListViewer .pager > ul {
+  display: flex;
+  list-style: none;
+  max-width: 340px;
+  margin: 20px auto 0; }
+  .imageListViewer .pager > ul .pagerItem {
+    flex: 1;
+    text-align: center; }
+
+.fileUpload .fileUploadForm > * {
+  display: block; }
+
+.fileUpload .fileUploadForm input[name="name"] {
+  width: 5em; }
+
+.fileUpload .fileUploadForm input[name="tag"] {
+  width: 5em; }
+
+.fileUpload .fileUploadForm input[name="age"] {
+  width: 3em; }
+
+.fileUpload .fileUploadForm .selectedImageViewBox {
+  display: flex;
+  flex-wrap: wrap; }
+  .fileUpload .fileUploadForm .selectedImageViewBox .selectedImage {
+    position: relative;
+    width: 100px;
+    height: 100px; }
+    .fileUpload .fileUploadForm .selectedImageViewBox .selectedImage .deleteButton {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: #fff;
+      background: #333;
+      cursor: pointer; }
+    .fileUpload .fileUploadForm .selectedImageViewBox .selectedImage img {
+      width: 100%;
+      height: 100%; }
