@@ -63,7 +63,11 @@ const uploadFileSuccess = () => {
 	};
 };
 
-const uploadFileFailure = () => {};
+const uploadFileFailure = () => {
+	return {
+		type: 'UPLOAD_FILE_FAILURE',
+	};
+};
 
 export const submit = (path, files, form) => {
 	const formData = new FormData(form);
@@ -74,10 +78,16 @@ export const submit = (path, files, form) => {
 	return async (dispatch) => {
 		dispatch(uploadFile());
 
-		const response = await fetch(path, {
-			method: 'post',
-			body: formData,
-		});
+		try {
+			var response = await fetch(path, {
+				method: 'post',
+				body: formData,
+			});
+			if(! response.ok) throw new TypeError();
+		}catch(e) {
+			return dispatch(uploadFileFailure());
+		}
+
 		const json = await response.json();
 		console.log(json);
 		dispatch(uploadFileSuccess());

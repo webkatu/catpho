@@ -4,7 +4,7 @@ const initialState = {
 	nameMaxLength: 32,
 	ageMax: 38,
 	ageMin: 0,
-	tagMaxLength: 48,
+	tagMaxLength: 32,
 	tagMaxCount: 3,
 	tweetMaxLength: 140,
 	overFileSize: false,
@@ -57,9 +57,12 @@ const fileUpload = (state = initialState, action) => {
 			});
 
 		case 'INPUT_TAG':
+			const allPassed = action.tags.every((tag) => {
+				return tag.length <= initialState.tagMaxLength;
+			});
+
 			return Object.assign({}, state, {
-				overTagCount: (action.value.length > action.maxLength
-					|| action.tags.length > initialState.tagMaxCount),
+				overTagCount: (action.tags.length > initialState.tagMaxCount || allPassed === false),
 			});
 
 		case 'INPUT_TWEET':
