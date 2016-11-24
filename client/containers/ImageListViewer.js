@@ -4,7 +4,7 @@ import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/imageListViewer.js';
 import ImageListViewBox from '../components/ImageListViewer/ImageListViewBox.js';
 import ImageListViewerNav from '../components/ImageListViewer/ImageListViewerNav.js';
-import { createPagerPath } from '../utils/index.js'
+import { createPagerPath } from '../common/index.js'
 
 class ImageListViewer extends React.Component {
 	constructor(props) {

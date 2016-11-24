@@ -1,4 +1,4 @@
-import mysql from '../utils/mysqlConnection';
+import mysql from '../common/mysqlConnection';
 import { MySQLModel } from './index.js';
 
 export default class Users extends MySQLModel {

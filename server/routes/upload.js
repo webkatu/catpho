@@ -3,9 +3,9 @@ import fs from 'fs';
 import multer from 'multer';
 import config from '../config.js';
 import Contents from '../models/Contents.js';
-import fscopy from '../utils/fscopy.js';
-import mysql from '../utils/mysqlConnection.js';
-import getDateTime from '../utils/getDateTime.js';
+import fscopy from '../common/fscopy.js';
+import mysql from '../common/mysqlConnection.js';
+import getDateTime from '../common/getDateTime.js';
 
 
 const router = express.Router();

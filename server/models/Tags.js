@@ -1,4 +1,4 @@
-import mysql from '../utils/mysqlConnection';
+import mysql from '../common/mysqlConnection';
 
 export default class Tags {
 	constructor() {
