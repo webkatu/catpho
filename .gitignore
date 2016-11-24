@@ -2,3 +2,4 @@ node_modules/
 dev/
 server/uploads/
 server/config.js
+npm-debug.log

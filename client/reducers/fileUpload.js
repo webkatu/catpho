@@ -1,7 +1,11 @@
 const initialState = {
 	files: [],
 	selectedImages: [],
-	maxTagCount: 3,
+	nameMaxLength: 32,
+	ageMax: 38,
+	ageMin: 0,
+	tagMaxLength: 48,
+	tagMaxCount: 3,
 	tweetMaxLength: 140,
 	overFileSize: false,
 	overNameCount: false,
@@ -42,25 +46,25 @@ const fileUpload = (state = initialState, action) => {
 
 		case 'INPUT_NAME':
 			return Object.assign({}, state, {
-				overNameCount: action.value.length > action.maxLength,
+				overNameCount: action.value.length > initialState.nameMaxLength,
 			});
 
 		case 'INPUT_AGE':
 			return Object.assign({}, state, {
 				overAgeCount: (Number.isNaN(action.value)
-					|| action.max < action.value
-					|| action.min > action.value)
+					|| initialState.ageMax < action.value
+					|| initialState.ageMin > action.value)
 			});
 
 		case 'INPUT_TAG':
 			return Object.assign({}, state, {
 				overTagCount: (action.value.length > action.maxLength
-					|| action.tags.length > action.maxTagCount),
+					|| action.tags.length > initialState.tagMaxCount),
 			});
 
 		case 'INPUT_TWEET':
 			return Object.assign({}, state, {
-				overTweetCount: action.value.length > action.maxLength,
+				overTweetCount: action.value.length > initialState.tweetMaxLength,
 			});
 
 		case 'UPLOAD_FILE':

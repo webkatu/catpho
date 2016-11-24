@@ -3,6 +3,7 @@ import fs from 'fs';
 import multer from 'multer';
 import config from '../config.js';
 import Contents from '../models/Contents.js';
+import fscopy from '../utils/fscopy.js';
 import mysql from '../utils/mysqlConnection.js';
 import getDateTime from '../utils/getDateTime.js';
 
@@ -16,23 +17,23 @@ router.post('/', upload.array('files'), async (req, res, next) => {
 	const userId = 1;
 	const dataArray = [];
 
-	var [err, count] = await contents.count();
+	try { var count = await contents.count(); }
+	catch(e) { return res.sendStatus(500); }
 
-	req.files.forEach((file) => {
+	for(let i = 0; i < req.files.length; i++) {
+		const file = req.files[0];
+
 		count++;
-		const filename = count + file.filename;
-		const filePath = config.contentsDir + '/' + filename;
+		const filename = count + '_' + file.filename;
+		const contentsPath = config.contentsDir + '/' + filename;
 		const thumbnailPath = config.contentsDir + '/thumbnails/' + filename;
 
-		let r = fs.createReadStream(file.path);
-		let w = fs.createWriteStream(filePath);
-		r.on('error', () => {res.sendStatus(500)});
-		w.on('error', () => {res.sendStatus(500)});
-		r.pipe(w);
+		try { await fscopy(file.path, contentsPath); }
+		catch(e) { return res.sendStatus(500); }
 
-		w = fs.createWriteStream(thumbnailPath);
-		w.on('error', () => {res.sendStatus(500)});
-		r.pipe(w);
+		try { await fscopy(file.path, thumbnailPath); }
+		catch(e) { return res.sendStatus(500); }
+
 
 		fs.unlink(file.path);
 
@@ -48,7 +49,7 @@ router.post('/', upload.array('files'), async (req, res, next) => {
 		};
 
 		dataArray.push(values);
-	});
+	}
 
 	const columns = Object.keys(dataArray[0]);
 	const valuesArray = dataArray.map((data) => {
@@ -59,14 +60,15 @@ router.post('/', upload.array('files'), async (req, res, next) => {
 		return values;
 	});
 
-	var [err, result] = await contents.insertMultiple(columns, valuesArray);
-	if(err) return res.sendStatus(500);
+	try { var [results] = await contents.insertMultiple(columns, valuesArray); }
+	catch(e) { return res.sendStatus(500); }
 
-	const startInsertId = result.insertId;
-	const lastInsertId = startInsertId + result.affectedRows - 1;
+	const startInsertId = results.insertId;
+	const lastInsertId = startInsertId + results.affectedRows - 1;
 
 	res.json({res: 'ok'});
 
 });
+
 
 export default router;

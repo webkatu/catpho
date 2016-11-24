@@ -34,14 +34,16 @@ export class MySQLModel {
 
 	count() {
 		const sql = `select count(*) from ${this.tableName};`;
-		return this.query(sql).then((args) => {
-			const [err, results] = args;
-			const count = (results)
-				? results[0]['count(*)']
-				: results;
 
-			return Promise.resolve([err, count]);
-		});
+		return (async () => {
+			try {
+				const [results] = await this.query(sql);
+				const count = results[0]['count(*)'];
+				return Promise.resolve(count);
+			}catch(e) {
+				return Promise.reject(e);
+			}
+		})();
 	}
 
 	selectAll() {
@@ -51,9 +53,12 @@ export class MySQLModel {
 	}
 
 	query(...args) {
-		return new Promise((res) => {
+		return new Promise((res, rej) => {
 			mysql.query(...args, (...args) => {
-				res(args);
+				const err = args[0];
+				if(err) { return rej(err); }
+
+				res(args.slice(1));
 			});
 		});
 	}

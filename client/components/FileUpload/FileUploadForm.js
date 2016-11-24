@@ -10,17 +10,17 @@ export default class FileUploadForm extends React.Component {
 
 	handleNameInputChange(e) {
 		const input = e.target;
-		this.props.onNameInputChange(input.value, input.maxLength);
+		this.props.onNameInputChange(input.value);
 	}
 
 	handleAgeInputChange(e) {
 		const input = e.target;
-		this.props.onAgeInputChange(input.value, input.max, input.min);
+		this.props.onAgeInputChange(input.value);
 	}
 
 	handleTagInputChange(e) {
 		const input = e.target;
-		this.props.onTagInputChange(input.value, input.maxLength);
+		this.props.onTagInputChange(input.value);
 	}
 
 	handleTextareaChange(e) {
@@ -56,7 +56,7 @@ export default class FileUploadForm extends React.Component {
 					<input
 						type="text"
 						name="name"
-						maxLength="10"
+						maxLength={this.props.nameMaxLength}
 						onChange={this.handleNameInputChange.bind(this)}
 					/>
 				</label>
@@ -68,8 +68,8 @@ export default class FileUploadForm extends React.Component {
 				<label>年: 
 					<input
 						type="number"
-						max="38"
-						min="0"
+						max={this.props.ageMax}
+						min={this.props.ageMin}
 						name="age"
 						onChange={this.handleAgeInputChange.bind(this)}
 					/>
@@ -78,7 +78,7 @@ export default class FileUploadForm extends React.Component {
 					<input
 						type="text"
 						name="tag"
-						maxLength="50"
+						maxLength={this.props.tagMaxLength}
 						onChange={this.handleTagInputChange.bind(this)}
 					/>
 				</label>

@@ -20,40 +20,34 @@ export const deleteSelectedImage = (index) => {
 	}
 }
 
-export const inputName = (value, maxLength) => {
+export const inputName = (value) => {
 	return {
 		type: 'INPUT_NAME',
 		value: value.trim(),
-		maxLength: Number(maxLength),
 	}
 };
 
-export const inputAge = (value, max, min) => {
+export const inputAge = (value) => {
 	return {
 		type: 'INPUT_AGE',
 		value: Number(value.trim()),
-		max: Number(max),
-		min: Number(min),
 	}
 };
 
-export const inputTag = (_value, maxLength, maxTagCount) => {
+export const inputTag = (_value) => {
 	const value = _value.trim();
 	const tags = value.split(/[\s ]+/);
 	return {
 		type: 'INPUT_TAG',
 		value,
 		tags,
-		maxLength: Number(maxLength),
-		maxTagCount,
 	}
 };
 
-export const inputTweet = (value, maxLength) => {
+export const inputTweet = (value) => {
 	return {
 		type: 'INPUT_TWEET',
 		value: value.trim(),
-		maxLength: Number(maxLength),
 	}
 };
 

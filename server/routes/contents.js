@@ -1,7 +1,6 @@
 import express from 'express';
 import fs from 'fs';
 import config from '../config.js'
-import Images from '../models/images.js';
 import Contents from '../models/Contents.js';
 
 
@@ -12,10 +11,11 @@ router.post('/', async (req, res, next) => {
 	const interval = req.body.interval;
 	const currentPage = Number(req.query.page) || 1;
 
-	var [err, count] = await contents.count();
-	if(err) return res.sendStatus(500);
-	var [err, results] = await contents.selectAtPage(['id', 'filename'], currentPage, interval);
-	if(err) return res.sendStatus(500);
+	try { var count = await contents.count(); }
+	catch(e) { return res.sendStatus(500); }
+
+	try { var [results] = await contents.selectAtPage(['id', 'filename'], currentPage, interval); }
+	catch(e) { return res.sendStatus(500); }
 
 	const json = {
 		interval,
