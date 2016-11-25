@@ -15,12 +15,51 @@ export class MySQLModel {
 		return this.query(sql);
 	}
 
-	insert(columns, values) {
+	insert(...args) {
+		let columns, values;
+		switch(args.length) {
+			case 1:
+				const data = args[0];
+				columns = Object.keys(data);
+				values = columns.map(key => data[key]);
+				break;
+
+			case 2:
+				columns = args[0];
+				values = args[1];
+				break;
+
+			default:
+				throw new Error();
+		}
+
 		const sql = `insert into ${this.tableName} (??) values (?);`;
 		return this.query(sql, [columns, values]);
 	}
 
-	insertMultiple(columns, valuesArray) {
+	insertMultiple(...args) {
+		let columns, valuesArray;
+		switch(args.length) {
+			case 1:
+				const dataArray = args[0];
+				if(dataArray.length === 0) return;
+
+				columns = Object.keys(dataArray[0]);
+				valuesArray = dataArray.map((data) => {
+					const values = columns.map(key => data[key]);
+					return values;
+				});
+				break;
+
+			case 2:
+				columns = args[0];
+				valuesArray = args[1];
+				break;
+
+			default:
+				throw new Error();
+		}
+
 		let valuesSql = '';
 		valuesArray.forEach(() => {
 			valuesSql += ' (?),';
@@ -36,13 +75,9 @@ export class MySQLModel {
 		const sql = `select count(*) from ${this.tableName};`;
 
 		return (async () => {
-			try {
-				const [results] = await this.query(sql);
-				const count = results[0]['count(*)'];
-				return Promise.resolve(count);
-			}catch(e) {
-				return Promise.reject(e);
-			}
+			const [results] = await this.query(sql);
+			const count = results[0]['count(*)'];
+			return count;
 		})();
 	}
 

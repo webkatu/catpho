@@ -3,6 +3,8 @@ import fs from 'fs';
 import multer from 'multer';
 import config from '../config.js';
 import Contents from '../models/Contents.js';
+import Tags from '../models/Tags.js';
+import TagMap from '../models/TagMap.js';
 import fscopy from '../common/fscopy.js';
 import mysql from '../common/mysqlConnection.js';
 import getDateTime from '../common/getDateTime.js';
@@ -14,65 +16,24 @@ const upload = multer({dest: config.tmpDir });
 router.post('/', upload.array('files'), async (req, res, next) => {
 
 	Object.assign(req.body, formatBody(req.body));
+	req.body.userId = 1;
 	if(! validateBody(req.body)) return res.sendStatus(500);
 	if(! validateFiles(req.files)) return res.sendStatus(500);
+	console.log(req.body);
+	console.log(req.files);
 
-	const contents = new Contents();
-	const userId = 1;
-	const dataArray = [];
-
-	try { var count = await contents.count(); }
-	catch(e) { return res.sendStatus(500); }
-
-	for(let i = 0; i < req.files.length; i++) {
-		const file = req.files[0];
-
-		count++;
-		const filename = count + '_' + file.filename;
-		const contentsPath = config.contentsDir + '/' + filename;
-		const thumbnailPath = config.contentsDir + '/thumbnails/' + filename;
-
-		try { await fscopy(file.path, contentsPath); }
-		catch(e) { return res.sendStatus(500); }
-
-		try { await fscopy(file.path, thumbnailPath); }
-		catch(e) { return res.sendStatus(500); }
-
-
-		fs.unlink(file.path);
-
-		const values = {
-			userId,
-			filename,
-			mimetype: file.mimetype,
-			name: req.body.name,
-			sex: req.body.sex,
-			age: Number(req.body.age),
-			tweet: req.body.tweet,
-			created: new Date().toISOString().slice(0, 19).replace('T', ' '),
-		};
-
-		dataArray.push(values);
-	}
-
-	const columns = Object.keys(dataArray[0]);
-	const valuesArray = dataArray.map((data) => {
-		const values = [];
-		columns.forEach((key) => {
-			values.push(data[key]);
-		});
-		return values;
-	});
-
-	try { var [results] = await contents.insertMultiple(columns, valuesArray); }
-	catch(e) { return res.sendStatus(500); }
-
-	const startInsertId = results.insertId;
-	const lastInsertId = startInsertId + results.affectedRows - 1;
+	try {
+		await changeFilename(req.files);
+		await saveUploadFiles(req.files);
+		var contentIdArray = await saveContents(req.files, req.body);
+		var tagIdArray = await saveTags(req.body.tags);
+		await saveTagMap(contentIdArray, tagIdArray);
+	}catch(e) { console.log(e);return res.sendStatus(500); }
 
 	res.json({res: 'ok'});
 
 });
+
 
 function formatBody(body) {
 	const name = String(body.name).trim();
@@ -88,7 +49,7 @@ function formatBody(body) {
 	}
 
 	const tag = String(body.tag).trim();
-	const tags = tag.split(/[\s ]+/);
+	const tags = (tag === '') ? [] : tag.split(/[\s ]+/);
 
 	const tweet = String(body.tweet).trim();
 
@@ -112,5 +73,82 @@ function validateFiles(files) {
 	if(files.length === 0) return false;
 	return true;
 }
+
+async function changeFilename(files) {
+	const contents = new Contents();
+
+	let count = await contents.count();
+
+	files.forEach((file) => {
+		count++;
+		files.filename = count + '_' + file.filename;
+	});
+}
+
+async function saveUploadFiles(files) {
+	return Promise.all(files.map(async (file) => {
+		const contentsPath = config.contentsDir + '/' + file.filename;
+		const thumbnailPath = config.contentsDir + '/thumbnails/' + file.filename;
+
+		await fscopy(file.path, contentsPath);
+		await fscopy(file.path, thumbnailPath);
+		fs.unlink(file.path);
+	}));
+}
+
+async function saveContents(files, body) {
+	const contents = new Contents();
+
+	const dataArray = files.map((file) => {
+		return {
+			userId: body.userId,
+			filename: file.filename,
+			mimetype: file.mimetype,
+			name: body.name,
+			sex: body.sex,
+			age: body.age,
+			tweet: body.tweet,
+			created: new Date(),
+		}
+	});
+	
+	const [ OkPacket ] = await contents.insertMultiple(dataArray);
+	let insertId = OkPacket.insertId;
+
+	return Array(OkPacket.affectedRows).fill(0).map(() => {
+		return insertId++;
+	});
+}
+
+async function saveTags(tags) {
+	const tagsModel = new Tags();
+
+	const idArray = await Promise.all(tags.map(async (tag) => {
+		let id = await tagsModel.selectIdByName(tag);
+		if(id === 0) {
+			const [ OkPacket ] = await tagsModel.insert({ name: tag });
+			id = OkPacket.insertId;
+		}
+
+		return id;		
+	}));
+
+	return idArray;
+}
+
+async function saveTagMap(contentIdArray, tagIdArray) {
+	const tagMap = new TagMap();
+	if(contentIdArray.length === 0 || tagIdArray.length ===0) return;
+
+	const dataArray = [];
+	contentIdArray.forEach((contentId) => {
+		tagIdArray.forEach((tagId) => {
+			dataArray.push({ contentId, tagId });
+		})
+	});
+
+	return await tagMap.insertMultiple(dataArray);
+}
+
 
 export default router;

@@ -76,8 +76,7 @@ const fileUpload = (state = initialState, action) => {
 			});
 
 		case 'UPLOAD_FILE_SUCCESS':
-			return Object.assign({}, state, {
-				isSubmitting: false,
+			return Object.assign({}, initialState, {
 				shouldViewResult: true,
 				isSuccess: true,
 			});
