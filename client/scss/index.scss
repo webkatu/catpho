@@ -111,3 +111,22 @@ body {
 		}
 	}
 }
+
+.signUp {
+	.signUpForm {
+		& > * {
+			display: block;
+			margin-top: 10px;
+
+			&:first-child { margin-top: 0 }
+		}
+
+		input[type="email"],
+		input[type="text"],
+		input[type="password"] {
+			padding: 7px;
+			border: 1px solid #ddd;
+			border-radius: 2px;
+		}
+	}
+}

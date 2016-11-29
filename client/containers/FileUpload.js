@@ -2,7 +2,7 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/fileUpload.js';
 import FileUploadForm from '../components/FileUpload/FileUploadForm.js';
-import FileUploadResultView from '../components/FileUpload/FileUploadResultView.js';
+import RequestResultView from '../components/common/RequestResultView.js';
 
 class FileUpload extends React.Component {
 	constructor(props) {
@@ -56,7 +56,7 @@ class FileUpload extends React.Component {
 		console.log(fileUpload);
 
 		const resultView = (fileUpload.shouldViewResult)
-			? <FileUploadResultView isSuccess={fileUpload.isSuccess} />
+			? <RequestResultView isSuccess={fileUpload.isSuccess} />
 			: null;
 
 		return (

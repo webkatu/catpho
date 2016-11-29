@@ -33,7 +33,7 @@ export default class FileUploadForm extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const form = ReactDOM.findDOMNode(this.refs.form);
+		const form = e.target;
 		this.props.onSubmit(form);
 	}
 
@@ -41,7 +41,7 @@ export default class FileUploadForm extends React.Component {
 
 	render() {
 		return (
-			<form className="fileUploadForm" ref="form">
+			<form className="fileUploadForm" ref="form" onSubmit={this.handleSubmit.bind(this)}>
 				<input
 					type="file"
 					multiple
@@ -95,7 +95,7 @@ export default class FileUploadForm extends React.Component {
 					type="submit"
 					value="Upload"
 					disabled={! this.props.possibleSubmit}
-					onClick={this.handleSubmit.bind(this)}
+					//onClick={this.handleSubmit.bind(this)}
 				/>
 			</form>
 		);

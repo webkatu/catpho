@@ -10,6 +10,7 @@ import App from './components/App.js';
 import NotFound from './components/NotFound.js';
 import ImageListViewer from './containers/ImageListViewer.js';
 import FileUpload from './containers/FileUpload.js';
+import SignUp from './containers/SignUp.js';
 
 const store = Redux.createStore(
 	catphoApp,
@@ -24,6 +25,7 @@ const routes = (<ReactRouter.Route path="/" component={App}>
 				<ReactRouter.IndexRoute component={ImageListViewer} />
 				<ReactRouter.Route path="test" component={ImageListViewer} />
 				<ReactRouter.Route path="upload" component={FileUpload} />
+				<ReactRouter.Route path="signup" component={SignUp} />
 				<ReactRouter.Route path="*" component={NotFound} />
 			</ReactRouter.Route>)
 
