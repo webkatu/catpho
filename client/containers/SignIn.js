@@ -1,18 +1,28 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import classnames from 'classnames';
 import * as ReactRedux from 'react-redux';
-import * actions from '../actions/signIn.js';
-import RequestResultView from '../components/common/RequestResultView.js'
+import * as actions from '../actions/signIn.js';
+import RequestResultView from '../components/common/RequestResultView.js';
 
 class SignIn extends React.Component {
+	componentDidUpdate() {
+		if(this.props.signIn.shouldResetForm) {
+			const form = ReactDOM.findDOMNode(this.refs.form);
+			form.reset();
+			this.props.dispatch(actions.resetForm());
+		}
+	}
+
 	handleSubmit(e) {
 		e.preventDefault();
 		const form = e.target;
-		this.props.onSubmit(form);
+		this.props.dispatch(actions.submit(form));
 	}
 
-	handleIdInputChange(e) {
+	handleEmailOrUserNameInputChange(e) {
 		const input = e.target;
-		this.props.dispatch(actions.inputId(input.value));
+		this.props.dispatch(actions.inputEmailOrUserName(input.value));
 	}
 
 	handlePasswordInputChange(e) {
@@ -22,18 +32,36 @@ class SignIn extends React.Component {
 
 	render() {
 		const signIn = this.props.signIn;
+		console.log(signIn);
 
 		const resultView = (signIn.shouldViewResult)
 			? <RequestResultView isSuccess={signIn.isSuccess} />
-			: null,
+			: null;
 
 		return (
 			<div className="signIn" >
 				{resultView}
-				<form className="signInForm">
-					<input type="text" name="id" />
-					<input type="password" name="password" />
-					<input type="submit" value="サインイン" disabled={signIn.possibleSubmit()}/>
+				<form className="signInForm" onSubmit={this.handleSubmit.bind(this)}>
+					<input
+						type="text"
+						className={classnames({error: ! signIn.validationEmailOrUserName})}
+						name="emailOrUserName"
+						placeholder="メールアドレスまたはユーザー名"
+						maxLength={signIn.emailOrUserNameMaxLength}
+						onChange={this.handleEmailOrUserNameInputChange.bind(this)}
+					/>
+					<input
+						type="password"
+						className={classnames({error: ! signIn.validationPassword})}
+						name="password"
+						placeholder="パスワード"
+						onChange={this.handlePasswordInputChange.bind(this)}
+					/>
+					<input
+						type="submit"
+						value="サインイン"
+						disabled={! signIn.possibleSubmit()}
+					/>
 				</form>
 			</div>
 		);

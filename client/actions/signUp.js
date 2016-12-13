@@ -1,3 +1,5 @@
+import config from '../config.js';
+
 export const inputEmail = (value) => {
 	return {
 		type: 'INPUT_EMAIL@signUp',
@@ -25,9 +27,10 @@ const requestSignUp = () => {
 	}
 }
 
-const requestSignUpSuccess = () => {
+const requestSignUpSuccess = (payload) => {
 	return {
 		type: 'REQUEST_SIGN_UP_SUCCESS',
+		payload,
 	}
 }
 
@@ -45,21 +48,22 @@ const hideResultView = () => {
 
 
 let hideResultViewTimerId = null;
-export const submit = (path, form) => {
+export const submit = (form) => {
 	const formData = new FormData(form);
 	return async (dispatch) => {
 		dispatch(requestSignUp());
 		try {
-			const response = await fetch(path, {
+			const response = await fetch(config.apiServer + location.pathname, {
 				method: 'post',
 				body: formData,
 			});
-			if(! response.ok) throw new TypeError();
+			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			if(! json.ok) throw new TypeError();
+			if(! json.success) throw json.error;
 
-			dispatch(requestSignUpSuccess());
+			dispatch(requestSignUpSuccess(json.payload));
 		}catch(e) {
+			console.log(e);
 			dispatch(requestSignUpFailure());
 		}
 

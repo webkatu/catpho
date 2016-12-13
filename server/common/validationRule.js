@@ -5,4 +5,12 @@ export default {
 	tagMaxLength: 32,
 	tagMaxCount: 3,
 	tweetMaxLength: 140,
+	emailMaxLength: 255,
+	emailPattern: /^.+@.+/,
+	userNameMinLength: 4,
+	userNameMaxLength: 32,
+	userNamePattern: /^[a-zA-Z0-9]+$/,
+	passwordMinLength: 8,
+	passwordMaxLength: 64,
+	passwordPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
 }

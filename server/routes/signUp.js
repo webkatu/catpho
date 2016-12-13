@@ -1,69 +1,80 @@
 import express from 'express';
+import multer from 'multer';
 import bcrypt from 'bcrypt';
 import uuid from 'uuid';
+import JWTManager from '../common/JWTManager.js';
 import config from '../config.js';
-import validationRule from '../common/validationRule.js';
+import Validator from '../common/Validator.js';
 import sendMail from '../common/sendMail.js';
 import Users from '../models/Users.js';
-import ActivationCodes from '../models/ActivationCodes.js';
 
 const router = express.Router();
 
-router.post('/', (req, res, next) => {
+router.post('/', multer().none(), async (req, res, next) => {
+	console.log(req.body);
 	if(! validateBody(req.body)) return res.sendStatus(400);
-	
 	const users = new Users();
 	try {
-		if(! await users.exists('email', req.body.email)) {
+		if(await users.exists('email', req.body.email)) {
 			return res.json({
-				ok: false,
-				isEmailAlreadyTaken: true,
+				success: false,
+				error: {
+					message: 'email is already taken.'
+				}
 			});
 		}
 
-		if(! await users.exists('userName', req.body.userName)) {
+		if(await users.exists('userName', req.body.userName)) {
 			return res.json({
-				ok: false,
-				isUserNameAlreadyTaken: true,
+				success: false,
+				error: {
+					message: 'username is already taken.'
+				}
 			});
 		}
 
-		await saveUsers(req.body);
+		var [ OkPacket ] = await saveUsers(req.body);
+
+		const jwtManager = new JWTManager();	
+		const activationToken = await jwtManager.createActivationToken({
+			userId: OkPacket.insertId,
+			userName: req.body.userName,
+		});
+
+		const activationURL = `${req.URL.origin}/activation/${activationToken}`;
+
+		await sendMail({
+			from: config.mail.from,
+			to: req.body.email,
+			subject: 'activation',
+			html: `please access to <a href="${activationURL}">${activationURL}</a>`,
+		});
+
+		var token = await jwtManager.createUserAuthToken({
+			userName: req.body.userName,
+		});
 	}
-	catch(e) { return res.sendStatus(500); }
+	catch(e) { console.log(e); return res.sendStatus(500); }
 
-	const activationCodes = new ActivationCodes();
-	activationCodes.code = uuid.v4();
-	activationCodes.email = req.body.email;
-	activationCodes.save();
-
-	res.json({ ok: true });
-
-
-	const activationURL = `${req.protocol}://${req.hostname}/activation/${activationCodes.code}`;
-
-	await sendMail({
-		from: config.mail.from,
-		to: 'mail@webkatu.com',
-		subject: 'activation',
-		html: `please access to ${activationURL}`,
+	res.json({
+		success: true,
+		payload: {
+			id: OkPacket.insertId,
+			userName: req.body.userName,
+			email: req.body.email,
+			nickname: req.body.userName,
+			token,
+		}
 	});
 });
 
 function validateBody(body) {
+	const validator = new Validator();
 	const { email, userName, password } = body;
 
-	if(email.length > validationRule.emailMaxLength) return false;
-	if(! validationRule.emailPattern.test(email)) return false;
-
-	if(userName.length < validationRule.userNameMinLength) return false;
-	if(userName.length > validationRule.userNameMaxLength) return false;
-	if(! validationRule.userNamePattern.test(userName)) return false;
-
-	if(password.length < validationRule.passwordMinLength) return false;
-	if(password.length > validationRule.passwordMaxLength) return false;
-	if(! validationRule.passwordPattern.test(password)) return false;
-
+	if(! validator.validateEmail(email)) return false;
+	if(! validator.validateUserName(userName)) return false;
+	if(! validator.validatePassword(password)) return false;
 	return true;
 }
 
@@ -87,7 +98,7 @@ async function saveUsers(body) {
 	const users = new Users();
 	const { email, userName, password } = body;
 	const data = {
-		email: encrypt(email),
+		email,
 		userName,
 		password: await createHash(password),
 		nickname: userName,

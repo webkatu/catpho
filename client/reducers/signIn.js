@@ -1,31 +1,34 @@
 const initialState = {
-	actionURI: location.origin + '/signin/',
-	idMinLength: 4,
-	idMaxLength: 64,
-	idPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
-	passwordMinxLength: 8,
+	emailOrUserNameMaxLength: 255,
+	emailMaxLength: 255,
+	emailPattern: /^.+@.+/,
+	userNameMinLength: 4,
+	userNameMaxLength: 32,
+	userNamePattern: /^[a-zA-Z0-9]+$/,
+	passwordMinLength: 8,
 	passwordMaxLength: 64,
 	passwordPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
-	validationId: false,
+	validationEmailOrUserName: false,
 	validationPassword: false,
 	isSubmitting: false,
+	shouldResetForm: false,
 	shouldViewResult: false,
 	isSuccess: null,
 
 	possibleSubmit() {
 		return (
-			|| this.validationId
-			|| this.validationPassword
-			! this.isSubmitting
+			this.validationEmailOrUserName
+			&& this.validationPassword
+			&& ! this.isSubmitting
 		);
 	},
 }
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-		case 'INPUT_ID@signIn':
+		case 'INPUT_EMAIL_OR_USER_NAME@signIn':
 			return Object.assign({}, state, {
-				validationId: validateId(action.value),
+				validationEmailOrUserName: validateEmailOrUserName(action.value),
 			});
 
 		case 'INPUT_PASSWORD@signIn':
@@ -33,21 +36,29 @@ export default (state = initialState, action) => {
 				validationPassword: validatePassword(action.value),
 			});
 
-		case 'REQUEST_SIGN_IN':
+		case 'REQUEST_AUTHENTICATION':
 			return Object.assign({}, state, {
 				isSubmitting: true,
 			});
 
-		case 'REQUEST_SIGN_IN_SUCCESS':
+		case 'REQUEST_AUTHENTICATION_SUCCESS':
 			return Object.assign({}, initialState, {
+				isSubmitting: false,
+				shouldResetForm: true,
 				shouldViewResult: true,
 				isSuccess: true,
 			});
 
-		case 'REQUEST_SIGN_IN_FAILURE':
+		case 'REQUEST_AUTHENTICATION_FAILURE':
 			return Object.assign({}, state, {
+				isSubmitting: false,
 				shouldViewResult: true,
 				isSuccess: false,
+			});
+
+		case 'RESET_FORM@signIn':
+			return Object.assign({}, state, {
+				shouldResetForm: false,
 			});
 
 		case 'HIDE_RESULT_VIEW@signIn': 
@@ -59,12 +70,24 @@ export default (state = initialState, action) => {
 	return state;
 }
 
-function validateId(value) {
-	const { idMinLength, idMaxLength, idPattern } = initialState;
+function validateEmailOrUserName(value) {
+	return validateEmail(value) || validateUserName(value);
+}
 
-	if(value.length < idMinLength) return false;
-	if(value.length > idMaxLength) return false;
-	if(! idPattern.test(value)) return false;
+function validateEmail(value) {
+	const { emailMaxLength, emailPattern } = initialState;
+
+	if(value.length > emailMaxLength) return false;
+	if(! emailPattern.test(value)) return false;
+	return true;
+}
+
+function validateUserName(value) {
+	const { userNameMinLength, userNameMaxLength, userNamePattern } = initialState;
+
+	if(value.length < userNameMinLength) return false;
+	if(value.length > userNameMaxLength) return false;
+	if(! userNamePattern.test(value)) return false;
 	return true;
 }
 

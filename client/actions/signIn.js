@@ -1,6 +1,8 @@
-export const inputId = (value) => {
+import config from '../config.js';
+
+export const inputEmailOrUserName = (value) => {
 	return {
-		type: 'INPUT_ID@signIn',
+		type: 'INPUT_EMAIL_OR_USER_NAME@signIn',
 		value,
 	}
 }
@@ -12,40 +14,61 @@ export const inputPassword = (value) => {
 	}
 }
 
-const requestSignIn = () => {
+const requestAuthentication = () => {
 	return {
-		type: 'REQUEST_SIGN_IN',
+		type: 'REQUEST_AUTHENTICATION',
 	}
 }
 
-const requestSignInSuccess = () => {
+const requestAuthenticationInSuccess = (payload) => {
 	return {
-		type: 'REQUEST_SIGN_IN_SUCCESS',
+		type: 'REQUEST_AUTHENTICATION_SUCCESS',
+		payload,
 	}
 }
 
-const requestSignInFailure = () => {
+const requestAuthenticationFailure = () => {
 	return {
-		type: 'REQUEST_SIGN_IN_FAILURE',
+		type: 'REQUEST_AUTHENTICATION_FAILURE',
 	}
 }
 
-export const submit = (path, form) => {
+const hideResultView = () => {
+	return {
+		type: 'HIDE_RESULT_VIEW@signIn',
+	}
+}
+
+
+let hideResultViewTimerId = null;
+export const submit = (form) => {
 	const formData = new FormData(form);
 	return async (dispatch) => {
-		dispatch(requestSignIn());
+		dispatch(requestAuthentication());
 		try {
-			const response = await fetch(path, {
+			const response = await fetch(config.apiServer + '/signin/authentication', {
 				method: 'post',
 				body: formData,
 			});
-			if(! response.ok) throw new TypeError();
+			if(! response.ok) throw new Error();
 			const json = await response.json();
-			if(! json.ok) throw new TypeError();
+			console.log(json);
+			if(! json.success) throw json.error;
 
-			dispatch(requestSignInSuccess());
+			dispatch(requestAuthenticationInSuccess(json.payload));
 		}catch(e) {
-			dispatch(requestSignInFailure());
+			dispatch(requestAuthenticationFailure());
 		}
+
+		clearTimeout(hideResultViewTimerId);
+		hideResultViewTimerId = setTimeout(() => {
+			dispatch(hideResultView());
+		}, 5000)
+	}
+}
+
+export const resetForm = () => {
+	return {
+		type: 'RESET_FORM@signIn',
 	}
 }

@@ -6,11 +6,13 @@ import * as ReactRouter from 'react-router';
 import * as ReactRouterRedux from 'react-router-redux';
 import thunk from 'redux-thunk';
 import catphoApp from './reducers/index.js';
-import App from './components/App.js';
+import App from './containers/App.js';
 import NotFound from './components/NotFound.js';
 import ImageListViewer from './containers/ImageListViewer.js';
 import FileUpload from './containers/FileUpload.js';
 import SignUp from './containers/SignUp.js';
+import SignIn from './containers/SignIn.js';
+import Activation from './containers/Activation.js';
 
 const store = Redux.createStore(
 	catphoApp,
@@ -26,6 +28,8 @@ const routes = (<ReactRouter.Route path="/" component={App}>
 				<ReactRouter.Route path="test" component={ImageListViewer} />
 				<ReactRouter.Route path="upload" component={FileUpload} />
 				<ReactRouter.Route path="signup" component={SignUp} />
+				<ReactRouter.Route path="signIn" component={SignIn} />
+				<ReactRouter.Route path="activation/*" component={Activation} />
 				<ReactRouter.Route path="*" component={NotFound} />
 			</ReactRouter.Route>)
 

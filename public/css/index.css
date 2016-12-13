@@ -93,3 +93,11 @@ body {
   padding: 7px;
   border: 1px solid #ddd;
   border-radius: 2px; }
+  .signUp .signUpForm input[type="email"].error,
+  .signUp .signUpForm input[type="text"].error,
+  .signUp .signUpForm input[type="password"].error {
+    border-color: #f22; }
+    .signUp .signUpForm input[type="email"].error:focus,
+    .signUp .signUpForm input[type="text"].error:focus,
+    .signUp .signUpForm input[type="password"].error:focus {
+      outline: none; }

@@ -1,5 +1,4 @@
 const initialState = {
-	actionURI: location.origin + '/signin/',
 	emailMaxLength: 255,
 	emailPattern: /^.+@.+/,
 	userNameMinLength: 4,
@@ -50,6 +49,7 @@ export default (state = initialState, action) => {
 
 		case 'REQUEST_SIGN_UP_SUCCESS':
 			return Object.assign({}, initialState, {
+				isSubmitting: false,
 				shouldResetForm: true,
 				shouldViewResult: true,
 				isSuccess: true,
@@ -57,6 +57,7 @@ export default (state = initialState, action) => {
 
 		case 'REQUEST_SIGN_UP_FAILURE':
 			return Object.assign({}, state, {
+				isSubmitting: false,
 				shouldViewResult: true,
 				isSuccess: false,
 			});

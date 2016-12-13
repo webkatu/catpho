@@ -81,6 +81,11 @@ export class MySQLModel {
 		})();
 	}
 
+	selectBy(col, value) {
+		const sql = `select * from ${this.tableName} where ?? = ?;`;
+		return this.query(sql, [col, value]);
+	}
+
 	selectAll() {
 		const sql = `select * from ${this.tableName};`;
 

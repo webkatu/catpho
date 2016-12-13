@@ -17,8 +17,8 @@ router.post('/', upload.array('files'), async (req, res, next) => {
 
 	Object.assign(req.body, formatBody(req.body));
 	req.body.userId = 1;
-	if(! validateBody(req.body)) return res.sendStatus(500);
-	if(! validateFiles(req.files)) return res.sendStatus(500);
+	if(! validateBody(req.body)) return res.sendStatus(400);
+	if(! validateFiles(req.files)) return res.sendStatus(400);
 	console.log(req.body);
 	console.log(req.files);
 
