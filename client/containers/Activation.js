@@ -6,18 +6,17 @@ import * as actions from '../actions/activation.js';
 
 class Activation extends React.Component {
 	componentDidMount() {
-		if(! this.props.user.isSignedIn) return;
+		if(! this.props.app.isSignedIn) return;
 		this.props.dispatch(actions.request());
 	}
 
 	componentDidUpdate() {
-		if(! this.props.user.isSignedIn) return;
+		if(! this.props.app.isSignedIn) return;
 		if(this.props.activation.isSuccess !== null) return;
 		this.props.dispatch(actions.request());
 	}
 
 	render() {
-		console.log(this.props.user, this.props.activation);
 		let textNode = null;
 
 		if(this.props.activation.isSuccess === true) {
@@ -50,7 +49,7 @@ class Activation extends React.Component {
 
 function mapStateToProps(state) {
 	return {
-		user: state.user,
+		app: state.app,
 		activation: state.activation,
 	}
 }

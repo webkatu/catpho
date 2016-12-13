@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import bcrypt from 'bcrypt';
 import JWTManager from '../common/JWTManager.js';
 import Validator from '../common/Validator.js';
@@ -27,7 +28,7 @@ router.post('/', async (req, res, next) => {
 
 });
 
-router.post('/authentication', async (req, res, next) => {
+router.post('/authentication', multer().none(), async (req, res, next) => {
 	if(! validateBody(req.body)) return res.sendStatus(400);
 
 	try {

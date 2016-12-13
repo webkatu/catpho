@@ -48,6 +48,9 @@ export const submit = (form) => {
 		try {
 			const response = await fetch(config.apiServer + '/signin/authentication', {
 				method: 'post',
+				headers: {
+					...config.defaultHeaders,
+				},
 				body: formData,
 			});
 			if(! response.ok) throw new Error();

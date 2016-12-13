@@ -1,22 +1,28 @@
 import config from '../config.js';
 
+const requestSignIn = () => {
+	return {
+		type: 'REQUEST_SIGN_IN',
+	};
+}
+
 const requestSignInSuccess = (payload) => {
 	return {
 		type: 'REQUEST_SIGN_IN_SUCCESS',
 		payload,
-	}
+	};
 }
 
 const requestSignInFailure = (error) => {
 	return {
 		type: 'REQUEST_SIGN_IN_FAILURE',
 		payload: error,
-	}
+	};
 }
 
-export const requestSignIn = () => {
+export const signIn = () => {
 	return async (dispatch) => {
-		dispatch(() => { return { type: 'REQUEST_SIGN_IN' } });
+		dispatch(requestSignIn());
 		try {
 			const response = await fetch(config.apiServer + '/signin', {
 				method: 'post',

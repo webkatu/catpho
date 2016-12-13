@@ -1,6 +1,7 @@
 import * as Redux from 'redux';
 import * as ReactRouterRedux from 'react-router-redux';
 import cookie from 'cookie';
+import app from './app.js';
 import user from './user.js';
 import imageListViewer from './imageListViewer.js';
 import fileUpload from './fileUpload.js';

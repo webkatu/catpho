@@ -13,6 +13,7 @@ import FileUpload from './containers/FileUpload.js';
 import SignUp from './containers/SignUp.js';
 import SignIn from './containers/SignIn.js';
 import Activation from './containers/Activation.js';
+import UserOnly from './containers/UserOnly.js';
 
 const store = Redux.createStore(
 	catphoApp,
@@ -23,15 +24,19 @@ console.log(store.getState());
 
 const history = ReactRouterRedux.syncHistoryWithStore(ReactRouter.browserHistory, store);
 
-const routes = (<ReactRouter.Route path="/" component={App}>
-				<ReactRouter.IndexRoute component={ImageListViewer} />
-				<ReactRouter.Route path="test" component={ImageListViewer} />
-				<ReactRouter.Route path="upload" component={FileUpload} />
-				<ReactRouter.Route path="signup" component={SignUp} />
-				<ReactRouter.Route path="signIn" component={SignIn} />
-				<ReactRouter.Route path="activation/*" component={Activation} />
-				<ReactRouter.Route path="*" component={NotFound} />
-			</ReactRouter.Route>)
+const routes = (
+	<ReactRouter.Route path="/" component={App}>
+		<ReactRouter.IndexRoute component={ImageListViewer} />
+		<ReactRouter.Route path="test" component={ImageListViewer} />
+		<ReactRouter.Route path="upload" component={FileUpload} />
+		<ReactRouter.Route path="signup" component={SignUp} />
+		<ReactRouter.Route path="signIn" component={SignIn} />
+		<ReactRouter.Route component={UserOnly}>
+			<ReactRouter.Route path="activation/*" component={Activation} />
+		</ReactRouter.Route>
+		<ReactRouter.Route path="*" component={NotFound} />
+	</ReactRouter.Route>
+);
 
 ReactDOM.render(
 	<ReactRedux.Provider store={store}>

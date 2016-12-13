@@ -41,21 +41,21 @@ class SignIn extends React.Component {
 		return (
 			<div className="signIn" >
 				{resultView}
-				<form className="signInForm" onSubmit={this.handleSubmit.bind(this)}>
+				<form className="signInForm" ref="form" onSubmit={::this.handleSubmit}>
 					<input
 						type="text"
 						className={classnames({error: ! signIn.validationEmailOrUserName})}
 						name="emailOrUserName"
 						placeholder="メールアドレスまたはユーザー名"
 						maxLength={signIn.emailOrUserNameMaxLength}
-						onChange={this.handleEmailOrUserNameInputChange.bind(this)}
+						onChange={::this.handleEmailOrUserNameInputChange}
 					/>
 					<input
 						type="password"
 						className={classnames({error: ! signIn.validationPassword})}
 						name="password"
 						placeholder="パスワード"
-						onChange={this.handlePasswordInputChange.bind(this)}
+						onChange={::this.handlePasswordInputChange}
 					/>
 					<input
 						type="submit"
