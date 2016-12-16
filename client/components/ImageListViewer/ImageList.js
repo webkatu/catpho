@@ -14,13 +14,13 @@ export default class ImageList extends React.Component {
 		}
 
 		const imageNodes = this.props.images.map((image, i) => {
-			return (<Image id={image.id} href={image.href} src={image.src} key={i} />)
+			return <Image id={image.id} href={image.href} src={image.src} key={i} />;
 		});
 
 		return (
 			<div className="imageList">
 				<div className="images">{imageNodes}</div>
-				<Pager pagerInfo={this.props.pagerInfo}/>
+				<Pager pagerInfo={this.props.pagerInfo} onPagerItemClick={this.props.onPagerItemClick}/>
 			</div>
 		);
 	}

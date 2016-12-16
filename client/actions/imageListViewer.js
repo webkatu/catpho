@@ -1,72 +1,76 @@
-export const requestImageList = (path) => {
+import config from '../config.js';
+
+export const _fetchImageList = () => {
 	return {
-		type: 'REQUEST_IMAGE_LIST',
-		path,
+		type: 'FETCH_IMAGE_LIST',
 	}
 }
 
-const fetchImageListSuccess = (path, json, contentsPath, imagesPath) => {
-	const images = json.contents.map((content) => {
+const fetchImageListSuccess = (payload) => {
+	const images = payload.contents.map((content) => {
 		return {
 			id: content.id,
-			href: contentsPath + '/' + content.id,
-			src: imagesPath + '/' + content.filename,
+			href: '/contents/' + content.id,
+			src: '/uploads/contents/thumbnails/' + content.filename,
 		}
 	});
 
 	return {
 		type: 'FETCH_IMAGE_LIST_SUCCESS',
-		path,
-		images,
-		pagerInfo: {
-			currentPage: json.currentPage,
-			maxPage: json.maxPage,
-		}
+		payload: {
+			images,
+			pagerInfo: {
+				currentPage: payload.currentPage,
+				maxPage: payload.maxPage,
+			}
+		},
 	};
 }
 
-const fetchImageListFailure = (path, error) => {
+const fetchImageListFailure = (error, path) => {
 	return {
 		type: 'FETCH_IMAGE_LIST_FAILURE',
-		path,
-		error,
+		payload: { ...error, path }
 	};
 }
 
-export const fetchImageList = (path, interval, contentsPath, imagesPath) => {
+export const fetchImageList = (path = location.pathname + location.search) => {
 	return async (dispatch) => {
-		dispatch(requestImageList(path));
+		dispatch(_fetchImageList());
 		
-		const response = await fetch(path, {
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-			body: JSON.stringify({ interval })
-		});
+		try {
+			console.log(config.defaultHeaders);
+			const response = await fetch(config.apiServer + path, {
+				headers: {
+					...config.defaultHeaders,
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				method: 'get',
+			});
+			if (! response.ok) throw new Error(response.status);
 
-		console.log(response);
-		if (! response.ok) {
-			const error = new TypeError(response.status);
-			dispatch(fetchImageListFailure(path, error));
-			return;
+			const json = await response.json();
+			if(! json.success) throw json.error;
+
+			dispatch(fetchImageListSuccess(json.payload));
+		}catch(e) {
+			dispatch(fetchImageListFailure(e, path));
 		}
-
-		const json = await response.json();
-		dispatch(fetchImageListSuccess(path, json, contentsPath, imagesPath));
-	}
-}
-
-export const init = () => {
-	return {
-		type: 'INIT',
 	}
 }
 
 export const toggleAutoReload = (checked) => {
 	return {
 		type: 'TOGGLE_AUTO_RELOAD',
-		shouldAutoReload: checked
+		payload: {
+			shouldAutoReload: checked,
+		},
 	};
+}
+
+export const init = () => {
+	return {
+		type: 'INIT',
+	}
 }

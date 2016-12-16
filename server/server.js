@@ -20,13 +20,18 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use('/', express.static(__dirname + '/../public'));
+app.use('/', express.static(__dirname + '/../public', { index: false }));
+
+app.use('/uploads', uploads);
+
+app.get('*', (req, res, next) => {
+	if(req.xhr) return next();
+	res.sendFile('/public/index.html', { root: __dirname + '/..'});
+});
 
 app.use(['/', '/contents'], contents);
 
 app.use('/upload', upload);
-
-app.use('/uploads', uploads);
 
 app.use('/signin', signIn);
 
@@ -34,9 +39,6 @@ app.use('/signup', signUp);
 
 app.use('/activation', activation);
 
-app.get('*', (req, res, next) => {
-	res.sendFile('/public/index.html', { root: __dirname + '/..'});
-})
 
 app.listen(3000, () => {
 	console.log('server started.');

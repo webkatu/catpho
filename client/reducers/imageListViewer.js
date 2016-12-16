@@ -10,7 +10,7 @@ const initialState = {
 			],
 			pagerInfo: {
 				pathname: location.pathname,
-				length: 10,
+				total: 10,
 				maxPage: 100,
 				currentPage: 1,
 				interval: 5,
@@ -19,89 +19,58 @@ const initialState = {
 	*/],
 	interval: 2,
 	pagerTotal: 10,
-	error: null,
+	error: false,
+	errorObject: {},
 	isLoading: false,
 	shouldAutoReload: true,
 	hasNextPage: false,
-	isLocationChange: false,
 	contentsPath: '/contents',
 	imagesPath: '/uploads/contents/thumbnails',
 }
 
 const imageListViewer = (state = initialState, action) => {
 	switch(action.type) {
-		case 'REQUEST_IMAGE_LIST':
+		case 'FETCH_IMAGE_LIST':
 			return Object.assign({}, state, {
+				error: false,
 				isLoading: true,
-				path: action.path,
 			});
 
 		case 'FETCH_IMAGE_LIST_SUCCESS':
-			const pagerInfo = action.pagerInfo;
-			let startPageNumber = pagerInfo.currentPage - Math.ceil(initialState.pagerTotal / 2) + 1;
-			if(startPageNumber < 1) startPageNumber = 1;
-
-			let endPageNumber = startPageNumber + initialState.pagerTotal - 1;
-			if(endPageNumber > pagerInfo.maxPage) endPageNumber = pagerInfo.maxPage;
-
-			pagerInfo.startPageNumber = startPageNumber;
-			pagerInfo.endPageNumber = endPageNumber;
-
 			return Object.assign({}, state, {
 				lists: [
 					...state.lists,
 					{
-						images: action.images,
-						pagerInfo: action.pagerInfo,
+						images: action.payload.images,
+						pagerInfo: {
+							...action.payload.pagerInfo,
+							total: initialState.pagerTotal,
+						},
 					}
 				],
 				isLoading: false,
-				hasNextPage: pagerInfo.currentPage < pagerInfo.maxPage,
+				hasNextPage: action.payload.pagerInfo.currentPage < action.payload.pagerInfo.maxPage,
 			});
 
 		case 'FETCH_IMAGE_LIST_FAILURE':
 			return Object.assign({}, state, {
 				isLoading: false,
-				error: action.error,
+				error: true,
+				errorObject: action.payload,
 			});
 
 		case 'INIT':
-			return Object.assign({}, state, {
-				lists: [],
-				isLocationChange: false,
-				error: '',
+			return Object.assign({}, initialState, {
+				shouldAutoReload: state.shouldAutoReload,
 			});
 
 		case 'TOGGLE_AUTO_RELOAD':
 			return Object.assign({}, state, {
-				shouldAutoReload: action.shouldAutoReload,
-			});
-
-		case LOCATION_CHANGE:
-			return Object.assign({}, state, {
-				isLocationChange: true,
+				shouldAutoReload: action.payload.shouldAutoReload,
 			});
 	}
 
 	return state;
 }
-
-
-/*
-images = [
-	{
-		src: String,
-		href: String,
-	}
-]
-
-pagerInfo = {
-	length: Number,
-	maxPage: Number,
-	currentPage: Number,
-	interval: Number,
-	path: String,
-}
-*/
 
 export default imageListViewer;

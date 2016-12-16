@@ -4,16 +4,15 @@ import { browserHistory } from 'react-router';
 export default class RequestError extends React.Component {
 	handleClick(e) {
 		e.preventDefault();
-		browserHistory.replace(location.href);
+		this.props.onReloadButtonClick(e.target);
 	}
 	render() {
-		console.log(this.props.error);
 		return (
 			<div className="requestError">
 				読み込みに失敗しました。
 				<a
-					href=""
-					onClick={this.handleClick.bind(this)}
+					href={this.props.errorObject.path}
+					onClick={::this.handleClick}
 				>
 					再読み込みする。
 				</a>

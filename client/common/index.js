@@ -1,6 +1,6 @@
 export const createPagerPath = (pageNumber) => {
-		const path = location.pathname.replace(location.search, '');
-		if(pageNumber === 1) return path;
+		const pathname = location.pathname;
+		if(pageNumber === 1) return pathname;
 		
 		const query = `page=${pageNumber}`;
 		let qs = location.search.slice(1);
@@ -12,5 +12,5 @@ export const createPagerPath = (pageNumber) => {
 		}else {
 			qs = qs.replace(/page=\d+/, query);
 		}
-		return path + '?' + qs;
+		return pathname + '?' + qs;
 }

@@ -1,6 +1,6 @@
 export default {
 	apiServer: location.origin,
 	defaultHeaders: {
-		'X-Request-With': 'XMLHttpRequest',
+		'X-Requested-With': 'XMLHttpRequest',
 	}
 }
