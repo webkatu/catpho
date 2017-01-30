@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as ReactRouter from 'react-router';
 import * as ReactRedux from 'react-redux';
+import * as ReactRouter from 'react-router';
 import * as actions from '../actions/imageListViewer.js';
 import ImageListViewBox from '../components/ImageListViewer/ImageListViewBox.js';
 import ImageListViewerNav from '../components/ImageListViewer/ImageListViewerNav.js';
@@ -9,14 +9,26 @@ import { createPagerPath } from '../common/index.js'
 
 class ImageListViewer extends React.Component {
 	componentWillMount() {
+		this._handlePopstate = ::this.handlePopstate;
 		this._handleScroll = ::this.handleScroll;
+		window.addEventListener('popstate', this._handlePopstate);
 		window.addEventListener('scroll', this._handleScroll);
+		this.props.dispatch(actions.mount());
 		this.props.dispatch(actions.fetchImageList());
 	}
 
 	componentWillUnmount() {
+		window.removeEventListener('popstate', this._handlePopstate);
 		window.removeEventListener('scroll', this._handleScroll);
-		this.props.dispatch(actions.init());
+	}
+
+	componentDidUpdate() {
+		if(! this.props.imageListViewer.shouldFetchContents) return;
+		this.props.dispatch(actions.fetchImageList());
+	}
+
+	handlePopstate(e) {
+		this.props.dispatch(actions.mount());
 	}
 
 	handleScroll(e) {
@@ -24,6 +36,7 @@ class ImageListViewer extends React.Component {
 		if(! imageListViewer.shouldAutoReload) return;
 		if(imageListViewer.isLoading) return;
 		if(! imageListViewer.hasNextPage) return;
+		if(imageListViewer.isDisplayingViewer) return;
 
 		const imageListViewBox = ReactDOM.findDOMNode(this.refs.imageListViewBox);
 		const rect = imageListViewBox.getBoundingClientRect();
@@ -31,7 +44,7 @@ class ImageListViewer extends React.Component {
 		//一番下までスクロールされているか
 		if(window.innerHeight < rect.bottom) return;
 
-		const currentPage = imageListViewer.lists[imageListViewer.lists.length - 1].pagerInfo.currentPage;
+		const currentPage = imageListViewer.pagerInfo.current;
 
 		this.props.dispatch(actions.fetchImageList(
 			createPagerPath(currentPage + 1)
@@ -44,12 +57,19 @@ class ImageListViewer extends React.Component {
 
 	onReloadButtonClick(url) {
 		ReactRouter.browserHistory.push(url.pathname + url.search);
-		this.props.dispatch(actions.fetchImageList());
+	}
+
+	handleImageClick(e) {
+		e.preventDefault();
+		const imageListViewBox = ReactDOM.findDOMNode(this.refs.imageListViewBox);
+		const list = Array.from(imageListViewBox.querySelectorAll('.image'));
+		const selectedIndex = list.indexOf(e.currentTarget.parentNode);
+		this.props.dispatch(actions.openViewer(this.props.imageListViewer.contents, selectedIndex));
 	}
 
 	onPagerItemClick(url) {
 		ReactRouter.browserHistory.push(url.pathname + url.search);
-		this.props.dispatch(actions.init());
+		this.props.dispatch(actions.mount());
 		this.props.dispatch(actions.fetchImageList());
 	}
 
@@ -58,17 +78,19 @@ class ImageListViewer extends React.Component {
 		const { dispatch, imageListViewer } = this.props;
 
 		return (
-			<div className="imageListViewer">
+			<article className="imageListViewer">
 				<ImageListViewerNav onAutoReloadButtonClick={::this.onAutoReloadButtonClick} />
 				<ImageListViewBox
 					lists={imageListViewer.lists}
+					pagerInfo={imageListViewer.pagerInfo}
 					error={imageListViewer.error}
 					errorObject={imageListViewer.errorObject}
 					isLoading={imageListViewer.isLoading}
 					onReloadButtonClick={::this.onReloadButtonClick}
+					onImageClick={::this.handleImageClick}
 					onPagerItemClick={::this.onPagerItemClick}
 					ref="imageListViewBox" />
-			</div>
+			</article>
 		);
 
 	}

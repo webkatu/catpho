@@ -6,11 +6,15 @@ import RequestError from './RequestError.js';
 export default class ImageListViewBox extends React.Component {
 
 	render() {
+		const lists = [];
+
 		const imageListNodes = this.props.lists.map((list, i) => {
 			return (
 				<ImageList
 					images={list.images}
-					pagerInfo={list.pagerInfo}
+					pagerInfo={this.props.pagerInfo}
+					page={this.props.pagerInfo.start + i}
+					onImageClick={this.props.onImageClick}
 					onPagerItemClick={this.props.onPagerItemClick}
 					key={i}
 				/>

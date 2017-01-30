@@ -32,4 +32,11 @@ export default class Validator {
 		if(! this.rule.passwordPattern.test(value)) return false;
 		return true;
 	}
+
+	validateComment(value = null) {
+		if(typeof value !== 'string') return false;
+		if(value.trim() === '') return false;
+		if(value.length > this.rule.commentMaxLength) return false;
+		return true;
+	}
 }

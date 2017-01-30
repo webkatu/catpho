@@ -1,4 +1,5 @@
 import { MySQLModel } from './index.js';
+import TagMap from './TagMap.js';
 
 export default class Tags extends MySQLModel {
 	createTable() {
@@ -16,6 +17,16 @@ export default class Tags extends MySQLModel {
 			const [ results ] = await this.query(sql, [name]);
 			if(results.length === 0) return 0;
 			return results[0]['id'];
+		})();
+	}
+
+	selectTags(contentId) {
+		const tagMap = new TagMap();
+		const sql = `select name from ${this.tableName} where id in (select id from ${tagMap.tableName} where contentId = ?);`;
+
+		return (async () => {
+			const [ results ] = await this.query(sql, [contentId]);
+			return results.map(result => result.name);
 		})();
 	}
 }

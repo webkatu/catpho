@@ -19,10 +19,8 @@ const fetchImageListSuccess = (payload) => {
 		type: 'FETCH_IMAGE_LIST_SUCCESS',
 		payload: {
 			images,
-			pagerInfo: {
-				currentPage: payload.currentPage,
-				maxPage: payload.maxPage,
-			}
+			currentPage: payload.currentPage,
+			maxPage: payload.maxPage,
 		},
 	};
 }
@@ -39,7 +37,6 @@ export const fetchImageList = (path = location.pathname + location.search) => {
 		dispatch(_fetchImageList());
 		
 		try {
-			console.log(config.defaultHeaders);
 			const response = await fetch(config.apiServer + path, {
 				headers: {
 					...config.defaultHeaders,
@@ -55,6 +52,7 @@ export const fetchImageList = (path = location.pathname + location.search) => {
 
 			dispatch(fetchImageListSuccess(json.payload));
 		}catch(e) {
+			console.log(e);
 			dispatch(fetchImageListFailure(e, path));
 		}
 	}
@@ -69,8 +67,18 @@ export const toggleAutoReload = (checked) => {
 	};
 }
 
-export const init = () => {
+export const openViewer = (contents, selectedIndex) => {
 	return {
-		type: 'INIT',
-	}
+		type: 'OPEN_VIEWER',
+		payload: {
+			contentIds: contents.map(content => content.id),
+			selectedIndex,
+		},
+	};
+}
+
+export const mount = () => {
+	return {
+		type: 'MOUNT@imageListViewer',
+	};
 }

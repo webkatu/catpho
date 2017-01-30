@@ -10,7 +10,7 @@ export default class Contents extends MySQLModel {
 			name varchar(255),
 			sex enum('none', 'male', 'female'),
 			age int,
-			tweet varchar(255),
+			description varchar(255),
 			created datetime,
 			modified timestamp
 		);`;
@@ -19,10 +19,22 @@ export default class Contents extends MySQLModel {
 	}
 
 	selectAtPage(columns, page, limit) {
-
 		const offset = (page - 1) * limit;
 		const sql = `select ?? from ${this.tableName} order by id desc limit ? offset ?;`;
 		return this.query(sql, [columns, limit, offset]);
 	}
 
+	selectContent(id) {
+		const sql = `(select * from ${this.tableName} where id = ?)
+			union all
+			(select * from ${this.tableName} where id < ? order by id desc limit 1)
+			union all
+			(select * from ${this.tableName} where id > ? order by id asc limit 1);`;
+		return this.query(sql, [id, id, id]);
+	}
+
+	deleteContent(id, userId) {
+		const sql = `delete from ${this.tableName} where id = ? and userId = ?;`;
+		return this.query(sql, [id, userId]);
+	}
 }

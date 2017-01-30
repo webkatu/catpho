@@ -44,6 +44,7 @@ router.post('/authentication', multer().none(), async (req, res, next) => {
 		}
 		const jwtManager = new JWTManager();
 		var token = await jwtManager.createUserAuthToken({
+			userId: user.id,
 			userName: user.userName,
 		});
 	}catch(e) { return res.sendStatus(500); }

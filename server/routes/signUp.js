@@ -51,6 +51,7 @@ router.post('/', multer().none(), async (req, res, next) => {
 		});
 
 		var token = await jwtManager.createUserAuthToken({
+			userId: OkPacket.insertId,
 			userName: req.body.userName,
 		});
 	}

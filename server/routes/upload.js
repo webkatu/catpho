@@ -51,20 +51,20 @@ function formatBody(body) {
 	const tag = String(body.tag).trim();
 	const tags = (tag === '') ? [] : tag.split(/[\s ]+/);
 
-	const tweet = String(body.tweet).trim();
+	const description = String(body.description).trim();
 
-	return { name, sex, age, tag, tags, tweet };
+	return { name, sex, age, tag, tags, description };
 }
 
 function validateBody(body) {
-	const { name, age, tags, tweet } = body;
-	const { nameMaxLength, ageMin, ageMax, tagMaxCount, tagMaxLength, tweetMaxLength } = validationRule;
+	const { name, age, tags, description } = body;
+	const { nameMaxLength, ageMin, ageMax, tagMaxCount, tagMaxLength, descriptionMaxLength } = validationRule;
 	
 	if(name.length > nameMaxLength) return false;
 	if(age < ageMin || age > ageMax) return false;
 	if(tags.length > tagMaxCount) return false;
 	if(! tags.every(tag => tag.length <= tagMaxLength)) return false;
-	if(tweet.length > tweetMaxLength) return false;
+	if(description.length > descriptionMaxLength) return false;
 
 	return true;
 }
@@ -107,7 +107,7 @@ async function saveContents(files, body) {
 			name: body.name,
 			sex: body.sex,
 			age: body.age,
-			tweet: body.tweet,
+			description: body.description,
 			created: new Date(),
 		}
 	});

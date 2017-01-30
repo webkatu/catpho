@@ -9,6 +9,7 @@ export default class Users extends MySQLModel {
 			userName varchar(255) not null unique,
 			password varchar(255) not null,
 			nickname varchar(255),
+			avatar varchar(255) default 'default.jpg',
 			activation tinyint(1),
 			created datetime,
 			modified timestamp

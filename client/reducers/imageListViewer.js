@@ -1,4 +1,5 @@
 import { LOCATION_CHANGE } from 'react-router-redux';
+import qs from 'querystring'
 
 const url = 'http://lorempixel.com/100/100/';
 const initialState = {
@@ -17,13 +18,23 @@ const initialState = {
 			}
 		}
 	*/],
+	contents: [],
+	pagerInfo: {
+		interval: 5,
+		total: 10,
+		max: 0,
+		start: 0,
+		current: 0,
+	},
 	interval: 2,
 	pagerTotal: 10,
 	error: false,
 	errorObject: {},
+	shouldFetchContents: false,
 	isLoading: false,
 	shouldAutoReload: true,
 	hasNextPage: false,
+	isDisplayingViewer: false,
 	contentsPath: '/contents',
 	imagesPath: '/uploads/contents/thumbnails',
 }
@@ -33,23 +44,24 @@ const imageListViewer = (state = initialState, action) => {
 		case 'FETCH_IMAGE_LIST':
 			return Object.assign({}, state, {
 				error: false,
+				shouldFetchContents: false,
 				isLoading: true,
 			});
 
 		case 'FETCH_IMAGE_LIST_SUCCESS':
 			return Object.assign({}, state, {
+				contents: [...state.contents, ...action.payload.images],
+				pagerInfo: {
+					...state.pagerInfo,
+					max: action.payload.maxPage,
+					current: action.payload.currentPage,
+				},
 				lists: [
 					...state.lists,
-					{
-						images: action.payload.images,
-						pagerInfo: {
-							...action.payload.pagerInfo,
-							total: initialState.pagerTotal,
-						},
-					}
+					{ images: action.payload.images },
 				],
 				isLoading: false,
-				hasNextPage: action.payload.pagerInfo.currentPage < action.payload.pagerInfo.maxPage,
+				hasNextPage: action.payload.currentPage < action.payload.maxPage,
 			});
 
 		case 'FETCH_IMAGE_LIST_FAILURE':
@@ -59,8 +71,26 @@ const imageListViewer = (state = initialState, action) => {
 				errorObject: action.payload,
 			});
 
-		case 'INIT':
+		case 'OPEN_VIEWER':
+			return Object.assign({}, state, {
+				isDisplayingViewer: true,
+			});
+
+		case 'CLOSE_VIEWER':
+			return Object.assign({}, state, {
+				isDisplayingViewer: false,
+			});
+
+		case 'MOUNT@imageListViewer':
+			const query = qs.parse(location.search.slice(1));
+			const start = (Number(query.page) > 0) ? Number(query.page) : 1;
+			
 			return Object.assign({}, initialState, {
+				pagerInfo: {
+					...initialState.pagerInfo,
+					start,
+				},
+				shouldFetchContents: true,
 				shouldAutoReload: state.shouldAutoReload,
 			});
 

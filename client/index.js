@@ -8,6 +8,7 @@ import thunk from 'redux-thunk';
 import catphoApp from './reducers/index.js';
 import App from './containers/App.js';
 import NotFound from './components/NotFound.js';
+import Contents from './containers/Contents.js';
 import ImageListViewer from './containers/ImageListViewer.js';
 import FileUpload from './containers/FileUpload.js';
 import SignUp from './containers/SignUp.js';
@@ -26,8 +27,8 @@ const history = ReactRouterRedux.syncHistoryWithStore(ReactRouter.browserHistory
 
 const routes = (
 	<ReactRouter.Route path="/" component={App}>
-		<ReactRouter.IndexRoute component={ImageListViewer} />
-		<ReactRouter.Route path="test" component={ImageListViewer} />
+		<ReactRouter.IndexRoute component={Contents} />
+		<ReactRouter.Route path="test" component={Contents} />
 		<ReactRouter.Route path="upload" component={FileUpload} />
 		<ReactRouter.Route path="signup" component={SignUp} />
 		<ReactRouter.Route path="signIn" component={SignIn} />

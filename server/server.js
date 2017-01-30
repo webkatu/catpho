@@ -2,6 +2,7 @@ import express from 'express';
 import url from 'url';
 import bodyParser from 'body-parser';
 import contents from './routes/contents.js';
+import users from './routes/users.js';
 import upload from './routes/upload.js';
 import uploads from './routes/uploads.js';
 import signIn from './routes/signIn.js';
@@ -30,6 +31,8 @@ app.get('*', (req, res, next) => {
 });
 
 app.use(['/', '/contents'], contents);
+
+app.use('/users', users);
 
 app.use('/upload', upload);
 

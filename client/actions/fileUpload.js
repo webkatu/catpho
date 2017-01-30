@@ -44,9 +44,9 @@ export const inputTag = (_value) => {
 	}
 };
 
-export const inputTweet = (value) => {
+export const inputDescription = (value) => {
 	return {
-		type: 'INPUT_TWEET',
+		type: 'INPUT_DESCRIPTION',
 		value: value.trim(),
 	}
 };

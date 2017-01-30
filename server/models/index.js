@@ -81,6 +81,16 @@ export class MySQLModel {
 		})();
 	}
 
+	countOf(col, value) {
+		const sql = `select count(*) from ${this.tableName} where ?? = ?;`;
+
+		return (async () => {
+			const [results] = await this.query(sql, [col, value]);
+			const count = results[0]['count(*)'];
+			return count;
+		})();
+	}
+
 	selectBy(col, value) {
 		const sql = `select * from ${this.tableName} where ?? = ?;`;
 		return this.query(sql, [col, value]);
@@ -90,6 +100,11 @@ export class MySQLModel {
 		const sql = `select * from ${this.tableName};`;
 
 		return this.query(sql);
+	}
+
+	deleteBy(col, value) {
+		const sql = `delete from ${this.tableName} where ?? = ?;`;
+		return this.query(sql, [col, value]);
 	}
 
 	query(...args) {

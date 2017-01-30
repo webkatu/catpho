@@ -41,8 +41,8 @@ class FileUpload extends React.Component {
 		this.props.dispatch(actions.inputTag(value));
 	}
 
-	onTweetTextareaChange(value) {
-		this.props.dispatch(actions.inputTweet(value));
+	onDescriptionTextareaChange(value) {
+		this.props.dispatch(actions.inputDescription(value));
 	}
 
 	onSubmit(form) {
@@ -69,14 +69,14 @@ class FileUpload extends React.Component {
 					onNameInputChange={this.onNameInputChange.bind(this)}
 					onAgeInputChange={this.onAgeInputChange.bind(this)}
 					onTagInputChange={this.onTagInputChange.bind(this)}
-					onTweetTextareaChange={this.onTweetTextareaChange.bind(this)}
+					onDescriptionTextareaChange={this.onDescriptionTextareaChange.bind(this)}
 					possibleSubmit={fileUpload.possibleSubmit()}
 					onSubmit={this.onSubmit.bind(this)}
 					nameMaxLength={fileUpload.nameMaxLength}
 					ageMax={fileUpload.ageMax}
 					ageMin={fileUpload.ageMin}
 					tagMaxLength={fileUpload.tagMaxLength}
-					tweetMaxLength={fileUpload.tweetMaxLength}
+					descriptionMaxLength={fileUpload.descriptionMaxLength}
 				/>
 			</div>
 		);

@@ -6,12 +6,12 @@ const initialState = {
 	ageMin: 0,
 	tagMaxLength: 32,
 	tagMaxCount: 3,
-	tweetMaxLength: 140,
+	descriptionMaxLength: 140,
 	overFileSize: false,
 	overNameCount: false,
 	overAgeCount: false,
 	overTagCount: false,
-	overTweetCount: false,
+	overDescriptionCount: false,
 	isSelectedFile() {
 		return Boolean(this.files.length);
 	},
@@ -20,7 +20,7 @@ const initialState = {
 			|| this.overNameCount
 			|| this.overAgeCount
 			|| this.overTagCount
-			|| this.overTweetCount
+			|| this.overDescriptionCount
 			|| ! this.isSelectedFile());
 	},
 	actionURI: location.origin + '/upload/',
@@ -65,9 +65,9 @@ const fileUpload = (state = initialState, action) => {
 				overTagCount: (action.tags.length > initialState.tagMaxCount || allPassed === false),
 			});
 
-		case 'INPUT_TWEET':
+		case 'INPUT_DESCRIPTION':
 			return Object.assign({}, state, {
-				overTweetCount: action.value.length > initialState.tweetMaxLength,
+				overDescriptionCount: action.value.length > initialState.descriptionMaxLength,
 			});
 
 		case 'UPLOAD_FILE':

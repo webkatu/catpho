@@ -6,16 +6,17 @@ export default class Pager extends React.Component {
 
 	render() {
 		const pagerInfo = this.props.pagerInfo;
+		const page = this.props.page;
 
-		let firstPage = pagerInfo.currentPage - Math.ceil(pagerInfo.total / 2) + 1;
+		let firstPage = page - Math.ceil(pagerInfo.total / 2) + 1;
 		if(firstPage < 1) firstPage = 1;
 
 		let lastPage = firstPage + pagerInfo.total - 1;
-		if(lastPage > pagerInfo.maxPage) lastPage = pagerInfo.maxPage;
+		if(lastPage > pagerInfo.max) lastPage = pagerInfo.max;
 
 		const pagerItemNodes = Array(lastPage - firstPage + 1).fill().map((el, i) => {
 			const pageNum = firstPage + i;
-			const href = (pageNum === pagerInfo.currentPage)
+			const href = (pageNum === page)
 				? null
 				: createPagerPath(pageNum);
 
@@ -42,7 +43,7 @@ export default class Pager extends React.Component {
 					</PagerItem>
 					{pagerItemNodes}
 					<PagerItem
-						href={createPagerPath(pagerInfo.maxPage)}
+						href={createPagerPath(pagerInfo.max)}
 						onPagerItemClick={this.props.onPagerItemClick}
 						key={-2}
 					>

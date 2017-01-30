@@ -4,7 +4,7 @@ export default {
 	ageMin: 0,
 	tagMaxLength: 32,
 	tagMaxCount: 3,
-	tweetMaxLength: 140,
+	descriptionMaxLength: 140,
 	emailMaxLength: 255,
 	emailPattern: /^.+@.+/,
 	userNameMinLength: 4,
@@ -13,4 +13,5 @@ export default {
 	passwordMinLength: 8,
 	passwordMaxLength: 64,
 	passwordPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
+	commentMaxLength: 1024,
 }

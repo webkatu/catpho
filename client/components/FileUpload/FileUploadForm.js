@@ -26,9 +26,9 @@ export default class FileUploadForm extends React.Component {
 	handleTextareaChange(e) {
 		const textarea = e.target;
 		const characterCount = ReactDOM.findDOMNode(this.refs.characterCount);
-		characterCount.textContent = this.props.tweetMaxLength - textarea.value.trim().length;
+		characterCount.textContent = this.props.descriptionMaxLength - textarea.value.trim().length;
 
-		this.props.onTweetTextareaChange(textarea.value);
+		this.props.onDescriptionTextareaChange(textarea.value);
 	}
 
 	handleSubmit(e) {
@@ -36,8 +36,6 @@ export default class FileUploadForm extends React.Component {
 		const form = e.target;
 		this.props.onSubmit(form);
 	}
-
-
 
 	render() {
 		return (
@@ -84,12 +82,12 @@ export default class FileUploadForm extends React.Component {
 				</label>
 				<label>
 					<textarea
-						name="tweet"
+						name="description"
 						placeholder="コメント"
-						ref="tweet"
+						ref="description"
 						onChange={this.handleTextareaChange.bind(this)}
 					></textarea>
-					<span className="characterCount" ref="characterCount">{this.props.tweetMaxLength}</span>
+					<span className="characterCount" ref="characterCount">{this.props.descriptionMaxLength}</span>
 				</label>
 				<input
 					type="submit"
