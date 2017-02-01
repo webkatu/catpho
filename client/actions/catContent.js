@@ -115,9 +115,12 @@ const _deleteContent = () => {
 	};
 }
 
-const deleteContentSuccess = () => {
+const deleteContentSuccess = (contentId) => {
 	return {
 		type: 'DELETE_CONTENT_SUCCESS',
+		payload: {
+			contentId,
+		}
 	};
 }
 
@@ -133,7 +136,7 @@ export const deleteContent = (contentId) => {
 		dispatch(_deleteContent());
 
 		try {
-			const response = await fetch(`${config.apiServer}/${contentId}`, {
+			const response = await fetch(`${config.apiServer}/contents/${contentId}`, {
 				method: 'delete',
 				headers: {
 					...config.defaultHeaders,
@@ -144,7 +147,7 @@ export const deleteContent = (contentId) => {
 				}),
 			});
 			if(! response.ok) throw new Error(response.status);
-			dispatch(deleteContentSuccess());
+			dispatch(deleteContentSuccess(contentId));
 		}catch(e) {
 			dispatch(deleteContentFailed(e));
 		}
@@ -182,7 +185,7 @@ export const fetchComments = (contentId) => {
 		dispatch(_fetchComments());
 
 		try {
-			const response = await fetch(`${config.apiServer}/${contentId}/comments`, {
+			const response = await fetch(`${config.apiServer}/contents/${contentId}/comments`, {
 				method: 'get',
 				headers: {
 					...config.defaultHeaders,

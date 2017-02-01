@@ -47,7 +47,7 @@ class ImageListViewer extends React.Component {
 		const currentPage = imageListViewer.pagerInfo.current;
 
 		this.props.dispatch(actions.fetchImageList(
-			createPagerPath(currentPage + 1)
+			'/contents' + createPagerPath(currentPage + 1)
 		));
 	}
 

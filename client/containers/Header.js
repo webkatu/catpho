@@ -8,12 +8,37 @@ class Header extends React.Component {
 		this.props.dispatch(actions.signOut());
 	}
 	render() {
+		const app = this.props.app;
+
+		const signUpButton = <a href="/signup">SignUp</a>;
+		const signUpButtonNode = (
+			(app.isSignedIn)
+			? null
+			: <li>{signUpButton}</li>
+		);
+
+		const signInButton = <a href="/signin">SignIn</a>;
+		const signInButtonNode = (
+			(app.isSignedIn)
+			? null
+			: <li>{signInButton}</li>
+		);
+
+		const signOutButton = <button type="button" onClick={::this.handleSignOutClick}>サインアウト</button>;
+		const signOutButtonNode = (
+			(app.isSignedIn)
+			? <li>{signOutButton}</li>
+			: null
+		);
+
 		return (
 			<header id="masthead" className="header">
 				<SiteTitle />
 				<nav>
 					<ul>
-						<li><button onClick={::this.handleSignOutClick}>サインアウト</button></li>
+						{signUpButtonNode}
+						{signInButtonNode}
+						{signOutButtonNode}
 					</ul>
 				</nav>
 			</header>
@@ -21,4 +46,10 @@ class Header extends React.Component {
 	}
 }
 
-export default ReactRedux.connect()(Header);
+function mapStateToProps(state) {
+	return {
+		app: state.app,
+	};
+}
+
+export default ReactRedux.connect(mapStateToProps)(Header);

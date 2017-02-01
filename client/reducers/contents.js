@@ -13,6 +13,11 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				shouldDisplayViewer: false,
 			});
+
+		case 'DELETE_CONTENT_SUCCESS':
+			return Object.assign({}, state, {
+				shouldDisplayViewer: false,
+			});
 	}
 	return state;
 }

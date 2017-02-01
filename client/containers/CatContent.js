@@ -35,11 +35,11 @@ class CatContent extends React.Component {
 		));
 	}
 
-	handleDeleteButtonClick() {
+	handleDeleteButtonClick(e) {
 		this.props.dispatch(actions.showDeletionConfirmation());
 	}
 
-	handleDeletionConfirmationSubmit() {
+	handleDeletionConfirmationSubmit(e) {
 		e.preventDefault();
 		if(this.props.catContent.isDeletingContent) return;
 		this.props.dispatch(actions.deleteContent(this.props.content.id));
@@ -113,7 +113,7 @@ class CatContent extends React.Component {
 		);
 
 		const posterNode = (
-			(content.poster.userName !== '')
+			(content.poster.userName === '')
 			? null
 			: <User
 				avatar={content.poster.avatar}
@@ -143,7 +143,7 @@ class CatContent extends React.Component {
 		);
 
 		const deletionConfirmationNode = (
-			(! catContent.isTryingToDelete)
+			(! catContent.shouldDisplayDeletionConfirmation)
 			? null
 			: <DeletionConfirmation
 				requesting={catContent.isDeletingContent}
@@ -190,6 +190,7 @@ class CatContent extends React.Component {
 					disabled={! this.props.app.isSignedIn || catContent.isRequestingFavorite}
 					onClick={::this.handleFavoriteButtonClick}
 				/>
+				{deleteButtonNode}
 				<button
 					type="button"
 					onClick={::this.handleShareButtonClick}

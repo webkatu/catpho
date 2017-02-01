@@ -32,7 +32,7 @@ const fetchImageListFailure = (error, path) => {
 	};
 }
 
-export const fetchImageList = (path = location.pathname + location.search) => {
+export const fetchImageList = (path = '/contents/' + location.search) => {
 	return async (dispatch) => {
 		dispatch(_fetchImageList());
 		
@@ -48,6 +48,7 @@ export const fetchImageList = (path = location.pathname + location.search) => {
 			if (! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
+			console.log(json);
 			if(! json.success) throw json.error;
 
 			dispatch(fetchImageListSuccess(json.payload));

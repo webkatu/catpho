@@ -98,6 +98,35 @@ const imageListViewer = (state = initialState, action) => {
 			return Object.assign({}, state, {
 				shouldAutoReload: action.payload.shouldAutoReload,
 			});
+
+		case 'DELETE_CONTENT_SUCCESS':
+			const deletedContents = [];
+			const contents = [...state.contents];
+			for(let i = 0; i < contents.length; i++) {
+				const content = contents[i];
+				if(content.id !== action.payload.contentId) continue;
+				deletedContents.push(content);
+				contents.splice(i, 1);
+				i--;
+			}
+
+			const lists = [...state.lists];
+			lists.forEach((list) => {
+				for(let i = 0; i < deletedContents.length; i++) {
+					const deletedContent = deletedContents[i];
+					const index = list.images.indexOf(deletedContent);
+					if(index === -1) continue;
+					list.images.splice(index, 1);
+					deletedContents.splice(i, 1);
+					i--;
+				}
+			});
+
+			return Object.assign({}, state, {
+				lists,
+				contents,
+				isDisplayingViewer: false,
+			});
 	}
 
 	return state;

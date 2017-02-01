@@ -27,10 +27,10 @@ app.use('/uploads', uploads);
 
 app.get('*', (req, res, next) => {
 	if(req.xhr) return next();
-	res.sendFile('/public/index.html', { root: __dirname + '/..'});
+	res.sendFile('/public/index.html', { root: __dirname + '/..' });
 });
 
-app.use(['/', '/contents'], contents);
+app.use('/contents', contents);
 
 app.use('/users', users);
 

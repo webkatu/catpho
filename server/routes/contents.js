@@ -9,6 +9,7 @@ import Users from '../models/Users.js';
 import Comments from '../models/Comments.js';
 import Favorites from '../models/Favorites.js';
 import Tags from '../models/Tags.js';
+import TagMap from '../models/TagMap.js';
 
 
 const router = express.Router();
@@ -117,7 +118,7 @@ async function getPoster(userId) {
 router.delete('/:id', async (req, res) => {
 	try {
 		if(Number.isNaN(req.params.id)) throw new Error();
-		var decoded = JWTManager.verifyUserAuthToken(req.body.userToken);
+		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
 	}catch(e) { return res.sendStatus(400); }
 
 	const contents = new Contents();
@@ -169,7 +170,6 @@ router.post('/:id/comments', multer().none(), async (req, res) => {
 	}
 
 	try {
-		console.log(req.body.comment);
 		const comments = new Comments();
 		const [ OkPacket ] = await comments.insert({
 			contentId: req.params.id,

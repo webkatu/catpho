@@ -27,7 +27,7 @@ export const fetchContent = (contentId) => {
 
 		const fetchId = ++fetchContentId;
 		try {
-			const response = await fetch(`${config.apiServer}/${contentId}?userToken=${localStorage.getItem('userToken')}`, {
+			const response = await fetch(`${config.apiServer}/contents/${contentId}?userToken=${localStorage.getItem('userToken')}`, {
 				method: 'get',
 				headers: {
 					...config.defaultHeaders,
