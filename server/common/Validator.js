@@ -33,6 +33,14 @@ export default class Validator {
 		return true;
 	}
 
+	validateNickname(_value) {
+		const value = _value.trim();
+		
+		if(value === '') return false;
+		if(value.length > this.rule.nicknameMaxLength) return false;
+		return true;
+	}
+
 	validateComment(value = null) {
 		if(typeof value !== 'string') return false;
 		if(value.trim() === '') return false;

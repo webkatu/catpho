@@ -71,6 +71,50 @@ export class MySQLModel {
 		return this.query(sql, [columns, ...valuesArray]);
 	}
 
+	update(setData, wherePhrase = '', whereData = {}) {
+		if(wherePhrase === '') throw new Error();
+
+		const dataArray = [];
+
+		let setPhrase = 'set ';
+		Object.keys(setData).forEach((key) => {
+			setPhrase += '?? = ?, ';
+			dataArray.push(key, setData[key]);
+		});
+		setPhrase = setPhrase.slice(0, -2);
+
+		for(const prop in whereData) dataArray.push(prop, whereData[prop]);
+
+		const sql = `update ${this.tableName} ${setPhrase} ${wherePhrase};`;
+
+		return this.query(sql, dataArray);
+	}
+
+	select(cols, wherePhrase = '', whereData = {}, otherPhrase = '', otherDataArray = []) {
+		let colsPhrase = '*';
+		const dataArray = [];
+		if(Array.isArray(cols)) {
+			colsPhrase = '';
+			cols.forEach((col) => {
+				colsPhrase += '??,';
+				dataArray.push(col);
+			});
+			colsPhrase = colsPhrase.slice(0, -1);
+		}
+
+		for(const prop in whereData) dataArray.push(prop, whereData[prop]);
+
+		const sql = `select ${colsPhrase} from ${this.tableName} ${wherePhrase} ${otherPhrase};`;
+		return this.query(sql, [...dataArray, ...otherDataArray]);
+	}
+
+	selectOnce(cols, wherePhrase, whereData) {
+		return (async () => {
+			const results = await this.select(cols, wherePhrase, whereData, 'limit 1');
+			return [ results[0][0], results[1] ];
+		})();
+	}
+
 	count() {
 		const sql = `select count(*) from ${this.tableName};`;
 
@@ -108,6 +152,7 @@ export class MySQLModel {
 	}
 
 	query(...args) {
+		console.log(args);
 		return new Promise((res, rej) => {
 			mysql.query(...args, (...args) => {
 				const err = args[0];

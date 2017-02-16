@@ -14,6 +14,7 @@ import FileUpload from './containers/FileUpload.js';
 import SignUp from './containers/SignUp.js';
 import SignIn from './containers/SignIn.js';
 import Activation from './containers/Activation.js';
+import MyPage from './containers/MyPage.js';
 import UserOnly from './containers/UserOnly.js';
 
 const store = Redux.createStore(
@@ -34,6 +35,7 @@ const routes = (
 		<ReactRouter.Route path="signIn" component={SignIn} />
 		<ReactRouter.Route component={UserOnly}>
 			<ReactRouter.Route path="activation/*" component={Activation} />
+			<ReactRouter.Route path="mypage" component={MyPage} />
 		</ReactRouter.Route>
 		<ReactRouter.Route path="*" component={NotFound} />
 	</ReactRouter.Route>

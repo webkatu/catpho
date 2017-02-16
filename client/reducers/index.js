@@ -12,6 +12,8 @@ import fileUpload from './fileUpload.js';
 import signUp from './signUp.js';
 import signIn from './signIn.js';
 import activation from './activation.js';
+import myPage from './myPage.js';
+import registrationInformation from './registrationInformation.js';
 
 const catphoApp = Redux.combineReducers({
 	app,
@@ -25,8 +27,10 @@ const catphoApp = Redux.combineReducers({
 	signUp,
 	signIn,
 	activation,
+	myPage,
+	registrationInformation,
 	routing: ReactRouterRedux.routerReducer,
 });
 
 //const catphoApp = imageListViewer;
-export default catphoApp;	
+export default catphoApp;

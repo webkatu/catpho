@@ -105,3 +105,8 @@ body {
     .signUp .signUpForm input[type="text"].error:focus,
     .signUp .signUpForm input[type="password"].error:focus {
       outline: none; }
+
+.registrationInformation .registrationInformationEdit input[type="email"].error,
+.registrationInformation .registrationInformationEdit input[type="text"].error,
+.registrationInformation .registrationInformationEdit input[type="password"].error {
+  border-color: #f22; }

@@ -3,7 +3,8 @@ const initialState = {
 	userName: '',
 	email: '',
 	nickname: '',
-}
+	avatar: '',
+};
 
 export default (state = initialState, action) => {
 	switch(action.type) {
@@ -20,6 +21,8 @@ export default (state = initialState, action) => {
 		case 'SIGN_OUT':
 			return { ...initialState };
 
+		case 'PATCH_REGISTRATION_INFORMATION_SUCCESS':
+			return Object.assign({}, state, action.payload);
 	}
 
 	return state;

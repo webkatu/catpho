@@ -1,8 +1,71 @@
 import express from 'express';
+import multer from 'multer';
+import config from '../config.js'
+import bcrypt from '../common/bcrypt';
 import JWTManager from '../common/JWTManager.js';
+import Validator from '../common/Validator.js';
+import Users from '../models/Users';
 import Favorites from '../models/Favorites';
 
 const router = express.Router();
+
+router.patch('/:userName', multer({dest: config.tmpDir}).single('avatar'), async (req, res) => {
+	console.log(req.file, req.body);
+	try {
+		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
+	}catch(e) { return res.sendStatus(401); }
+	
+	try{
+		if(req.params.userName !== decoded.userName) throw new Error();
+		if(! await validateBody(req.body, decoded.userId)) throw new Error();
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(422);
+	}
+
+	//avatarのvalidationとファイル処理;
+
+
+
+	const data = {};
+	['nickname', 'email'].forEach((prop) => {
+		if(req.body[prop] === '') return;
+		data[prop] = req.body[prop];
+	});
+	if(req.body.password) data.password = await bcrypt.createHash(req.body.password);
+	if(req.file) data.avatar = req.file.filename;
+
+	try {
+		const [ result ] = await new Users().updateUser(data, decoded.userId);
+	}catch(e) {console.log(e); return res.sendStatus(500); }
+
+	const user = { ... data }
+	delete user.password;
+	res.json({
+		success: true,
+		payload: user,
+	});
+
+});
+
+async function validateBody(body, userId) {
+	const { email, nickname, currentPassword, password } = body;
+	const validator = new Validator();
+
+	if(email !== '' && ! validator.validateEmail(email)) return false;
+	if(nickname !== '' && ! validator.validateNickname(nickname)) return false;
+	if(currentPassword !== '' && password !== '') {
+		if(! validator.validatePassword(currentPassword)) return false;
+		if(! validator.validatePassword(password)) return false;
+		
+		//DBのパスワードと比較
+		const [ result ] = await new Users().selectOnce(['password'], 'where ?? = ?', { id: userId });
+		const same = bcrypt.compare(currentPassword, result.password);
+		if(! same) return false;
+	}
+
+	return true;
+}
 
 router.post('/:userName/favorites', async (req, res) => {
 	const contentId = Number(req.body.contentId);
