@@ -5,7 +5,7 @@ import ImagesNotFound from './ImagesNotFound.js';
 
 export default class ImageList extends React.Component {
 	render() {
-		if(this.props.images.length === 0) {
+		if(this.props.contents.length === 0) {
 			return (
 				<div className="imageList">
 					<ImagesNotFound />
@@ -13,8 +13,16 @@ export default class ImageList extends React.Component {
 			);
 		}
 
-		const imageNodes = this.props.images.map((image, i) => {
-			return <Image id={image.id} href={image.href} src={image.src} onClick={this.props.onImageClick} key={i} />;
+		const imageNodes = this.props.contents.map((content, i) => {
+			return (
+				<Image
+					id={content.id}
+					href={content.href}
+					src={content.src}
+					onClick={this.props.handleImageClick}
+					key={i}
+				/>
+			);
 		});
 
 		return (
@@ -23,7 +31,7 @@ export default class ImageList extends React.Component {
 				<Pager
 					pagerInfo={this.props.pagerInfo}
 					page={this.props.page}
-					onPagerItemClick={this.props.onPagerItemClick}/>
+					onPagerItemClick={this.props.handlePagerItemClick}/>
 			</div>
 		);
 	}

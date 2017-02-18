@@ -1,16 +1,15 @@
-export const createPagerPath = (pageNumber) => {
-		const pathname = location.pathname;
-		if(pageNumber === 1) return pathname;
-		
-		const query = `page=${pageNumber}`;
-		let qs = location.search.slice(1);
+import qs from 'querystring';
 
-		if(qs === '') {
-			qs = query;
-		}else if(! qs.includes('page=')) {
-			qs = query + '&' + qs;
-		}else {
-			qs = qs.replace(/page=\d+/, query);
-		}
-		return pathname + '?' + qs;
+export const createPagerPath = (pageNumber) => {
+	const pathname = location.pathname;
+	const query = qs.parse(location.search.slice(1));
+	if(Number(pageNumber) === 1) {
+		delete query.page;
+		const queryString = qs.stringify(query);
+		if(queryString === '') return pathname;
+		return pathname + '?' + queryString;
+	}
+
+	query.page = pageNumber;
+	return pathname + '?' + qs.stringify(query);
 }

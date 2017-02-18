@@ -8,22 +8,27 @@ body {
   width: 90%;
   margin: 50px auto 0; }
 
-.imageListViewer .imageListViewerNav {
+.imageListViewer .imageListViewerNav,
+.simpleImageListViewer .imageListViewerNav {
   height: 30px; }
-  .imageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton {
+  .imageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton,
+  .simpleImageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton {
     width: 30px;
     height: 30px;
     margin: 0; }
 
-.imageListViewer .imageList {
+.imageListViewer .imageList,
+.simpleImageListViewer .imageList {
   margin-top: 20px; }
 
-.imageListViewer .images {
+.imageListViewer .images,
+.simpleImageListViewer .images {
   display: flex;
   flex-wrap: wrap;
   overflow: hidden;
   margin-left: -10px; }
-  .imageListViewer .images .image {
+  .imageListViewer .images .image,
+  .simpleImageListViewer .images .image {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,20 +39,24 @@ body {
     max-height: 200px;
     border-radius: 10px;
     background: #eee; }
-    .imageListViewer .images .image a {
+    .imageListViewer .images .image a,
+    .simpleImageListViewer .images .image a {
       display: block;
       width: 100%;
       height: 85%; }
-    .imageListViewer .images .image img {
+    .imageListViewer .images .image img,
+    .simpleImageListViewer .images .image img {
       width: 100%;
       height: 100%; }
 
-.imageListViewer .pager > ul {
+.imageListViewer .pager > ul,
+.simpleImageListViewer .pager > ul {
   display: flex;
   list-style: none;
   max-width: 340px;
   margin: 20px auto 0; }
-  .imageListViewer .pager > ul .pagerItem {
+  .imageListViewer .pager > ul .pagerItem,
+  .simpleImageListViewer .pager > ul .pagerItem {
     flex: 1;
     text-align: center; }
 

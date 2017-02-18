@@ -6,8 +6,6 @@ import RequestError from './RequestError.js';
 export default class ImageListViewBox extends React.Component {
 
 	render() {
-		const lists = [];
-
 		const imageListNodes = this.props.lists.map((list, i) => {
 			return (
 				<ImageList

@@ -1,13 +1,15 @@
+import qs from 'querystring';
+import URL from 'url';
 import config from '../config.js';
 
-export const _fetchImageList = () => {
+const _fetchContents = () => {
 	return {
-		type: 'FETCH_IMAGE_LIST',
+		type: 'FETCH_CONTENTS',
 	}
 }
 
-const fetchImageListSuccess = (payload) => {
-	const images = payload.contents.map((content) => {
+const fetchContentsSuccess = (payload) => {
+	const contents = payload.contents.map((content) => {
 		return {
 			id: content.id,
 			href: '/contents/' + content.id,
@@ -16,45 +18,50 @@ const fetchImageListSuccess = (payload) => {
 	});
 
 	return {
-		type: 'FETCH_IMAGE_LIST_SUCCESS',
+		type: 'FETCH_CONTENTS_SUCCESS',
 		payload: {
-			images,
+			contents,
 			currentPage: payload.currentPage,
 			maxPage: payload.maxPage,
 		},
 	};
 }
 
-const fetchImageListFailure = (error, path) => {
+const fetchContentsFailed = (error, path) => {
 	return {
-		type: 'FETCH_IMAGE_LIST_FAILURE',
+		type: 'FETCH_CONTENTS_FAILED',
 		payload: { ...error, path }
 	};
 }
 
-export const fetchImageList = (path = '/contents/' + location.search) => {
+export const fetchContents = (basePath = '/contents' + location.search, page) => {
+	//引数からfetch先のpathを作成;
+	if(page === undefined) page = qs.parse(location.search.slice(1)).page;
+
+	const url = URL.parse(basePath);
+	const query = qs.parse(url.query);
+	if(page) query.page = page;
+	else delete query.page;
+	const path = url.pathname + '?' + qs.stringify(query);
+	
 	return async (dispatch) => {
-		dispatch(_fetchImageList());
+		dispatch(_fetchContents());
+
 		
 		try {
 			const response = await fetch(config.apiServer + path, {
-				headers: {
-					...config.defaultHeaders,
-					'Accept': 'application/json',
-					'Content-Type': 'application/json',
-				},
+				headers: { ...config.defaultHeaders },
 				method: 'get',
 			});
 			if (! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
-			console.log(json);
 			if(! json.success) throw json.error;
 
-			dispatch(fetchImageListSuccess(json.payload));
+			dispatch(fetchContentsSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchImageListFailure(e, path));
+			dispatch(fetchContentsFailed(e, path));
 		}
 	}
 }
@@ -78,8 +85,15 @@ export const openViewer = (contents, selectedIndex) => {
 	};
 }
 
-export const mount = () => {
+export const mount = (path) => {
+	const query = qs.parse(location.search.slice(1));
+	const startPage = (Number(query.page) > 0) ? Number(query.page) : 1;
+
 	return {
-		type: 'MOUNT@imageListViewer',
+		type: 'MOUNT@simpleImageListViewer',
+		payload: {
+			basePathOfFetch: path,
+			startPage,
+		},
 	};
 }
