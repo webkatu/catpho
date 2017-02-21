@@ -14,26 +14,104 @@ import TagMap from '../models/TagMap.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-	const contents = new Contents();
-	const interval = 20;
-	const currentPage = Number(req.query.page) || 1;
+router.get('/', (req, res, next) => {
+	res.locals.interval = 20;
+	const page = Math.floor(req.query.page);
+	res.locals.currentPage = (page > 0) ? 1 || page;
+	res.locals.offset = (res.locals.currentPage - 1) * res.locals.interval;
+	res.locals.count = 0;
+	res.locals.contents = [];
 
+}, async (req, res, next) => {
+	if(req.query.poster === undefined) return next();
+
+	const users = new Users();
 	try {
-		var count = await contents.count();
-		var [ results ] = await contents.selectAtPage(['id', 'filename'], currentPage, interval);
-	}catch(e) { return res.sendStatus(500); }
+		const [ result ] = await users.selectOnce(['id'], '?? = ?', {userName: req.query.poster});
+		if(result === undefined) return next('route');
 
+		const userId = result.id;
+
+		const contents = new Contents();
+		const count = await contents.count('*', '?? = ?', {userId: userId});
+		const [ results ] = await contents.select(
+			['id', 'filename'], 
+			'?? = ?', 
+			{userId: userId}, 
+			'order by id desc limit ? offset ?',
+			[res.locals.interval, res.locals.offset]
+		);
+
+		res.locals.count = count;
+		res.locals.contents = results;
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+	next('route');
+
+}, async (req, res, next) => {
+	if(req.query.favorites === undefined) return next();
+
+	if(req.query.userToken === undefined) return next('route');
+	try {
+		var decoded = await new JWTManager().verifyUserAuthToken(req.query.userToken);
+	}catch(e) { return next('route'); }
+	if(req.query.favorites !== decoded.userName) return next('route');
+
+	const userId = decoded.userId;
+	try {
+		const favoriters = new Favoriters();
+		const contents = new Contents();
+		const count = await favoriters.count('*', '?? = ?', {userId: userId});
+		const [ results ] = await contents.select(
+			['id', 'filename'],
+			`id in (select contentId from ${favoriters.tableName} where ?? = ?)`,
+			{userId: userId},
+		);
+
+		res.locals.count = count;
+		res.locals.contents = results;
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+	next('route');
+
+}, async (req, res, next) => {
+	const contents = new Contents();
+	try {
+		const count = await contents.count();
+		const [ results ] = await contents.select(
+			['id', 'filename'],
+			undefined,
+			undefined,
+			'order by id desc limit ? offset ?',
+			[res.locals.interval, res.locals.offset]
+		);
+
+		res.locals.count = count;
+		res.locals.contents = results;
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+	next('route');
+});
+
+router.get('/', (req, res) => {
+	const { interval, currentPage, count, contents } = res.locals;
 	res.json({
 		success: true,
 		payload: {
 			interval,
 			currentPage,
-			maxPage: Math.ceil(count / interval),
-			contents: results,
-		}
+			maxPage: Math.cell(count / interval),
+			contents,
+		},
 	});
 });
+
 
 router.param('id', (req, res, next, id) => {
 	req.params.id = Number(id);
@@ -68,7 +146,7 @@ router.get('/:id', async (req, res) => {
 					postedDate: content.created,
 					imageURL: `/uploads/contents/${content.filename}`,
 					poster: await getPoster(content.userId),
-					favoritesCount: await favorites.countOf('contentId', content.id),
+					favoritesCount: await favorites.count('*', '?? = ?', {contentId: content.id}),
 					tags: await tags.selectTags(content.id),
 				},
 				isFavorite: await favorites.isFavorite(userId, content.id),
@@ -107,7 +185,7 @@ async function getPoster(userId) {
 	};
 
 	const users = new Users();
-	const [ results ] = await users.selectBy('id', userId);
+	const [ results ] = await users.select('*', '?? = ?', {id: userId});
 	if(results.length !== 0) {
 		const user = results[0];
 		for(const prop in poster) poster[prop] = user[prop];
