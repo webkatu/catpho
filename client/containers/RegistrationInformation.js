@@ -53,7 +53,6 @@ class RegistrationInformation extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.registrationInformation)
 		const RegistrationInformationContentNode = (
 			(! this.props.registrationInformation.isEditMode)
 			? <RegistrationInformationView

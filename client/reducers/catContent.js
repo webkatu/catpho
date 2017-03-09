@@ -42,6 +42,11 @@ export default (state = initialState, action) => {
 			});
 
 		case 'FETCH_CONTENT_SUCCESS':
+			const content = (
+				(action.payload.content.id)
+				? action.payload.content
+				: Object.assign({}, initialState.content, action.payload.content)
+			);
 			return Object.assign({}, state, {
 				isFetchingContent: false,
 				fetchingContentSuccess: true,

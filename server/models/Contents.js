@@ -18,12 +18,6 @@ export default class Contents extends MySQLModel {
 		return this.query(sql);
 	}
 
-	selectAtPage(columns, page, limit) {
-		const offset = (page - 1) * limit;
-		const sql = `select ?? from ${this.tableName} order by id desc limit ? offset ?;`;
-		return this.query(sql, [columns, limit, offset]);
-	}
-
 	selectContent(id) {
 		const sql = `(select * from ${this.tableName} where id = ?)
 			union all
@@ -31,10 +25,5 @@ export default class Contents extends MySQLModel {
 			union all
 			(select * from ${this.tableName} where id > ? order by id asc limit 1);`;
 		return this.query(sql, [id, id, id]);
-	}
-
-	deleteContent(id, userId) {
-		const sql = `delete from ${this.tableName} where id = ? and userId = ?;`;
-		return this.query(sql, [id, userId]);
 	}
 }

@@ -1,32 +1,43 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
+import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import RegistrationInformation from './RegistrationInformation.js';
 
 class MyPage extends React.Component {
-	handleRegistrationInformationClick(e) {
+	handleAnchorClick(e) {
 		e.preventDefault();
+		this.context.router.push(e.target.pathname + e.target.search);
 	}
+
+	handleAnchorContainingSimpleImageListViewerClick(e) {
+		e.preventDefault();
+		this.context.router.push(e.target.pathname + e.target.search);
+		if(location.pathname === e.target.pathname) {
+			this.props.dispatch(simpleImageListViewerActions.clear());
+		}
+	}
+
 	render() {
 		const myPage = this.props.myPage;
-
-		let contentNode = null;
-		if(myPage.shouldDisplayRegistrationInformation) {
-			contentNode = <RegistrationInformation />
-		}
 
 		return (
 			<article className="myPage">
 				<ul className="myPageNav">
-					<li><a href="" onClick={::this.handleRegistrationInformationClick}>登録情報</a></li>
-					<li><a href="">投稿した画像</a></li>
-					<li><a href="">お気に入り</a></li>
-					<li><a href="">コメントした画像</a></li>
+					<li><a href="/mypage" onClick={::this.handleAnchorClick}>登録情報</a></li>
+					<li><a href="/mypage/myposts" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>投稿した画像</a></li>
+					<li><a href="/mypage/favorites" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>お気に入り</a></li>
+					<li><a href="/mypage/mycomments" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>コメントした画像</a></li>
 				</ul>
 
-				{contentNode}
+				{this.props.children}
 			</article>
 		);
 	}
+
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
+
 }
 
 function mapStateToProps(state) {

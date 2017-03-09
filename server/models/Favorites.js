@@ -12,10 +12,11 @@ export default class Favorites extends MySQLModel {
 	}
 
 	isFavorite(userId, contentId) {
-		const sql = `select id from ${this.tableName} where userId = ? and contentId = ?;`;
-
 		return (async () => {
-			const [ results ] = await this.query(sql, [userId, contentId]);
+			const [ results ] = await this.select(
+				['id'],
+				'userId = ? and contentId = ?',
+				[userId, contentId]);
 			return results.length !== 0
 		})();
 	}

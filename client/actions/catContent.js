@@ -193,7 +193,6 @@ export const fetchComments = (contentId) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			if(! json.success) throw json.error;
 			dispatch(fetchCommentsSuccess(json.payload));
 		}catch(e) {
 			dispatch(fetchCommentsFailed(e));
@@ -242,7 +241,7 @@ export const postComment = (form, contentId) => {
 		formData.append('userToken', localStorage.getItem('userToken'));
 
 		try {
-			const response = await fetch(`${config.apiServer}/${contentId}/comments`, {
+			const response = await fetch(`${config.apiServer}/contents/${contentId}/comments`, {
 				method: 'post',
 				headers: {
 					...config.defaultHeaders,
@@ -251,7 +250,6 @@ export const postComment = (form, contentId) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			if(! json.success) throw json.error;
 			dispatch(postCommentSuccess(json.payload));
 		}catch(e) {
 			dispatch(postCommentFailed(e));
@@ -310,7 +308,6 @@ export const deleteComment = (contentId, commentId) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			if(! json.success) throw json.error;
 			dispatch(deleteCommentSuccess(json.payload));
 		}catch(e) {
 			dispatch(deleteCommentFailed(e));

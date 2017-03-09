@@ -1,3 +1,5 @@
+import qs from 'querystring';
+
 const initialState = {
 	contents: [],
 	pagerInfo: {
@@ -8,10 +10,10 @@ const initialState = {
 		current: 0,
 	},
 	lists: [],
+	basePathOfFetch: '/contents',
 	isFetching: false,
 	shouldFetchContents: false,
-	isDisplayContentViewer: false,
-	basePathOfFetch: '/contents',
+	shouldDisplayContentViewer: false,
 };
 
 export default (state = initialState, action) => {
@@ -66,27 +68,34 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				contents,
 				lists,
-				isDisplayingViewer: false,
+				shouldDisplayContentViewer: false,
 			});
 
-		case 'MOUNT@simpleImageListViewer':
+		case 'CLEAR@simpleImageListViewer':
+			const page = Number(qs.parse(location.search.slice(1)).page);
+
 			return Object.assign({}, initialState, {
 				pagerInfo: {
 					...initialState.pagerInfo,
-					start: action.payload.startPage,
+					start: (page > 0) ? page : 1,
 				},
+				basePathOfFetch: state.basePathOfFetch,
 				shouldFetchContents: true,
+			})
+
+		case 'MOUNT@simpleImageListViewer':
+			return Object.assign({}, state, {
 				basePathOfFetch: action.payload.basePathOfFetch,
 			});
 
 		case 'OPEN_VIEWER':
 			return Object.assign({}, state, {
-				isDisplayingViewer: true,
+				shouldDisplayContentViewer: true,
 			});
 
 		case 'CLOSE_VIEWER':
 			return Object.assign({}, state, {
-				isDisplayingViewer: false,
+				shouldDisplayContentViewer: false,
 			});
 	}
 	return state;

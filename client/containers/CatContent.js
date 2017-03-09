@@ -187,7 +187,8 @@ class CatContent extends React.Component {
 				</ul>
 				<FavoriteButton
 					isFavorite={catContent.isFavorite}
-					disabled={! this.props.app.isSignedIn || catContent.isRequestingFavorite}
+					isSignedIn={this.props.app.isSignedIn}
+					isRequesting={catContent.isRequestingFavorite}
 					onClick={::this.handleFavoriteButtonClick}
 				/>
 				{deleteButtonNode}

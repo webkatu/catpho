@@ -37,7 +37,6 @@ export const fetchContent = (contentId) => {
 			if(fetchId !== fetchContentId) return;
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			if(! json.success) throw json.error;
 			dispatch(fetchContentSuccess(json.payload));
 		}catch(e) {
 			console.log(e);

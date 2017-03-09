@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as ReactRedux from 'react-redux';
 import * as ReactRouter from 'react-router';
 import * as actions from '../actions/imageListViewer.js';
+import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import SimpleImageListViewer from './SimpleImageListViewer.js';
 import ImageListViewBox from '../components/ImageListViewer/ImageListViewBox.js';
 import ImageListViewerNav from '../components/ImageListViewer/ImageListViewerNav.js';
@@ -24,14 +25,14 @@ class ImageListViewer extends React.Component {
 		if(! imageListViewer.shouldAutoReload) return;
 		if(simpleImageListViewer.isFetching) return;
 		if(! imageListViewer.hasNextPage) return;
-		if(imageListViewer.isDisplayingViewer) return;
+		if(simpleImageListViewer.shouldDisplayContentViewer) return;
 
 		const simpleImageListViewerNode = ReactDOM.findDOMNode(this.refs.simpleImageListViewer);
 		const rect = simpleImageListViewerNode.getBoundingClientRect();
 		//一番下までスクロールされているか
 		if(window.innerHeight < rect.bottom) return;
 
-		this.props.dispatch(actions.fetchContents(
+		this.props.dispatch(simpleImageListViewerActions.fetchContents(
 			simpleImageListViewer.basePathOfFetch,
 			simpleImageListViewer.pagerInfo.current + 1
 		));

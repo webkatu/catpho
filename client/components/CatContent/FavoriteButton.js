@@ -8,7 +8,13 @@ export default (props) => {
 		textNode = 'お気に入り';
 	}
 
+	if(! props.isSignedIn) {
+		return (
+			<button title="サインインしてください" disabled={true} onClick={props.onClick}>{textNode}</button>
+		);
+	}
+
 	return (
-		<button disabled={props.disabled} onClick={props.onClick}>{textNode}</button>
+		<button disabled={props.isRequesting} onClick={props.onClick}>{textNode}</button>
 	);
 }

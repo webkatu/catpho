@@ -21,11 +21,12 @@ export default class Tags extends MySQLModel {
 	}
 
 	selectTags(contentId) {
-		const tagMap = new TagMap();
-		const sql = `select name from ${this.tableName} where id in (select id from ${tagMap.tableName} where contentId = ?);`;
-
 		return (async () => {
-			const [ results ] = await this.query(sql, [contentId]);
+			const [ results ] = await this.select(
+				['name'],
+				`id in(select tagId from ${new TagMap().tableName} where contentId = ?)`,
+				[contentId]
+			);
 			return results.map(result => result.name);
 		})();
 	}

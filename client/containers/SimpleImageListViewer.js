@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as ReactRedux from 'react-redux';
-import * as ReactRouter from 'react-router';
-import * as actions from '../actions/imageListViewer.js';
+import * as actions from '../actions/simpleImageListViewer.js';
+import SimpleContentViewer from './SimpleContentViewer.js';
 import ImageList from '../components/ImageListViewer/ImageList.js';
 import LoadingEffect from '../components/ImageListViewer/LoadingEffect.js';
 
 class SimpleImageListViewer extends React.Component {
 	componentWillMount() {
-		this._handlePopstate = ::this.handlePopstate;
+		this._handlePopstate = ::this.handlePopstate
 		window.addEventListener('popstate', this._handlePopstate);
 		this.props.dispatch(actions.mount(this.props.basePathOfFetch));
-		this.props.dispatch(actions.fetchContents(this.props.simpleImageListViewer.basePathOfFetch));
+		this.props.dispatch(actions.clear());
 	}
 
 	componentWillUnmount() {
@@ -19,12 +19,13 @@ class SimpleImageListViewer extends React.Component {
 	}
 
 	componentDidUpdate() {
-		if(! this.props.simpleImageListViewer.shouldFetchContents) return;
-		this.props.dispatch(actions.fetchContents(this.props.simpleImageListViewer.basePathOfFetch));
+		if(this.props.simpleImageListViewer.shouldFetchContents) {
+			this.props.dispatch(actions.fetchContents(this.props.simpleImageListViewer.basePathOfFetch));
+		}
 	}
 
 	handlePopstate(e) {
-		this.props.dispatch(actions.mount(this.props.simpleImageListViewer.basePathOfFetch));
+		this.props.dispatch(actions.clear());
 	}
 
 	handleImageClick(e) {
@@ -38,14 +39,15 @@ class SimpleImageListViewer extends React.Component {
 	handlePagerItemClick(e) {
 		e.preventDefault();
 		const url = e.target;
-		ReactRouter.browserHistory.push(url.pathname + url.search);
-		this.props.dispatch(actions.mount(this.props.simpleImageListViewer.basePathOfFetch));
-		this.props.dispatch(actions.fetchContents(this.props.simpleImageListViewer.basePathOfFetch));
+		this.context.router.push({
+			pathname: url.pathname,
+			search: url.search,
+		});
+		this.props.dispatch(actions.clear());
 	}
 
 	render() {
 		const simpleImageListViewer = this.props.simpleImageListViewer;
-
 		const imageListNodes = simpleImageListViewer.lists.map((list, i) => {
 			return (
 				<ImageList
@@ -56,6 +58,7 @@ class SimpleImageListViewer extends React.Component {
 					handlePagerItemClick={::this.handlePagerItemClick}
 					key={i}
 				/>
+
 			);
 		});
 
@@ -63,17 +66,28 @@ class SimpleImageListViewer extends React.Component {
 			? <LoadingEffect />
 			: null;
 
+		const simpleContentViewerNode = (
+			(simpleImageListViewer.shouldDisplayContentViewer)
+			? <SimpleContentViewer />
+			: null
+		);
+
 		return (
 			<div className="simpleImageListViewer" ref="simpleImageListViewer">
 				{imageListNodes}
 				{loadingEffect}
+				{simpleContentViewerNode}
 			</div>
 		);
 	}
 
 	static propTypes = {
 		basePathOfFetch: React.PropTypes.string.isRequired,
-	}
+	};
+
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
 }
 
 function mapStateToProps(state) {
