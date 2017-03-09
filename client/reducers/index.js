@@ -7,6 +7,7 @@ import contents from './contents.js';
 import imageListViewer from './imageListViewer.js';
 import simpleImageListViewer from './simpleImageListViewer.js';
 import simpleContentViewer from './simpleContentViewer.js';
+import contentViewer from './contentViewer.js';
 import catContent from './catContent.js';
 import comment from './comment.js';
 import fileUpload from './fileUpload.js';
@@ -23,6 +24,7 @@ const catphoApp = Redux.combineReducers({
 	imageListViewer,
 	simpleImageListViewer,
 	simpleContentViewer,
+	contentViewer,
 	catContent,
 	comment,
 	fileUpload,

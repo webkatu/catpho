@@ -155,7 +155,7 @@ class CatContent extends React.Component {
 		const shareViewNode = (
 			(! catContent.shouldDisplayShareView)
 			? null
-			: <ShareView />
+			: <ShareView url={`${location.origin}/contents/${this.props.content.id}`}/>
 		);
 
 		const commentBoxNode = (

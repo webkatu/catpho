@@ -14,6 +14,7 @@ const initialState = {
 	isFetching: false,
 	shouldFetchContents: false,
 	shouldDisplayContentViewer: false,
+	shouldClearContents: false,
 };
 
 export default (state = initialState, action) => {
@@ -71,6 +72,11 @@ export default (state = initialState, action) => {
 				shouldDisplayContentViewer: false,
 			});
 
+		case 'CHANGE_LOCATION@simpleImageListViewer':
+			return Object.assign({}, state, {
+				shouldClearContents: true,
+			});
+
 		case 'CLEAR@simpleImageListViewer':
 			const page = Number(qs.parse(location.search.slice(1)).page);
 
@@ -81,7 +87,7 @@ export default (state = initialState, action) => {
 				},
 				basePathOfFetch: state.basePathOfFetch,
 				shouldFetchContents: true,
-			})
+			});
 
 		case 'MOUNT@simpleImageListViewer':
 			return Object.assign({}, state, {

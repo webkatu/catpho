@@ -13,7 +13,7 @@ class MyPage extends React.Component {
 		e.preventDefault();
 		this.context.router.push(e.target.pathname + e.target.search);
 		if(location.pathname === e.target.pathname) {
-			this.props.dispatch(simpleImageListViewerActions.clear());
+			this.props.dispatch(simpleImageListViewerActions.changeLocation());
 		}
 	}
 

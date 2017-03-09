@@ -71,6 +71,12 @@ export const openViewer = (contents, selectedIndex) => {
 	};
 }
 
+export const changeLocation = () => {
+	return {
+		type: 'CHANGE_LOCATION@simpleImageListViewer',
+	};
+}
+
 export const clear = () => {
 	return {
 		type: 'CLEAR@simpleImageListViewer',

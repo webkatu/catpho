@@ -197,6 +197,8 @@ router.get('/:id', async (req, res) => {
 					poster: await getPoster(content.userId),
 					favoritesCount: await favorites.count('*', '?? = ?', {contentId: content.id}),
 					tags: await tags.selectTags(content.id),
+					prevId: content.prevId,
+					nextId: content.nextId,
 				},
 				isFavorite: await favorites.isFavorite(userId, content.id),
 				commentsCount: await comments.count('*', '?? = ?', {contentId: content.id}),

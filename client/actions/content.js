@@ -44,3 +44,9 @@ export const fetchContent = (contentId) => {
 		}
 	}
 }
+
+export const changeLocation = () => {
+	return {
+		type: 'CHANGE_LOCATION@contentViewer',
+	};
+}

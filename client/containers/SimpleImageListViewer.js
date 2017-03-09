@@ -11,7 +11,7 @@ class SimpleImageListViewer extends React.Component {
 		this._handlePopstate = ::this.handlePopstate
 		window.addEventListener('popstate', this._handlePopstate);
 		this.props.dispatch(actions.mount(this.props.basePathOfFetch));
-		this.props.dispatch(actions.clear());
+		this.props.dispatch(actions.changeLocation());
 	}
 
 	componentWillUnmount() {
@@ -19,13 +19,16 @@ class SimpleImageListViewer extends React.Component {
 	}
 
 	componentDidUpdate() {
+		if(this.props.simpleImageListViewer.shouldClearContents) {
+			this.props.dispatch(actions.clear());
+		}
 		if(this.props.simpleImageListViewer.shouldFetchContents) {
 			this.props.dispatch(actions.fetchContents(this.props.simpleImageListViewer.basePathOfFetch));
 		}
 	}
 
 	handlePopstate(e) {
-		this.props.dispatch(actions.clear());
+		this.props.dispatch(actions.changeLocation());
 	}
 
 	handleImageClick(e) {
@@ -43,7 +46,7 @@ class SimpleImageListViewer extends React.Component {
 			pathname: url.pathname,
 			search: url.search,
 		});
-		this.props.dispatch(actions.clear());
+		this.props.dispatch(actions.changeLocation());
 	}
 
 	render() {
