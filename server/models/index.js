@@ -73,7 +73,7 @@ export class MySQLModel {
 
 	update(setData, wherePhrase = '', whereData = []) {
 		if(wherePhrase === '') throw new Error();
-		wherePhrase = 'where' + wherePhrase;
+		wherePhrase = 'where ' + wherePhrase;
 		const dataArray = [];
 		
 		let setPhrase = 'set ';
@@ -93,7 +93,7 @@ export class MySQLModel {
 
 	delete(wherePhrase = '', whereData = []) {
 		if(wherePhrase === '') throw new Error();
-		wherePhrase = 'where' + wherePhrase;
+		wherePhrase = 'where ' + wherePhrase;
 		const dataArray = [];
 		
 		if(Array.isArray(whereData)) dataArray.push(...whereData);

@@ -93,24 +93,13 @@ class CatContent extends React.Component {
 		const catContent = this.props.catContent;
 		const content = this.props.content;
 
-		const closeAreaNode = (
-			(! catContent.isGalleryMode)
-			? null
-			: <div
-				className="closeArea"
-				onClick={::this.handleCloseButtonClick}
-			/>
-		);
-
-		const closeButtonNode = (
-			(! catContent.isGalleryMode)
-			? null
-			: <button
-				className="closeButton"
-				type="button"
-				onClick={::this.handleCloseButtonClick}
-			>×</button>
-		);
+		if(content.id === '') {
+			return (
+				<article className="catContent">
+					コンテンツがありません。
+				</article>
+			);
+		}
 
 		const posterNode = (
 			(content.poster.userName === '')

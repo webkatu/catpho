@@ -33,6 +33,7 @@ class SimpleImageListViewer extends React.Component {
 
 	handleImageClick(e) {
 		e.preventDefault();
+		if(this.props.simpleImageListViewer.shouldDisplayContentViewer) return;
 		const simpleImageListViewer = ReactDOM.findDOMNode(this.refs.simpleImageListViewer);
 		const list = Array.from(simpleImageListViewer.querySelectorAll('.image'));
 		const selectedIndex = list.indexOf(e.currentTarget.parentNode);

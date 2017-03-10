@@ -149,6 +149,7 @@ export const deleteContent = (contentId) => {
 			if(! response.ok) throw new Error(response.status);
 			dispatch(deleteContentSuccess(contentId));
 		}catch(e) {
+			console.log(e);
 			dispatch(deleteContentFailed(e));
 		}
 	}

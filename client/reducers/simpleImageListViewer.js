@@ -58,9 +58,9 @@ export default (state = initialState, action) => {
 			lists.forEach((list) => {
 				for(let i = 0; i < deletedContents.length; i++) {
 					const deletedContent = deletedContents[i];
-					const index = list.contents.indexOf(deletedContent);
+					const index = list.indexOf(deletedContent);
 					if(index === -1) continue;
-					list.contents.splice(index, 1);
+					list.splice(index, 1);
 					deletedContents.splice(i, 1);
 					i--;
 				}

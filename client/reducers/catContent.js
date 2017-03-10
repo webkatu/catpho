@@ -14,8 +14,6 @@ const initialState = {
 		sex: '',
 		description: '',
 		postedDate:'',
-		prevId: 0,
-		nextId: 0,
 	},
 	isFavorite: false,
 	shouldDisplayDeletionConfirmation: false,
@@ -57,6 +55,7 @@ export default (state = initialState, action) => {
 
 		case 'FETCH_CONTENT_FAILED':
 			return Object.assign({}, state, {
+				content: Object.assign({}, initialState.content),
 				isFetchingContent: false,
 				fetchingContentSuccess: false,
 			});

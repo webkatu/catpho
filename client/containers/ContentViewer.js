@@ -43,11 +43,11 @@ class ContentViewer extends React.Component {
 			<div className="contentViewer">
 				<CatContent />
 				<NavigationButton
-					contentId={this.props.content.prevId}
+					contentId={this.props.contentViewer.prevId}
 					onClick={::this.handlePreviousButtonClick}
 				>&lt;</NavigationButton>
 				<NavigationButton
-					contentId={this.props.content.nextId}
+					contentId={this.props.contentViewer.nextId}
 					onClick={::this.handleNextButtonClick}
 				>&gt;</NavigationButton>
 			</div>
@@ -62,7 +62,6 @@ class ContentViewer extends React.Component {
 function mapStateToProps(state) {
 	return {
 		contentViewer: state.contentViewer,
-		content: state.catContent.content,
 	};
 }
 
