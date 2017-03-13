@@ -23,7 +23,7 @@ const initialState = {
 			|| this.overDescriptionCount
 			|| ! this.isSelectedFile());
 	},
-	actionURI: location.origin + '/upload/',
+	actionURI: '/contents',
 	isSubmitting: false,
 	shouldViewResult: false,
 	isSuccess: null,

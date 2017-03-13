@@ -2,8 +2,10 @@ import express from 'express';
 import url from 'url';
 import bodyParser from 'body-parser';
 import contents from './routes/contents.js';
+import content from './routes/content.js';
+import comments from './routes/comments.js';
+import comment from './routes/comment.js';
 import users from './routes/users.js';
-import upload from './routes/upload.js';
 import uploads from './routes/uploads.js';
 import signIn from './routes/signIn.js';
 import signUp from './routes/signUp.js';
@@ -30,11 +32,25 @@ app.get('*', (req, res, next) => {
 	res.sendFile('/public/index.html', { root: __dirname + '/..' });
 });
 
+app.param('contentId', (req, res, next, value) => {
+	req.params.contentId = Number(value);
+	next();
+});
+
+app.param('commentId', (req, res, next, value) => {
+	req.params.commentId = Number(value);
+	next();
+});
+
 app.use('/contents', contents);
 
-app.use('/users', users);
+app.use('/contents/:contentId', content);
 
-app.use('/upload', upload);
+app.use('/contents/:contentId/comments', comments);
+
+app.use('/contents/:contentId/comments/:commentId', comment);
+
+app.use('/users', users);
 
 app.use('/signin', signIn);
 
