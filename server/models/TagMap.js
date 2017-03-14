@@ -10,4 +10,18 @@ export default class TagMap extends MySQLModel {
 
 		return this.query(sql);
 	}
+
+	async saveTagMap(contentIdArray, tagIdArray) {
+		if(contentIdArray.length === 0 || tagIdArray.length ===0) return;
+
+		const dataArray = [];
+		contentIdArray.forEach((contentId) => {
+			tagIdArray.forEach((tagId) => {
+				dataArray.push({ contentId, tagId });
+			})
+		});
+
+		return await this.insertMultiple(dataArray);
+	}
+
 }

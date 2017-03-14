@@ -11,6 +11,18 @@ export default class Tags extends MySQLModel {
 		return this.query(sql);
 	}
 
+	async saveTags(tags) {
+		const idArray = await Promise.all(tags.map(async (tag) => {
+			const result = await this.select(['id'], '?? = ?', { name: tag });
+			if(result !== null) return result.id;
+
+			const [ OkPacket ] = await this.insert({ name: tag });
+			return OkPacket.insertId;
+		}));
+
+		return idArray;
+	}
+
 	selectIdByName(name) {
 		return (async () => {
 			const sql = `select id from ${this.tableName} where name = ?;`;

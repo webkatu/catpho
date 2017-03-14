@@ -121,8 +121,8 @@ router.delete('/', async (req, res) => {
 	}catch(e) { return res.sendStatus(400); }
 
 	const contents = new Contents();
-	try {
-		contents.mysql.beginTransaction(async (err) => {
+	contents.mysql.beginTransaction(async (err) => {
+		try {
 			if(err) throw err;
 			
 			const [ OkPacket ] = await contents.delete(
@@ -136,13 +136,13 @@ router.delete('/', async (req, res) => {
 			await new Favorites().delete('contentId = ?', [req.params.contentId]);
 
 			contents.mysql.commit((err) => { if(err) throw err;	});	
-		});
+			res.sendStatus(204);
+		}catch(e) {
+			contents.mysql.rollback();
+			return res.sendStatus(500);
+		}
+	});
 
-		res.sendStatus(204);
-	}catch(e) {
-		contents.mysql.rollback();
-		return res.sendStatus(500);
-	}
 });
 
 export default router;

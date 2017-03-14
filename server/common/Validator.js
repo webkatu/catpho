@@ -41,6 +41,19 @@ export default class Validator {
 		return true;
 	}
 
+	validateContentBody(body) {
+		const { name, age, tags, description } = body;
+		const { nameMaxLength, ageMin, ageMax, tagMaxCount, tagMaxLength, descriptionMaxLength } = this.rule;
+		
+		if(name.length > nameMaxLength) return false;
+		if(age < ageMin || age > ageMax) return false;
+		if(tags.length > tagMaxCount) return false;
+		if(! tags.every(tag => tag.length <= tagMaxLength)) return false;
+		if(description.length > descriptionMaxLength) return false;
+
+		return true;
+	}
+
 	validateComment(value = null) {
 		if(typeof value !== 'string') return false;
 		if(value.trim() === '') return false;

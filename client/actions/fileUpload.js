@@ -84,13 +84,11 @@ export const submit = (path, files, form) => {
 				body: formData,
 			});
 			if(! response.ok) throw new TypeError();
+			return dispatch(uploadFileSuccess());
 		}catch(e) {
 			return dispatch(uploadFileFailure());
 		}
 
-		const json = await response.json();
-		console.log(json);
-		dispatch(uploadFileSuccess());
 	}
 }
 
