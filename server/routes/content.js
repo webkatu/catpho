@@ -1,4 +1,6 @@
 import express from 'express';
+import fs from 'fs';
+import config from '../config.js';
 import JWTManager from '../common/JWTManager.js'
 import Contents from '../models/Contents.js';
 import Users from '../models/Users.js';
@@ -125,6 +127,7 @@ router.delete('/', async (req, res) => {
 		try {
 			if(err) throw err;
 			
+			const result = await contents.selectOnce(['filename'], 'id = ?', [req.params.contentId]);
 			const [ OkPacket ] = await contents.delete(
 				'id = ? and userId = ?',
 				[req.params.contentId, decoded.userId]
@@ -135,7 +138,11 @@ router.delete('/', async (req, res) => {
 			await new Comments().delete('contentId = ?', [req.params.contentId]);
 			await new Favorites().delete('contentId = ?', [req.params.contentId]);
 
-			contents.mysql.commit((err) => { if(err) throw err;	});	
+			contents.mysql.commit((err) => {
+				if(err) throw err;
+				fs.unlink(`${config.contentsDir}/${result.filename}`, (err) => { if(err) throw err; });
+				fs.unlink(`${config.contentsDir}/thumbnails/${result.filename}`, (err) => { if(err) throw err; });
+			});	
 			res.sendStatus(204);
 		}catch(e) {
 			contents.mysql.rollback();
