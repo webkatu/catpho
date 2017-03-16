@@ -1,11 +1,11 @@
 import express from 'express';
 import fs from 'fs';
 import multer from 'multer';
-import easyimage from 'easyimage';
 import config from '../config.js'
 import JWTManager from '../common/JWTManager.js'
+import validationRule from '../common/validationRule.js'
 import Validator from '../common/Validator.js'
-import validationRule from '../common/validationRule.js';
+import ImageProcessor from '../common/ImageProcessor.js'
 import fscopy from '../common/fscopy.js';
 import Contents from '../models/Contents.js';
 import Users from '../models/Users.js';
@@ -154,45 +154,68 @@ router.get('/', (req, res) => {
 });
 
 
-const upload = multer({dest: config.tmpDir });
-router.post('/', upload.array('files'), async (req, res, next) => {
+const upload = multer({
+	dest: config.tmpDir,
+	limits: {
+		fileSize: validationRule.fileMaxSize,
+		files: validationRule.fileMaxLength,
+	},
+	fileFilter(req, file, cb) {
+		if(new Validator().validateImageFile(file)) return cb(null, true);
 
-	Object.assign(req.body, formatBody(req.body));
-	req.body.userId = 1;
+		req.fileValidationError = true;
+		cb(null, false);
+	},
+}).array('files');
 
-	const validator = new Validator();
-	if(! validator.validateContentBody(req.body)) return res.sendStatus(400);
-	if(! validateFiles(req.files)) return res.sendStatus(400);
-	console.log(req.body);
-	console.log(req.files);
-
-	try {
-		await changeFilename(req.files);
-		await saveUploadFiles(req.files);
-
-		const contents = new Contents();
-		const mysql = contents.mysql;
-		mysql.beginTransaction(async (err) => {
-			try {
-				if(err) throw err;
-
-				var contentIdArray = await contents.saveContents(req.files, req.body);
-				var tagIdArray = await new Tags().saveTags(req.body.tags);
-				await new TagMap().saveTagMap(contentIdArray, tagIdArray);
-
-				mysql.commit((err) => { if(err) throw err; });
-				res.sendStatus(204);
-			}catch(e) {
-				console.log(e);
-				mysql.rollback();
-				return res.sendStatus(500);
+router.post('/',
+	(req, res, next) => {
+		upload(req, res, (err) => {
+			if(err || req.fileValidationError) {
+				return res.sendStatus(400);
 			}
+
+			next();
 		});
-	}catch(e) {
-		console.log(e);
-		return res.sendStatus(500);
+	},
+	async (req, res, next) => {
+
+		Object.assign(req.body, formatBody(req.body));
+		req.body.userId = 1;
+
+		const validator = new Validator();
+		if(! validator.validateContentBody(req.body)) return res.sendStatus(400);
+		console.log(req.body);
+		console.log(req.files);
+
+		try {
+			await changeFilename(req.files);
+			await saveUploadFiles(req.files);
+
+			const contents = new Contents();
+			const mysql = contents.mysql;
+			mysql.beginTransaction(async (err) => {
+				try {
+					if(err) throw err;
+
+					var contentIdArray = await contents.saveContents(req.files, req.body);
+					var tagIdArray = await new Tags().saveTags(req.body.tags);
+					await new TagMap().saveTagMap(contentIdArray, tagIdArray);
+
+					mysql.commit((err) => { if(err) throw err; });
+					res.sendStatus(204);
+				}catch(e) {
+					console.log(e);
+					mysql.rollback();
+					return res.sendStatus(500);
+				}
+			});
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);
+		}
 	}
-});
+);
 
 
 function formatBody(body) {
@@ -216,11 +239,6 @@ function formatBody(body) {
 	return { name, sex, age, tag, tags, description };
 }
 
-function validateFiles(files) {
-	if(files.length === 0) return false;
-	return true;
-}
-
 async function changeFilename(files) {
 	const contents = new Contents();
 
@@ -228,37 +246,19 @@ async function changeFilename(files) {
 
 	files.forEach((file) => {
 		count++;
-		files.filename = count + '_' + file.filename;
+		file.filename = count + '_' + file.filename;
 	});
-}
-
-async function createThumbnail(src, dst) {
-	const size = 400;
-	const image = await easyimage.info(src);
-	if(image.width <= size && image.height <= size) {
-		return await easyimage.resize({ src, dst });
-	}
-
-	let width, height;
-	if(image.width > image.height) {
-		width = size;
-		height = image.height / (image.width / size);
-	}else {
-		height = size;
-		width = image.width / (image.height / size);
-	}
-
-	return await easyimage.resize({ src, dst, width, height });
 }
 
 async function saveUploadFiles(files) {
 	return Promise.all(files.map(async (file) => {
+		const imageProcessor = new ImageProcessor();
 		const contentsPath = config.contentsDir + '/' + file.filename;
 		const thumbnailPath = config.contentsDir + '/thumbnails/' + file.filename;
 
-		await fscopy(file.path, contentsPath);
-		await createThumbnail(file.path, thumbnailPath);
-		fs.unlink(file.path);
+		await imageProcessor.createContent(file.path, contentsPath);
+		await imageProcessor.createThumbnail(file.path, thumbnailPath);
+		fs.unlink(file.path, (err) => { if(err) throw err; });
 	}));
 }
 

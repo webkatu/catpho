@@ -81,8 +81,8 @@ body {
 	}
 }
 
-.fileUpload {
-	.fileUploadForm {
+.contentsUpload {
+	form {
 		& > * {
 			display: block;
 		}

@@ -65,33 +65,33 @@ body {
   width: 200px;
   height: 200px; }
 
-.fileUpload .fileUploadForm > * {
+.contentsUpload form > * {
   display: block; }
 
-.fileUpload .fileUploadForm input[name="name"] {
+.contentsUpload form input[name="name"] {
   width: 5em; }
 
-.fileUpload .fileUploadForm input[name="tag"] {
+.contentsUpload form input[name="tag"] {
   width: 5em; }
 
-.fileUpload .fileUploadForm input[name="age"] {
+.contentsUpload form input[name="age"] {
   width: 3em; }
 
-.fileUpload .fileUploadForm .selectedImageViewBox {
+.contentsUpload form .selectedImageViewBox {
   display: flex;
   flex-wrap: wrap; }
-  .fileUpload .fileUploadForm .selectedImageViewBox .selectedImage {
+  .contentsUpload form .selectedImageViewBox .selectedImage {
     position: relative;
     width: 100px;
     height: 100px; }
-    .fileUpload .fileUploadForm .selectedImageViewBox .selectedImage .deleteButton {
+    .contentsUpload form .selectedImageViewBox .selectedImage .deleteButton {
       position: absolute;
       top: 5px;
       right: 5px;
       color: #fff;
       background: #333;
       cursor: pointer; }
-    .fileUpload .fileUploadForm .selectedImageViewBox .selectedImage img {
+    .contentsUpload form .selectedImageViewBox .selectedImage img {
       width: 100%;
       height: 100%; }
 

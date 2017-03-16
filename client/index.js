@@ -11,7 +11,7 @@ import NotFound from './components/NotFound.js';
 import Contents from './containers/Contents.js';
 import ImageListViewer from './containers/ImageListViewer.js';
 import ContentViewer from './containers/ContentViewer.js';
-import FileUpload from './containers/FileUpload.js';
+import ContentsUpload from './containers/ContentsUpload.js';
 import SignUp from './containers/SignUp.js';
 import SignIn from './containers/SignIn.js';
 import Activation from './containers/Activation.js';
@@ -36,7 +36,7 @@ const routes = (
 		<ReactRouter.IndexRoute component={Contents} />
 		<ReactRouter.Route path="contents/:id" component={ContentViewer} />
 		<ReactRouter.Route path="test" component={Contents} />
-		<ReactRouter.Route path="upload" component={FileUpload} />
+		<ReactRouter.Route path="upload" component={ContentsUpload} />
 		<ReactRouter.Route path="signup" component={SignUp} />
 		<ReactRouter.Route path="signIn" component={SignIn} />
 		<ReactRouter.Route component={UserOnly}>

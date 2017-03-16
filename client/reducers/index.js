@@ -10,7 +10,7 @@ import simpleContentViewer from './simpleContentViewer.js';
 import contentViewer from './contentViewer.js';
 import catContent from './catContent.js';
 import comment from './comment.js';
-import fileUpload from './fileUpload.js';
+import contentsUpload from './contentsUpload.js';
 import signUp from './signUp.js';
 import signIn from './signIn.js';
 import activation from './activation.js';
@@ -27,7 +27,7 @@ const catphoApp = Redux.combineReducers({
 	contentViewer,
 	catContent,
 	comment,
-	fileUpload,
+	contentsUpload,
 	signUp,
 	signIn,
 	activation,

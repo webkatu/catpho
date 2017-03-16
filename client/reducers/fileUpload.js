@@ -40,7 +40,7 @@ const fileUpload = (state = initialState, action) => {
 		case 'DELETE_SELECTED_IMAGE':
 			const newState = Object.assign({}, state);
 			newState.files.splice(action.index, 1);
-			const removed = newState.selectedImages.splice(action.index, 1);
+			const removed = newState.selectedImages.splice(action.index, 1)[0];
 			window.URL.revokeObjectURL(removed);
 			return newState;
 
