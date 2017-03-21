@@ -41,11 +41,6 @@ class Header extends React.Component {
 				onClick={::this.handleSignUpButtonClick}
 			>登録</button>
 		);
-		const signUpButtonNode = (
-			(app.isSignedIn)
-			? null
-			: signUpButton
-		);
 
 		const signInButton = (
 			<button
@@ -53,11 +48,6 @@ class Header extends React.Component {
 				value="SignIn"
 				onClick={::this.handleSignInButtonClick}
 			>ログイン</button>
-		);
-		const signInButtonNode = (
-			(app.isSignedIn)
-			? null
-			: signInButton
 		);
 
 		const signOutButton = (
@@ -67,13 +57,37 @@ class Header extends React.Component {
 				onClick={::this.handleSignOutButtonClick}
 			>サインアウト</button>
 		);
-		const signOutButtonNode = (
-			(app.isSignedIn)
-			? signOutButton
-			: null
+
+		const myPageButton = (
+			<a
+				href="/mypage"
+				onClick={::this.handleMyPageButtonClick}
+			>
+				<img src={this.props.user.avatar} />
+			</a>
 		);
 
-		const myPageButtonNode = <a href="/mypage" onClick={::this.handleMyPageButtonClick}><img src={this.props.user.avatar} /></a>
+		const contentsUploadButton = (
+			<button
+				type="button"
+				value="Upload"
+				onClick={::this.handleContentsUploadButtonClick}
+			>アップロード</button>
+		);
+
+		let signUpButtonNode = null;
+		let signInButtonNode = null;
+		let signOutButtonNode = null;
+		let contentsUploadButtonNode = null;
+		let myPageButtonNode = null;
+		if(app.isSignedIn) {
+			signOutButtonNode = signOutButton;
+			contentsUploadButtonNode = contentsUploadButton;
+			myPageButtonNode = myPageButton;
+		}else {
+			signUpButtonNode = signUpButton;
+			signInButtonNode = signInButton;
+		}
 
 		const signUpNode = (
 			(header.shouldDisplaySignUp)
@@ -101,6 +115,7 @@ class Header extends React.Component {
 						<li>{signUpButtonNode}</li>
 						<li>{signInButtonNode}</li>
 						<li>{signOutButtonNode}</li>
+						<li>{contentsUploadButtonNode}</li>
 						<li>{myPageButtonNode}</li>
 					</ul>
 				</nav>

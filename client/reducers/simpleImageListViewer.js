@@ -12,9 +12,9 @@ const initialState = {
 	lists: [],
 	basePathOfFetch: '/contents',
 	isFetching: false,
-	shouldFetchContents: false,
 	shouldDisplayContentViewer: false,
 	shouldClearContents: false,
+	shouldFetchContents: false,
 };
 
 export default (state = initialState, action) => {
@@ -40,6 +40,11 @@ export default (state = initialState, action) => {
 		case 'FETCH_CONTENTS_FAILED':
 			return Object.assign({}, state, {
 				isFetching: false,
+			});
+
+		case 'POST_CONTENTS_SUCCESS':
+			return Object.assign({}, state, {
+				shouldClearContents: true,
 			});
 
 		case 'DELETE_CONTENT_SUCCESS':
