@@ -17,22 +17,19 @@ class SignIn extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		const form = e.target;
-		this.props.dispatch(actions.submit(form));
+		this.props.dispatch(actions.signIn(form));
 	}
 
 	handleEmailOrUserNameInputChange(e) {
-		const input = e.target;
-		this.props.dispatch(actions.inputEmailOrUserName(input.value));
+		this.props.dispatch(actions.inputEmailOrUserName(e.target.value));
 	}
 
 	handlePasswordInputChange(e) {
-		const input = e.target;
-		this.props.dispatch(actions.inputPassword(input.value));
+		this.props.dispatch(actions.inputPassword(e.target.value));
 	}
 
 	render() {
 		const signIn = this.props.signIn;
-		console.log(signIn);
 
 		const resultView = (signIn.shouldViewResult)
 			? <RequestResultView isSuccess={signIn.isSuccess} />
@@ -48,6 +45,7 @@ class SignIn extends React.Component {
 						name="emailOrUserName"
 						placeholder="メールアドレスまたはユーザー名"
 						maxLength={signIn.emailOrUserNameMaxLength}
+						value={signIn.emailOrUserName}
 						onChange={::this.handleEmailOrUserNameInputChange}
 					/>
 					<input
@@ -55,6 +53,7 @@ class SignIn extends React.Component {
 						className={classnames({error: ! signIn.validationPassword})}
 						name="password"
 						placeholder="パスワード"
+						value={signIn.password}
 						onChange={::this.handlePasswordInputChange}
 					/>
 					<input

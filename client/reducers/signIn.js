@@ -1,4 +1,6 @@
 const initialState = {
+	emailOrUserName: '',
+	password: '',
 	emailOrUserNameMaxLength: 255,
 	emailMaxLength: 255,
 	emailPattern: /^.+@.+/,
@@ -10,7 +12,7 @@ const initialState = {
 	passwordPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
 	validationEmailOrUserName: false,
 	validationPassword: false,
-	isSubmitting: false,
+	isRequesting: false,
 	shouldResetForm: false,
 	shouldViewResult: false,
 	isSuccess: null,
@@ -19,7 +21,7 @@ const initialState = {
 		return (
 			this.validationEmailOrUserName
 			&& this.validationPassword
-			&& ! this.isSubmitting
+			&& ! this.isRequesting
 		);
 	},
 }
@@ -28,30 +30,32 @@ export default (state = initialState, action) => {
 	switch(action.type) {
 		case 'INPUT_EMAIL_OR_USER_NAME@signIn':
 			return Object.assign({}, state, {
-				validationEmailOrUserName: validateEmailOrUserName(action.value),
+				emailOrUserName: action.payload.emailOrUserName,
+				validationEmailOrUserName: validateEmailOrUserName(action.payload.emailOrUserName),
 			});
 
 		case 'INPUT_PASSWORD@signIn':
 			return Object.assign({}, state, {
-				validationPassword: validatePassword(action.value),
+				password: action.payload.password,
+				validationPassword: validatePassword(action.payload.password),
 			});
 
-		case 'REQUEST_AUTHENTICATION':
+		case 'REQUEST_SIGN_IN':
 			return Object.assign({}, state, {
-				isSubmitting: true,
+				isRequesting: true,
 			});
 
-		case 'REQUEST_AUTHENTICATION_SUCCESS':
+		case 'REQUEST_SIGN_IN_SUCCESS':
 			return Object.assign({}, initialState, {
-				isSubmitting: false,
+				isRequesting: false,
 				shouldResetForm: true,
 				shouldViewResult: true,
 				isSuccess: true,
 			});
 
-		case 'REQUEST_AUTHENTICATION_FAILURE':
+		case 'REQUEST_SIGN_IN_FAILED':
 			return Object.assign({}, state, {
-				isSubmitting: false,
+				isRequesting: false,
 				shouldViewResult: true,
 				isSuccess: false,
 			});

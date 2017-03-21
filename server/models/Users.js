@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import mysql from '../common/mysqlConnection';
 import { MySQLModel } from './index.js';
 
@@ -16,6 +17,25 @@ export default class Users extends MySQLModel {
 		);`;
 
 		return this.query(sql);
+	}
+
+	async authenticate(emailOrUserName, password) {
+		const user = await this.selectOnce(
+			['id', 'email', 'userName', 'password', 'nickname', 'avatar'],
+			'email = ? or userName = ?',
+			[emailOrUserName, emailOrUserName],
+		);
+		if(user === null) return null;
+
+		const isValid = await new Promise((res, rej) => {
+			bcrypt.compare(password, user.password, (err, isValid) => {
+				if(err) return rej(err);
+				res(isValid);
+			});
+		});
+		if(isValid === false) return null;
+		delete user.password;
+		return user;
 	}
 
 	selectUserByEmailOrUserName(emailOrUserName) {

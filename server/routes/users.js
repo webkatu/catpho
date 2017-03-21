@@ -9,6 +9,79 @@ import Favorites from '../models/Favorites';
 
 const router = express.Router();
 
+router.get('/', 
+	async (req, res, next) => {
+		if(req.query.userToken || req.query.emailOrUserName || req.query.password) return next();
+
+		return res.sendStatus(404);
+	},
+
+	async (req, res, next) => {
+		if(req.query.userToken === undefined) return next();
+
+		try {
+			var decoded = await new JWTManager().verifyUserAuthToken(req.query.userToken);
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(401);
+		}
+		
+		try {
+			var user = await new Users().selectOnce(
+				['id', 'userName', 'email', 'nickname', 'avatar'],
+				'id = ? and userName = ?',
+				[decoded.userId, decoded.userName],
+			);
+			if(user === null) return res.sendStatus(401);
+
+			var token = (
+				(new Date().getTime() <= decoded.expiresIn)
+				? req.query.userToken
+				: await new JWTManager().createUserAuthToken({
+					userId: user.id,
+					userName: user.userName,
+				})
+			);
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);
+		}
+
+		res.json({
+			payload: {
+				...user,
+				token,
+			},
+		});
+	},
+
+	async (req, res, next) => {
+		const validator = new Validator();
+		if(! validator.validateEmailOrUserName(req.query.emailOrUserName) || ! validator.validatePassword(req.query.password)) {
+			return res.sendStatus(401);
+		}
+
+		try {
+			var user = await new Users().authenticate(req.query.emailOrUserName, req.query.password);
+			if(user === null) return res.sendStatus(401);
+			var token = await new JWTManager().createUserAuthToken({
+				userId: user.id,
+				userName: user.userName,
+			});
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);
+		}
+
+		res.json({
+			payload: {
+				...user,
+				token,
+			},
+		});
+	}
+);
+
 router.patch('/:userName', multer({dest: config.tmpDir}).single('avatar'), async (req, res) => {
 	console.log(req.file, req.body);
 	try {

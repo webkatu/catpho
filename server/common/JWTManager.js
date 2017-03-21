@@ -5,9 +5,12 @@ export default class JWTManager {
 	createUserAuthToken(payload) {
 		return new Promise((res, rej) => {
 			jwt.sign(
-				payload,
+				{
+					...payload,
+					expiresIn: new Date().getTime() + config.userAuthJWT.expiresIn,
+				},
 				config.userAuthJWT.secretKey,
-				{ expiresIn: config.userAuthJWT.expiresin },
+				{},
 				(err, token) => {
 					if(err) return rej(err);
 					res(token);

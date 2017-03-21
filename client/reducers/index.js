@@ -3,6 +3,7 @@ import * as ReactRouterRedux from 'react-router-redux';
 import cookie from 'cookie';
 import app from './app.js';
 import user from './user.js';
+import header from './header.js';
 import contents from './contents.js';
 import imageListViewer from './imageListViewer.js';
 import simpleImageListViewer from './simpleImageListViewer.js';
@@ -20,6 +21,7 @@ import registrationInformation from './registrationInformation.js';
 const catphoApp = Redux.combineReducers({
 	app,
 	user,
+	header,
 	contents,
 	imageListViewer,
 	simpleImageListViewer,

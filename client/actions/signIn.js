@@ -1,77 +1,74 @@
 import config from '../config.js';
+import formToSearchParams from '../common/formToSearchParams.js';
 
 export const inputEmailOrUserName = (value) => {
 	return {
 		type: 'INPUT_EMAIL_OR_USER_NAME@signIn',
-		value,
-	}
+		payload: {
+			emailOrUserName: value,
+		},
+	};
 }
 
 export const inputPassword = (value) => {
 	return {
 		type: 'INPUT_PASSWORD@signIn',
-		value,
-	}
+		payload: {
+			password: value,
+		},
+	};
 }
 
-const requestAuthentication = () => {
+const requestSignIn = () => {
 	return {
-		type: 'REQUEST_AUTHENTICATION',
-	}
+		type: 'REQUEST_SIGN_IN',
+	};
 }
 
-const requestAuthenticationInSuccess = (payload) => {
+const requestSignInSuccess = (payload) => {
 	return {
-		type: 'REQUEST_AUTHENTICATION_SUCCESS',
+		type: 'REQUEST_SIGN_IN_SUCCESS',
 		payload,
-	}
+	};
 }
 
-const requestAuthenticationFailure = () => {
+const requestSignInFailed = () => {
 	return {
-		type: 'REQUEST_AUTHENTICATION_FAILURE',
-	}
+		type: 'REQUEST_SIGN_IN_FAILED',
+	};
 }
 
 const hideResultView = () => {
 	return {
 		type: 'HIDE_RESULT_VIEW@signIn',
-	}
+	};
 }
 
-
-let hideResultViewTimerId = null;
-export const submit = (form) => {
-	const formData = new FormData(form);
+export const signIn = (form) => {
 	return async (dispatch) => {
-		dispatch(requestAuthentication());
+		let query = '';
+		if(form) query = formToSearchParams(form).toString();
+		else query = `userToken=${localStorage.getItem('userToken')}`;
+		
+		dispatch(requestSignIn());
 		try {
-			const response = await fetch(config.apiServer + '/signin/authentication', {
-				method: 'post',
-				headers: {
-					...config.defaultHeaders,
-				},
-				body: formData,
+			const response = await fetch(`${config.apiServer}/users?${query}`, {
+				method: 'GET',
+				headers: { ...config.defaultHeaders },
 			});
-			if(! response.ok) throw new Error();
+			if(! response.ok) throw new Error(response.status);
+
 			const json = await response.json();
-			console.log(json);
-			if(! json.success) throw json.error;
-
-			dispatch(requestAuthenticationInSuccess(json.payload));
+			dispatch(requestSignInSuccess(json.payload));
 		}catch(e) {
-			dispatch(requestAuthenticationFailure());
+			console.log(e);
+			dispatch(requestSignInFailed());
 		}
-
-		clearTimeout(hideResultViewTimerId);
-		hideResultViewTimerId = setTimeout(() => {
-			dispatch(hideResultView());
-		}, 5000)
-	}
+	};
 }
 
 export const resetForm = () => {
 	return {
 		type: 'RESET_FORM@signIn',
-	}
+	};
 }
