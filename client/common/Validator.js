@@ -2,7 +2,7 @@ import validationRule from './validationRule.js';
 
 export default class Validator {
 	validateEmail(value) {
-		const { emailMaxLength, emailPattern } = validationRule;
+		const { emailMaxLength, emailPattern } = this.constructor.rule;
 
 		if(value === '') return false;
 		if(value.length > emailMaxLength) return false;
@@ -11,7 +11,7 @@ export default class Validator {
 	}
 
 	validateUserName(value) {
-		const { userNameMinLength, userNameMaxLength, userNamePattern } = validationRule;
+		const { userNameMinLength, userNameMaxLength, userNamePattern } = this.constructor.rule;
 
 		if(value === '') return false;
 		if(value.length < userNameMinLength) return false;
@@ -21,7 +21,7 @@ export default class Validator {
 	}
 
 	validateNickname(value) {
-		const { nicknameMaxLength } = validationRule;
+		const { nicknameMaxLength } = this.constructor.rule;
 
 		if(value === '') return false;
 		if(value.length > nicknameMaxLength) return false;
@@ -29,7 +29,7 @@ export default class Validator {
 	}
 
 	validatePassword(value) {
-		const { passwordMinLength, passwordMaxLength, passwordPattern } = validationRule;
+		const { passwordMinLength, passwordMaxLength, passwordPattern } = this.constructor.rule;
 
 		if(value === '') return false;
 		if(value.length < passwordMinLength) return false;
@@ -39,21 +39,21 @@ export default class Validator {
 	}
 
 	validateImageFile(file) {
-		const { fileMaxSize, allowedImageTypes } = validationRule;
+		const { fileMaxSize, allowedImageTypes } = this.constructor.rule;
 		if(file.size > fileMaxSize) return false;
 		if(! allowedImageTypes.includes(file.type)) return false;
 		return true;
 	}
 
 	validateName(value) {
-		const { nameMaxLength } = validationRule;
+		const { nameMaxLength } = this.constructor.rule;
 		value = value.trim();
 		if(value.length > nameMaxLength) return false;
 		return true;
 	}
 
 	validateAge(value) {
-		const { ageMin, ageMax } = validationRule;
+		const { ageMin, ageMax } = this.constructor.rule;
 		value = Number(value);
 		if(Number.isNaN(value)) return false;
 		if(value < ageMin) return false;
@@ -62,7 +62,7 @@ export default class Validator {
 	}
 
 	validateTag(value) {
-		const { tagMaxLength, tagMaxCount } = validationRule;
+		const { tagMaxLength, tagMaxCount } = this.constructor.rule;
 		const tags = value.trim().split(' ');
 
 		if(tags.length > tagMaxCount) return false;
@@ -71,10 +71,11 @@ export default class Validator {
 	}
 
 	validateDescription(value) {
-		const { descriptionMaxLength } = validationRule;
+		const { descriptionMaxLength } = this.constructor.rule;
 		value = value.trim();
 		if(value.length > descriptionMaxLength) return false;
 		return true;
 	}
 
+	static rule = validationRule;
 }

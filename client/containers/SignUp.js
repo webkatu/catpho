@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/signUp.js';
-import RequestResultView from '../components/common/RequestResultView.js';
 
 class SignUp extends React.Component {
 	componentDidUpdate() {
@@ -16,42 +15,34 @@ class SignUp extends React.Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
-		const form = e.target;
-		this.props.dispatch(actions.submit(form));
+		this.props.dispatch(actions.signUp(e.target));
 	}
 
 	handleEmailInputChange(e) {
-		const input = e.target;
-		this.props.dispatch(actions.inputEmail(input.value))
+		this.props.dispatch(actions.inputEmail(e.target.value))
 	}
 
 	handleUserNameInputChange(e) {
-		const input = e.target;
-		this.props.dispatch(actions.inputUserName(input.value));
+		this.props.dispatch(actions.inputUserName(e.target.value));
 	}
 
 	handlePasswordInputChange(e) {
-		const input = e.target;
-		this.props.dispatch(actions.inputPassword(input.value));
+		this.props.dispatch(actions.inputPassword(e.target.value));
 	}
 
 	render() {
 		const signUp = this.props.signUp;
 
-		const resultView = (signUp.shouldViewResult)
-			? <RequestResultView isSuccess={signUp.isSuccess} />
-			: null;
-
 		return (
 			<div className="signUp" >
-				{resultView}
-				<form className="signUpForm" onSubmit={this.handleSubmit.bind(this)} ref="form">
+				<form className="signUpForm" onSubmit={::this.handleSubmit} ref="form">
 					<input
 						type="email"
 						className={classnames({error: ! signUp.validationEmail})}
 						name="email"
 						placeholder="メールアドレス"
-						onChange={this.handleEmailInputChange.bind(this)}
+						maxLength={signUp.emailMaxLength}
+						onChange={::this.handleEmailInputChange}
 					/>
 					<input
 						type="text"
@@ -59,14 +50,14 @@ class SignUp extends React.Component {
 						name="userName"
 						placeholder="ユーザー名(半角英数字4文字以上)"
 						maxLength={signUp.userNameMaxLength}
-						onChange={this.handleUserNameInputChange.bind(this)}
+						onChange={::this.handleUserNameInputChange}
 					/>
 					<input
 						type="password"
 						className={classnames({error: ! signUp.validationPassword})}
 						name="password"
 						placeholder="パスワード(8文字以上)"
-						onChange={this.handlePasswordInputChange.bind(this)}
+						onChange={::this.handlePasswordInputChange}
 					/>
 					<input
 						type="submit"

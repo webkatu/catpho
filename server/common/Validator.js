@@ -7,17 +7,21 @@ export default class Validator {
 	}
 
 	validateEmail(value) {
+		const { emailMaxLength, emailPattern } = this.constructor.rule;
+
 		if(typeOf(value) !== 'string') return false;
-		if(value.length > this.rule.emailMaxLength) return false;
-		if(! this.rule.emailPattern.test(value)) return false;
+		if(value.length > emailMaxLength) return false;
+		if(! emailPattern.test(value)) return false;
 		return true;
 	}
 
 	validateUserName(value) {
+		const { userNameMinLength, userNameMaxLength, userNamePattern } = this.constructor.rule;
+
 		if(typeOf(value) !== 'string') return false;
-		if(value.length < this.rule.userNameMinLength) return false;
-		if(value.length > this.rule.userNameMaxLength) return false;
-		if(! this.rule.userNamePattern.test(value)) return false;
+		if(value.length < userNameMinLength) return false;
+		if(value.length > userNameMaxLength) return false;
+		if(! userNamePattern.test(value)) return false;
 		return true;
 	}
 
@@ -27,31 +31,35 @@ export default class Validator {
 	}
 
 	validatePassword(value) {
+		const { passwordMinLength, passwordMaxLength, passwordPattern } = this.constructor.rule;
+
 		if(typeOf(value) !== 'string') return false;
-		if(value.length < this.rule.passwordMinLength) return false;
-		if(value.length > this.rule.passwordMaxLength) return false;
-		if(! this.rule.passwordPattern.test(value)) return false;
+		if(value.length < passwordMinLength) return false;
+		if(value.length > passwordMaxLength) return false;
+		if(! passwordPattern.test(value)) return false;
 		return true;
 	}
 
 	validateNickname(value) {
+		const { nicknameMaxLength } = this.constructor.rule;
+
 		if(typeOf(value) !== 'string') return false;
-		
 		if(value === '') return false;
-		if(value.length > this.rule.nicknameMaxLength) return false;
+		if(value.length > nicknameMaxLength) return false;
 		return true;
 	}
 
 	validateImageFile(file) {
-		if(typeOf(file) !== 'object') return false;
+		const { allowedImageTypes } = this.constructor.rule;
 
-		return this.rule.allowedImageTypes.includes(file.mimetype);
+		if(typeOf(file) !== 'object') return false;
+		return allowedImageTypes.includes(file.mimetype);
 	}
 
 	validateContentBody(body) {
 		if(typeOf(body) !== 'object') return false;
 		const { name, age, tags, description } = body;
-		const { nameMaxLength, ageMin, ageMax, tagMaxCount, tagMaxLength, descriptionMaxLength } = this.rule;
+		const { nameMaxLength, ageMin, ageMax, tagMaxCount, tagMaxLength, descriptionMaxLength } = this.constructor.rule;
 		
 		if(name === undefined || age === undefined || tags === undefined || description === undefined) return false;
 
@@ -65,9 +73,13 @@ export default class Validator {
 	}
 
 	validateComment(value = null) {
+		const { commentMaxLength } = this.constructor.rule;
+
 		if(typeof value !== 'string') return false;
 		if(value.trim() === '') return false;
 		if(value.length > this.rule.commentMaxLength) return false;
 		return true;
 	}
+
+	static rule = validationRule;
 }

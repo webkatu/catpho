@@ -38,12 +38,6 @@ const requestSignInFailed = () => {
 	};
 }
 
-const hideResultView = () => {
-	return {
-		type: 'HIDE_RESULT_VIEW@signIn',
-	};
-}
-
 export const signIn = (form) => {
 	return async (dispatch) => {
 		let query = '';

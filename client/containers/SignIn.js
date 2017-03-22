@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/signIn.js';
-import RequestResultView from '../components/common/RequestResultView.js';
 
 class SignIn extends React.Component {
 	componentDidUpdate() {
@@ -31,13 +30,8 @@ class SignIn extends React.Component {
 	render() {
 		const signIn = this.props.signIn;
 
-		const resultView = (signIn.shouldViewResult)
-			? <RequestResultView isSuccess={signIn.isSuccess} />
-			: null;
-
 		return (
 			<div className="signIn" >
-				{resultView}
 				<form className="signInForm" ref="form" onSubmit={::this.handleSubmit}>
 					<input
 						type="text"

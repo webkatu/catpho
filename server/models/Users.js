@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt';
-import mysql from '../common/mysqlConnection';
+import config from '../config.js';
+import bcrypt from '../common/bcrypt.js';
 import { MySQLModel } from './index.js';
 
 export default class Users extends MySQLModel {
@@ -10,13 +10,28 @@ export default class Users extends MySQLModel {
 			userName varchar(255) not null unique,
 			password varchar(255) not null,
 			nickname varchar(255),
-			avatar varchar(255) default 'default.jpg',
+			avatar varchar(255),
 			activation tinyint(1),
 			created datetime,
 			modified timestamp
 		);`;
 
 		return this.query(sql);
+	}
+
+	async register(body) {
+		const { email, userName, password } = body;
+		const data = {
+			email,
+			userName,
+			password: await bcrypt.createHash(password),
+			nickname: userName,
+			avatar: config.defaultAvatarFileName,
+			activation: 0,
+			created: new Date(),
+		};
+
+		return await users.insert(data);
 	}
 
 	async authenticate(emailOrUserName, password) {
@@ -27,13 +42,8 @@ export default class Users extends MySQLModel {
 		);
 		if(user === null) return null;
 
-		const isValid = await new Promise((res, rej) => {
-			bcrypt.compare(password, user.password, (err, isValid) => {
-				if(err) return rej(err);
-				res(isValid);
-			});
-		});
-		if(isValid === false) return null;
+		const same = await bcrypt.compare(password, user.password);
+		if(same === false) return null;
 		delete user.password;
 		return user;
 	}

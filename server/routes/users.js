@@ -28,13 +28,13 @@ router.get('/',
 		
 		try {
 			var user = await new Users().selectOnce(
-				['id', 'userName', 'email', 'nickname', 'avatar'],
+				['id', 'email', 'userName', 'nickname', 'avatar'],
 				'id = ? and userName = ?',
 				[decoded.userId, decoded.userName],
 			);
 			if(user === null) return res.sendStatus(401);
 
-			var token = (
+			var userToken = (
 				(new Date().getTime() <= decoded.expiresIn)
 				? req.query.userToken
 				: await new JWTManager().createUserAuthToken({
@@ -48,10 +48,7 @@ router.get('/',
 		}
 
 		res.json({
-			payload: {
-				...user,
-				token,
-			},
+			payload: { ...user, userToken },
 		});
 	},
 
@@ -64,7 +61,7 @@ router.get('/',
 		try {
 			var user = await new Users().authenticate(req.query.emailOrUserName, req.query.password);
 			if(user === null) return res.sendStatus(401);
-			var token = await new JWTManager().createUserAuthToken({
+			var userToken = await new JWTManager().createUserAuthToken({
 				userId: user.id,
 				userName: user.userName,
 			});
@@ -74,13 +71,66 @@ router.get('/',
 		}
 
 		res.json({
-			payload: {
-				...user,
-				token,
-			},
+			payload: { ...user, userToken },
 		});
 	}
 );
+
+const upload = multer().none();
+router.post('/', upload, async (req, res) => {
+	const validator = new Validator();
+	if(! validator.validateEmail(req.body.email)
+		|| ! validator.validateUserName(req.body.userName)
+		|| ! validator.validatePassword(req.body.password)) {
+		return res.sendStatus(400);
+	}
+
+	try {
+		const users = new Users();
+		//すでに登録されていれば登録拒否;
+		const result = await users.selectOnce(
+			'id', 
+			'email = ? or userName = ?', 
+			[req.body.email, req.body.userName],
+		);
+		if(result) return res.sendStatus(401);
+
+		const [ OkPacket ] = await users.register(req.body);
+
+		var user = {
+			id: OkPacket.insertId,
+			email: req.body.email,
+			userName: req.body.userName,
+			nickname: req.body.userName,
+			avatar: config.defaultAvatarFileName,
+		};
+
+		const jwtManager = new JWTManager();
+		var userToken = await jwtManager.createUserAuthToken({
+			userId: OkPacket.insertId,
+			userName: req.body.userName,
+		});
+
+		const activationToken = await jwtManager.createActivationToken({
+			userId: OkPacket.insertId,
+			userName: req.body.userName,
+		});
+/*
+		await new Mailer().sendRegisterMail({
+			to: req.body.email,
+			token: activationToken,
+		});
+*/
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+
+	res.json({
+		payload: { ...user, userToken },
+	});
+
+});
 
 router.patch('/:userName', multer({dest: config.tmpDir}).single('avatar'), async (req, res) => {
 	console.log(req.file, req.body);

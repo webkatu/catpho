@@ -3,75 +3,68 @@ import config from '../config.js';
 export const inputEmail = (value) => {
 	return {
 		type: 'INPUT_EMAIL@signUp',
-		value,
-	}
+		payload: {
+			email: value,
+		},
+	};
 }
 
 export const inputUserName = (value) => {
 	return {
 		type: 'INPUT_USER_NAME@signUp',
-		value,
-	}
+		payload: {
+			userName: value,
+		},
+	};
 }
 
 export const inputPassword = (value) => {
 	return {
 		type: 'INPUT_PASSWORD@signUp',
-		value,
-	}
+		payload: {
+			password: value,
+		},
+	};
 }
 
 const requestSignUp = () => {
 	return {
 		type: 'REQUEST_SIGN_UP',
-	}
+	};
 }
 
 const requestSignUpSuccess = (payload) => {
 	return {
 		type: 'REQUEST_SIGN_UP_SUCCESS',
 		payload,
-	}
+	};
 }
 
-const requestSignUpFailure = () => {
+const requestSignUpFailed = () => {
 	return {
-		type: 'REQUEST_SIGN_UP_FAILURE',
-	}
+		type: 'REQUEST_SIGN_UP_FAILED',
+	};
 }
 
-const hideResultView = () => {
-	return {
-		type: 'HIDE_RESULT_VIEW@signUp',
-	}
-}
-
-
-let hideResultViewTimerId = null;
-export const submit = (form) => {
-	const formData = new FormData(form);
+export const signUp = (form) => {
 	return async (dispatch) => {
+		const formData = new FormData(form);
 		dispatch(requestSignUp());
 		try {
-			const response = await fetch(config.apiServer + location.pathname, {
-				method: 'post',
+			const response = await fetch(config.apiServer + 'users', {
+				method: 'POST',
+				headers: { ...config.defaultHeaders },
 				body: formData,
 			});
 			if(! response.ok) throw new Error(response.status);
-			const json = await response.json();
-			if(! json.success) throw json.error;
 
+			const json = await response.json();
 			dispatch(requestSignUpSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
 			dispatch(requestSignUpFailure());
 		}
-
-		clearTimeout(hideResultViewTimerId);
-		hideResultViewTimerId = setTimeout(() => {
-			dispatch(hideResultView());
-		}, 5000)
-	}
+	};
 }
 
 export const resetForm = () => {
