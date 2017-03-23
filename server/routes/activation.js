@@ -1,11 +1,10 @@
 import express from 'express';
-import JWTManager from '../common/JWTManager.js';
+import jwtManager from '../common/jwtManager.js';
 import Users from '../models/Users.js';
 
 const router = express.Router();
 
 router.post('/:token', async (req, res, next) => {
-	const jwtManager = new JWTManager();
 	try {
 		var userAuthJWTPayload = await jwtManager.verifyUserAuthToken(req.body.userToken);
 	}catch(e) {

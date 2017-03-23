@@ -1,4 +1,4 @@
-import validationRule from '../common/validationRule.js';
+import validator from '../common/validator.js';
 
 const initialState = {
 	comments: [],
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
 		case 'INPUT_POST_COMMENT_TEXT':
 			return Object.assign({}, state, {
 				postCommentText: action.payload.value,
-				validationPostCommentText: validatePostCommentText(action.payload.value),
+				validationPostCommentText: validator.validatePostCommentText(action.payload.value),
 			});
 
 		case 'POST_COMMENT':
@@ -77,9 +77,4 @@ export default (state = initialState, action) => {
 			});
 	}
 	return state;
-}
-
-function validatePostCommentText(value) {
-	if(value.trim() > validationRule.postCommentTextMaxLength) return false;
-	return true;
 }

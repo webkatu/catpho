@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import config from '../config.js';
 
-export default class Mailer {
+export default {
 	async sendMail(mailOptions) {
 		const transporter = nodemailer.createTransport(config.mail.smtpConfig);
 
@@ -11,7 +11,7 @@ export default class Mailer {
 				res(info);
 			});
 		});
-	}
+	},
 
 	async sendRegisterMail(params) {
 		const { to, activationURL } = params;
@@ -21,6 +21,5 @@ export default class Mailer {
 			subject: 'activation',
 			html: `please access to <a href="${activationURL}">${activationURL}</a>`,
 		});
-	}
-
-}
+	},
+};

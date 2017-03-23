@@ -7,8 +7,6 @@ import comments from './routes/comments.js';
 import comment from './routes/comment.js';
 import users from './routes/users.js';
 import uploads from './routes/uploads.js';
-import signIn from './routes/signIn.js';
-import signUp from './routes/signUp.js';
 import activation from './routes/activation.js';
 
 const app = express();
@@ -51,10 +49,6 @@ app.use('/contents/:contentId/comments', comments);
 app.use('/contents/:contentId/comments/:commentId', comment);
 
 app.use('/users', users);
-
-app.use('/signin', signIn);
-
-app.use('/signup', signUp);
 
 app.use('/activation', activation);
 

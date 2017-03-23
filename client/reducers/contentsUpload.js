@@ -1,5 +1,4 @@
-import Validator from '../common/Validator.js';
-const validator = new Validator();
+import validator from '../common/validator.js';
 
 const initialState = {
 	files: [],
@@ -7,10 +6,10 @@ const initialState = {
 	age: '',
 	tag: '',
 	description: '',
-	allowedImageTypes: Validator.rule.allowedImageTypes,
-	ageMin: Validator.rule.ageMin,
-	ageMax: Validator.rule.ageMax,
-	descriptionMaxLength: Validator.rule.descriptionMaxLength,
+	allowedImageTypes: validator.rule.allowedImageTypes,
+	ageMin: validator.rule.ageMin,
+	ageMax: validator.rule.ageMax,
+	descriptionMaxLength: validator.rule.descriptionMaxLength,
 	validationFile: false,
 	validationName: true,
 	validationAge: true,
@@ -37,8 +36,8 @@ export default (state = initialState, action) => {
 				file.url = window.URL.createObjectURL(file);
 				files.push(file);
 			});
-			if(files.length > Validator.rule.filesMaxLength) {
-				files.splice(Validator.rule.filesMaxLength);
+			if(files.length > validator.rule.filesMaxLength) {
+				files.splice(validator.rule.filesMaxLength);
 			}
 
 			return Object.assign({}, state, {

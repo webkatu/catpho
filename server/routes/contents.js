@@ -2,10 +2,9 @@ import express from 'express';
 import fs from 'fs';
 import multer from 'multer';
 import config from '../config.js'
-import JWTManager from '../common/JWTManager.js'
-import validationRule from '../common/validationRule.js'
-import Validator from '../common/Validator.js'
-import ImageProcessor from '../common/ImageProcessor.js'
+import jwtManager from '../common/jwtManager.js'
+import validator from '../common/validator.js'
+import imageProcessor from '../common/imageProcessor.js'
 import fscopy from '../common/fscopy.js';
 import Contents from '../models/Contents.js';
 import Users from '../models/Users.js';
@@ -63,7 +62,7 @@ router.get('/',
 
 		if(req.query.userToken === undefined) return next('route');
 		try {
-			var decoded = await new JWTManager().verifyUserAuthToken(req.query.userToken);
+			var decoded = await jwtManager.verifyUserAuthToken(req.query.userToken);
 		}catch(e) { return next('route'); }
 		if(req.query.favoritesOf !== decoded.userName) return next('route');
 
@@ -157,11 +156,11 @@ router.get('/', (req, res) => {
 const upload = multer({
 	dest: config.tmpDir,
 	limits: {
-		fileSize: validationRule.fileMaxSize,
-		files: validationRule.fileMaxLength,
+		fileSize: validator.rule.fileMaxSize,
+		files: validator.rule.fileMaxLength,
 	},
 	fileFilter(req, file, cb) {
-		if(new Validator().validateImageFile(file)) return cb(null, true);
+		if(validator.validateImageFile(file)) return cb(null, true);
 
 		req.fileValidationError = true;
 		cb(null, false);
@@ -183,7 +182,6 @@ router.post('/',
 		Object.assign(req.body, formatBody(req.body));
 		req.body.userId = 1;
 
-		const validator = new Validator();
 		if(! validator.validateContentBody(req.body)) return res.sendStatus(400);
 		console.log(req.body);
 		console.log(req.files);
@@ -252,7 +250,6 @@ async function changeFilename(files) {
 
 async function saveUploadFiles(files) {
 	return Promise.all(files.map(async (file) => {
-		const imageProcessor = new ImageProcessor();
 		const contentsPath = config.contentsDir + '/' + file.filename;
 		const thumbnailPath = config.contentsDir + '/thumbnails/' + file.filename;
 

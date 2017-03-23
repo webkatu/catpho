@@ -2,8 +2,8 @@ import express from 'express';
 import multer from 'multer';
 import config from '../config.js'
 import bcrypt from '../common/bcrypt';
-import JWTManager from '../common/JWTManager.js';
-import Validator from '../common/Validator.js';
+import jwtManager from '../common/jwtManager.js';
+import validator from '../common/validator.js';
 import Users from '../models/Users';
 import Favorites from '../models/Favorites';
 
@@ -20,7 +20,7 @@ router.get('/',
 		if(req.query.userToken === undefined) return next();
 
 		try {
-			var decoded = await new JWTManager().verifyUserAuthToken(req.query.userToken);
+			var decoded = await jwtManager.verifyUserAuthToken(req.query.userToken);
 		}catch(e) {
 			console.log(e);
 			return res.sendStatus(401);
@@ -37,7 +37,7 @@ router.get('/',
 			var userToken = (
 				(new Date().getTime() <= decoded.expiresIn)
 				? req.query.userToken
-				: await new JWTManager().createUserAuthToken({
+				: await jwtManager.createUserAuthToken({
 					userId: user.id,
 					userName: user.userName,
 				})
@@ -53,7 +53,6 @@ router.get('/',
 	},
 
 	async (req, res, next) => {
-		const validator = new Validator();
 		if(! validator.validateEmailOrUserName(req.query.emailOrUserName) || ! validator.validatePassword(req.query.password)) {
 			return res.sendStatus(401);
 		}
@@ -61,7 +60,7 @@ router.get('/',
 		try {
 			var user = await new Users().authenticate(req.query.emailOrUserName, req.query.password);
 			if(user === null) return res.sendStatus(401);
-			var userToken = await new JWTManager().createUserAuthToken({
+			var userToken = await jwtManager.createUserAuthToken({
 				userId: user.id,
 				userName: user.userName,
 			});
@@ -78,7 +77,6 @@ router.get('/',
 
 const upload = multer().none();
 router.post('/', upload, async (req, res) => {
-	const validator = new Validator();
 	if(! validator.validateEmail(req.body.email)
 		|| ! validator.validateUserName(req.body.userName)
 		|| ! validator.validatePassword(req.body.password)) {
@@ -105,7 +103,6 @@ router.post('/', upload, async (req, res) => {
 			avatar: config.defaultAvatarFileName,
 		};
 
-		const jwtManager = new JWTManager();
 		var userToken = await jwtManager.createUserAuthToken({
 			userId: OkPacket.insertId,
 			userName: req.body.userName,
@@ -135,7 +132,7 @@ router.post('/', upload, async (req, res) => {
 router.patch('/:userName', multer({dest: config.tmpDir}).single('avatar'), async (req, res) => {
 	console.log(req.file, req.body);
 	try {
-		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
+		var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
 	}catch(e) { return res.sendStatus(401); }
 	
 	try{
@@ -173,7 +170,6 @@ router.patch('/:userName', multer({dest: config.tmpDir}).single('avatar'), async
 
 async function validateBody(body, userId) {
 	const { email, nickname, currentPassword, password } = body;
-	const validator = new Validator();
 
 	if(email !== '' && ! validator.validateEmail(email)) return false;
 	if(nickname !== '' && ! validator.validateNickname(nickname)) return false;
@@ -194,7 +190,7 @@ router.post('/:userName/favorites', async (req, res) => {
 	const contentId = Number(req.body.contentId);
 	try {
 		if(Number.isNaN(contentId)) throw new Error();
-		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
+		var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
 		if(req.params.userName !== decoded.userName) throw new Error();
 	}catch(e) { return res.sendStatus(400); }
 
@@ -212,7 +208,7 @@ router.delete('/:userName/favorites/:contentId', async (req, res) => {
 	const contentId = Number(req.params.contentId);
 	try {
 		if(Number.isNaN(contentId)) throw new Error();
-		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
+		var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
 		if(req.params.userName !== decoded.userName) throw new Error();
 	}catch(e) { return res.sendStatus(400); }
 

@@ -1,7 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import config from '../config.js';
-import JWTManager from '../common/JWTManager.js'
+import jwtManager from '../common/jwtManager.js'
 import Contents from '../models/Contents.js';
 import Users from '../models/Users.js';
 import Comments from '../models/Comments.js';
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 	
 	let userId = 0;
 	try {
-		var decoded = await new JWTManager().verifyUserAuthToken(req.query.userToken);
+		var decoded = await jwtManager.verifyUserAuthToken(req.query.userToken);
 		userId = decoded.userId;
 	}catch(e) {
 		console.log(e);
@@ -119,7 +119,7 @@ async function getPoster(userId) {
 router.delete('/', async (req, res) => {
 	try {
 		if(Number.isNaN(req.params.contentId)) throw new Error();
-		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
+		var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
 	}catch(e) { return res.sendStatus(400); }
 
 	const contents = new Contents();

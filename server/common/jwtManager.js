@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import config from '../config.js';
 
-export default class JWTManager {
+export default {
 	createUserAuthToken(payload) {
 		return new Promise((res, rej) => {
 			jwt.sign(
@@ -17,7 +17,7 @@ export default class JWTManager {
 				}
 			);
 		});
-	}
+	},
 
 	createActivationToken(payload) {
 		return new Promise((res, rej) => {
@@ -31,7 +31,7 @@ export default class JWTManager {
 				}
 			);
 		});
-	}
+	},
 
 	verifyUserAuthToken(token) {
 		return new Promise((res, rej) => {
@@ -40,7 +40,7 @@ export default class JWTManager {
 				res(decoded);
 			});
 		});
-	}
+	},
 
 	verifyActivationToken(token) {
 		return new Promise((res, rej) => {
@@ -49,5 +49,5 @@ export default class JWTManager {
 				res(decoded);
 			});
 		});
-	}
-}
+	},
+};

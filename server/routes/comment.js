@@ -1,5 +1,5 @@
 import express from 'express';
-import JWTManager from '../common/JWTManager.js'
+import jwtManager from '../common/jwtManager.js'
 import Comments from '../models/Comments.js';
 
 const router = express.Router({ mergeParams: true });
@@ -8,7 +8,7 @@ router.delete('/:id/comments/:commentId', async (req, res) => {
 	try {
 		if(Number.isNaN(req.params.contentId)) throw new Error();
 		if(Number.isNaN(req.params.commentId)) throw new Error();
-		var decoded = await new JWTManager().verifyUserAuthToken(req.body.userToken);
+		var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
 	}catch(e) { return res.sendStatus(400); }
 
 	try {

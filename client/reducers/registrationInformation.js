@@ -1,5 +1,4 @@
-import Validator from '../common/Validator.js';
-const validator = new Validator();
+import validator from '../common/validator.js';
 
 const initialState = {
 	form: {

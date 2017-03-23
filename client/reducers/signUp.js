@@ -1,12 +1,11 @@
-import Validator from '../common/Validator.js';
-const validator = new Validator();
+import validator from '../common/validator.js';
 
 const initialState = {
 	email: '',
 	userName: '',
 	password: '',
-	emailMaxLength: Validator.rule.emailMaxLength,
-	userNameMaxLength: Validator.rule.userNameMaxLength,
+	emailMaxLength: validator.rule.emailMaxLength,
+	userNameMaxLength: validator.rule.userNameMaxLength,
 	validationEmail: false,
 	validationUserName: false,
 	validationPassword: false,
