@@ -1,5 +1,5 @@
 node_modules/
 dev/
 server/uploads/
-server/config.js
+server/secret.js
 npm-debug.log
