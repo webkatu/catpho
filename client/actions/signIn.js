@@ -48,6 +48,7 @@ export const signIn = (form) => {
 		try {
 			const response = await fetch(`${config.apiServer}/users?${query}`, {
 				method: 'GET',
+				mode: 'cors',
 				headers: { ...config.defaultHeaders },
 			});
 			if(! response.ok) throw new Error(response.status);

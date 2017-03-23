@@ -6,7 +6,9 @@
   "scripts": {
     "webpack": "./node_modules/.bin/webpack --colors --progress",
     "watch": "./node_modules/.bin/webpack --watch --colors --progress",
-    "server": "./node_modules/.bin/babel-node --trace-deprecation ./server/server.js",
+    "appServer": "./node_modules/.bin/babel-node --trace-deprecation ./server/appServer.js",
+    "apiServer": "./node_modules/.bin/babel-node --trace-deprecation ./server/apiServer.js",
+    "server": "npm run appServer & npm run apiServer",
     "node": "./node_modules/.bin/babel-node",
     "tmp": "./node_modules/.bin/babel-node ./dev/tmp.js"
   },

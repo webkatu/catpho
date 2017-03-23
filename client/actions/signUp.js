@@ -53,6 +53,7 @@ export const signUp = (form) => {
 		try {
 			const response = await fetch(config.apiServer + 'users', {
 				method: 'POST',
+				mode: 'cors',
 				headers: { ...config.defaultHeaders },
 				body: formData,
 			});

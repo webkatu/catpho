@@ -73,6 +73,7 @@ export const postContents = (form, files) => {
 		try {
 			const response = await fetch(config.apiServer + '/contents', {
 				method: 'POST',
+				mode: 'cors',
 				body: formData,
 			});
 			if(! response.ok) throw new TypeError();

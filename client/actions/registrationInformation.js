@@ -24,7 +24,8 @@ export const requestActivatioin = () => {
 
 		try {
 			const response = await fetch(path, {
-				method: 'post',
+				method: 'POST',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 					'Content-Type': 'application/json',
@@ -125,6 +126,7 @@ export const patchRegistrationInformation = (form, userName) => {
 		try {
 			const response = await fetch(config.apiServer + '/users/' + userName, {
 				method: 'PATCH',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 				},

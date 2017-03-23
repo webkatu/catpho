@@ -13,7 +13,7 @@ const fetchContentsSuccess = (payload) => {
 		return {
 			id: content.id,
 			href: '/contents/' + content.id,
-			src: '/uploads/contents/thumbnails/' + content.filename,
+			src: config.apiServer + '/uploads/contents/thumbnails/' + content.filename,
 		}
 	});
 
@@ -48,8 +48,9 @@ export const fetchContents = (basePath = '/contents' + location.search, page) =>
 		dispatch(_fetchContents());
 		try {
 			const response = await fetch(config.apiServer + path, {
+				method: 'GET',
+				mode: 'cors',
 				headers: { ...config.defaultHeaders },
-				method: 'get',
 			});
 			if (! response.ok) throw new Error(response.status);
 			const json = await response.json();

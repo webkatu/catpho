@@ -24,7 +24,8 @@ export const request = () => {
 		dispatch(requestActivation);
 		try {
 			const response = await fetch(config.apiServer + location.pathname, {
-				method: 'post',
+				method: 'POST',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 					'Content-Type': 'application/json',

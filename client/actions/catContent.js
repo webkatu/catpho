@@ -37,7 +37,8 @@ export const addFavorite = (userName, contentId) => {
 
 		try {
 			const response = await fetch(`${config.apiServer}/users/${userName}/favorites`, {
-				method: 'post',
+				method: 'POST',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 					'Content-Type': 'application/json',
@@ -80,7 +81,8 @@ export const removeFavorite = (userName, contentId) => {
 
 		try {
 			const response = await fetch(`${config.apiServer}/users/${userName}/favorites/${contentId}`, {
-				method: 'delete',
+				method: 'DELETE',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 					'Content-Type': 'application/json',
@@ -137,7 +139,8 @@ export const deleteContent = (contentId) => {
 
 		try {
 			const response = await fetch(`${config.apiServer}/contents/${contentId}`, {
-				method: 'delete',
+				method: 'DELETE',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 					'Content-Type': 'application/json',
@@ -187,7 +190,8 @@ export const fetchComments = (contentId) => {
 
 		try {
 			const response = await fetch(`${config.apiServer}/contents/${contentId}/comments`, {
-				method: 'get',
+				method: 'GET',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 				},
@@ -243,7 +247,8 @@ export const postComment = (form, contentId) => {
 
 		try {
 			const response = await fetch(`${config.apiServer}/contents/${contentId}/comments`, {
-				method: 'post',
+				method: 'POST',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 				},
@@ -298,7 +303,8 @@ export const deleteComment = (contentId, commentId) => {
 
 		try {
 			const response = await fetch(`${config.apiServer}/${contentId}/comments/${commentId}`, {
-				method: 'delete',
+				method: 'DELETE',
+				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
 					'Content-Type': 'application/json',
