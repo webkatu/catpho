@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import url from 'url';
+import sendMail from './routes/sendMail.js';
 
 const app = express();
 
@@ -16,17 +17,12 @@ app.use((req, res, next) => {
 
 app.use('/', express.static(__dirname + '/../public', { index: false }));
 
+app.use('/sendmail', sendMail);
+
 app.get('*', (req, res, next) => {
 	res.sendFile('/public/index.html', { root: __dirname + '/..' });
 });
 
-app.post('/sendmail', (req, res, next) => {
-	switch(req.query.at) {
-		case 'registration':
-
-		case 'activation':
-	}
-});
 
 
 app.listen(3000, () => {

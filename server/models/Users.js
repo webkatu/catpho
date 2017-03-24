@@ -31,7 +31,7 @@ export default class Users extends MySQLModel {
 			created: new Date(),
 		};
 
-		return await users.insert(data);
+		return await this.insert(data);
 	}
 
 	async authenticate(emailOrUserName, password) {

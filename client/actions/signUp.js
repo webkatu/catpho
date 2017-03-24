@@ -51,7 +51,7 @@ export const signUp = (form) => {
 		const formData = new FormData(form);
 		dispatch(requestSignUp());
 		try {
-			const response = await fetch(config.apiServer + 'users', {
+			const response = await fetch(config.apiServer + '/users', {
 				method: 'POST',
 				mode: 'cors',
 				headers: { ...config.defaultHeaders },
@@ -60,10 +60,22 @@ export const signUp = (form) => {
 			if(! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
+
+			fetch(`/sendmail?at=register`, {
+				method: 'POST',
+				headers: {
+					...config.defaultHeaders,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					to: json.payload.email,
+					activationToken: json.payload.activationToken,
+				}),
+			}).then((res) => { console.log(res); });
 			dispatch(requestSignUpSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(requestSignUpFailure());
+			dispatch(requestSignUpFailed());
 		}
 	};
 }

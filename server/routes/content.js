@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 		var decoded = await jwtManager.verifyUserAuthToken(req.query.userToken);
 		userId = decoded.userId;
 	}catch(e) {
-		console.log(e);
+		//console.log(e);
 	}
 
 	try {

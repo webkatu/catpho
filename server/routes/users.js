@@ -108,23 +108,18 @@ router.post('/', upload, async (req, res) => {
 			userName: req.body.userName,
 		});
 
-		const activationToken = await jwtManager.createActivationToken({
+		var activationToken = await jwtManager.createActivationToken({
 			userId: OkPacket.insertId,
 			userName: req.body.userName,
+			email: req.body.email,
 		});
-/*
-		await new Mailer().sendRegisterMail({
-			to: req.body.email,
-			token: activationToken,
-		});
-*/
 	}catch(e) {
 		console.log(e);
 		return res.sendStatus(500);
 	}
 
 	res.json({
-		payload: { ...user, userToken },
+		payload: { ...user, userToken, activationToken },
 	});
 
 });

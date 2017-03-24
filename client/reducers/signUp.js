@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
 		case 'INPUT_EMAIL@signUp':
 			return Object.assign({}, state, {
 				email: action.payload.email,
-				validationEmail: validarot.validateEmail(action.payload.email),
+				validationEmail: validator.validateEmail(action.payload.email),
 			});
 
 		case 'INPUT_USER_NAME@signUp':
