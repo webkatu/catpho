@@ -42,6 +42,7 @@ class SignUp extends React.Component {
 						name="email"
 						placeholder="メールアドレス"
 						maxLength={signUp.emailMaxLength}
+						value={signUp.email}
 						onChange={::this.handleEmailInputChange}
 					/>
 					<input
@@ -50,6 +51,7 @@ class SignUp extends React.Component {
 						name="userName"
 						placeholder="ユーザー名(半角英数字4文字以上)"
 						maxLength={signUp.userNameMaxLength}
+						value={signUp.userName}
 						onChange={::this.handleUserNameInputChange}
 					/>
 					<input
@@ -57,6 +59,7 @@ class SignUp extends React.Component {
 						className={classnames({error: ! signUp.validationPassword})}
 						name="password"
 						placeholder="パスワード(8文字以上)"
+						value={signUp.password}
 						onChange={::this.handlePasswordInputChange}
 					/>
 					<input
