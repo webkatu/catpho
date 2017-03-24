@@ -22,14 +22,9 @@ export default (state = initialState, action) => {
 			});
 
 		case 'REQUEST_SIGN_UP_SUCCESS':
-			return Object.assign({}, state, {
-				shouldDisplaySignUp: false,
-			});
-
 		case 'REQUEST_SIGN_IN_SUCCESS':
-			return Object.assign({}, state, {
-				shouldDisplaySignIn: false,
-			});
+		case 'SIGN_OUT':
+			return Object.assign({}, initialState);
 
 		case 'POST_CONTENTS_SUCCESS':
 			return Object.assign({}, state, {
