@@ -13,7 +13,7 @@ const fetchContentsSuccess = (payload) => {
 		return {
 			id: content.id,
 			href: '/contents/' + content.id,
-			src: config.apiServer + '/uploads/contents/thumbnails/' + content.filename,
+			src: content.thumbnail,
 		}
 	});
 

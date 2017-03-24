@@ -147,7 +147,12 @@ router.get('/', (req, res) => {
 			interval,
 			currentPage,
 			maxPage: Math.ceil(count / interval),
-			contents,
+			contents: contents.map((content) => {
+				return {
+					...content,
+					thumbnail: `${req.URL.origin}/uploads/contents/thumbnails/${content.filename}`
+				};
+			}),
 		},
 	});
 });
