@@ -12,8 +12,8 @@ export default class RegistrationInformationView extends React.Component {
 				onClick={this.props.onActivationButtonClick}
 			>所有権を確認</button>
 		);
-		const activationButtonNode = (user.hasActivated)
-			? null
+		const activationButtonNode = (user.hasBeenActivated)
+			? <span>認証済み</span>
 			: activationButton;
 
 		const dialog = (

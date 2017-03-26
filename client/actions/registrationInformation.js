@@ -1,6 +1,6 @@
 import config from '../config.js';
 
-const _requestActivatioin = () => {
+const _requestActivation = () => {
 	return {
 		type: 'REQUEST_ACTIVATION',
 	};
@@ -18,12 +18,12 @@ const requestActivationFailed = () => {
 	};
 }
 
-export const requestActivatioin = () => {
+export const requestActivation = (email) => {
 	return async (dispatch) => {
-		dispatch(_requestActivatioin());
+		dispatch(_requestActivation());
 
 		try {
-			const response = await fetch(path, {
+			const response = await fetch('/sendmail/?at=activation' , {
 				method: 'POST',
 				mode: 'cors',
 				headers: {
@@ -32,6 +32,7 @@ export const requestActivatioin = () => {
 				},
 				body: JSON.stringify({
 					userToken: localStorage.getItem('userToken'),
+					to: email,
 				}),
 			});
 

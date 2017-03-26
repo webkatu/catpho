@@ -28,7 +28,7 @@ router.get('/',
 		
 		try {
 			var user = await new Users().selectOnce(
-				['id', 'email', 'userName', 'nickname', 'avatar'],
+				['id', 'email', 'userName', 'nickname', 'avatar', 'activation'],
 				'id = ? and userName = ?',
 				[decoded.userId, decoded.userName],
 			);
@@ -101,6 +101,7 @@ router.post('/', upload, async (req, res) => {
 			userName: req.body.userName,
 			nickname: req.body.userName,
 			avatar: config.defaultAvatarFileName,
+			activation: 0,
 		};
 
 		var userToken = await jwtManager.createUserAuthToken({

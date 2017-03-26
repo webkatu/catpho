@@ -36,7 +36,7 @@ export default class Users extends MySQLModel {
 
 	async authenticate(emailOrUserName, password) {
 		const user = await this.selectOnce(
-			['id', 'email', 'userName', 'password', 'nickname', 'avatar'],
+			['id', 'email', 'userName', 'password', 'nickname', 'avatar', 'activation'],
 			'email = ? or userName = ?',
 			[emailOrUserName, emailOrUserName],
 		);

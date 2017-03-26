@@ -10,7 +10,7 @@ class RegistrationInformation extends React.Component {
 		if(this.props.registrationInformation.isRequestingActivation) return;
 		if(this.props.registrationInformation.isAlreadyRequestingActivation) return;
 
-		this.props.dispatch(actions.requestActivation());
+		this.props.dispatch(actions.requestActivation(this.props.user.email));
 	}
 
 	handleDialogCloseButtonClick() {

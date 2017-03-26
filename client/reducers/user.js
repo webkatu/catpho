@@ -4,6 +4,7 @@ const initialState = {
 	email: '',
 	nickname: '',
 	avatar: '',
+	hasBeenActivated: false,
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +17,7 @@ export default (state = initialState, action) => {
 				email: action.payload.email,
 				nickname: action.payload.nickname,
 				avatar: action.payload.avatar,
+				hasBeenActivated: Boolean(action.payload.activation)
 			});
 
 		case 'SIGN_OUT':

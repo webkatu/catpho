@@ -7,7 +7,6 @@ const router = express.Router();
 
 router.post('/', 
 	async (req, res, next) => {
-		console.log(req.query, req.body);
 		if(! req.xhr) return res.sendStatus(403);
 		next();
 	},
@@ -31,17 +30,28 @@ router.post('/',
 	async (req, res, next) => {
 		if(req.query.at !== 'activation') return next();
 
+		if(! validator.validateEmail(req.body.to)) return res.sendStatus(400);
 		try {
-			const decoded = await jwtManager.verifyActivationToken(req.body.activationToken);
-			if(decoded.email !== req.body.to) throw new Error();
+			var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
 		}catch(e) {
 			console.log(e);
-			return res.sendStatus(403);
+			return res.sendStatus(400);
 		}
-		mailer.sendActivationMail({
-			to: req.body.to,
-			activationToken: req.body.activationToken,
-		}).catch((err) => { console.log(err); });
+
+		const activationToken = await jwtManager.createActivationToken({
+			userId: decoded.userId,
+			userName: decoded.userName,
+		});
+
+		try {
+			await mailer.sendActivationMail({
+				to: req.body.to,
+				activationToken: req.body.activationToken,
+			});
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);			
+		}
 
 		return res.sendStatus(204);
 	},
