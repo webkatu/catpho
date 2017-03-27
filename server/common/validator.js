@@ -39,11 +39,12 @@ export default {
 	},
 
 	validateNickname(value) {
-		const { nicknameMaxLength } = this.rule;
+		const { nicknameMaxLength, nicknamePattern } = this.rule;
 
 		if(typeOf(value) !== 'string') return false;
 		if(value === '') return false;
 		if(value.length > nicknameMaxLength) return false;
+		if(! nicknamePattern.test(value)) return false;
 		return true;
 	},
 
