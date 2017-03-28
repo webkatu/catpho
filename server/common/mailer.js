@@ -16,7 +16,7 @@ export default {
 	async sendRegisterMail(params) {
 		const { to, activationToken } = params;
 
-		const activationURL = `${config.appServer}/activation?token=${activationToken}`;
+		const activationURL = `${config.appServer}/activation/?token=${activationToken}`;
 		return await this.sendMail({
 			from: config.mail.from,
 			to,
@@ -28,7 +28,7 @@ export default {
 	async sendActivationMail(params) {
 		const { to, activationToken } = params;
 
-		const activationURL = `${config.appServer}/activation?token=${activationToken}`;
+		const activationURL = `${config.appServer}/activation/?token=${activationToken}`;
 		return await this.sendMail({
 			from: config.mail.from,
 			to,

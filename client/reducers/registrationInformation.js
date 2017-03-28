@@ -1,7 +1,9 @@
+import config from '../config.js';
 import validator from '../common/validator.js';
 
 const initialState = {
 	form: {
+		currentAvatarImg: '',
 		avatarImg: '',
 		avatar: '',
 		nickname: '',
@@ -9,11 +11,15 @@ const initialState = {
 		currentPassword: '',
 		password: '',
 		rePassword: '',
+		avatarDisabled: false,
+		restoringAvatarChecked: false,
+		allowedImageTypes: validator.rule.allowedImageTypes,
 	},
 	isRequestingActivation: false,
 	isAlreadyRequestingActivation: false,
 	shouldDisplayDialog: false,
 	isEditMode: false,
+	validationAvatar: true,
 	validationNickname: true,
 	validationEmail: true,
 	validationCurrentPassword: true,
@@ -22,6 +28,7 @@ const initialState = {
 	isPatching: false,
 	possibleSubmit() {
 		return (
+			this.validationAvatar &&
 			this.validationNickname &&
 			this.validationEmail &&
 			this.validationCurrentPassword &&
@@ -34,6 +41,10 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch(action.type) {
+		case 'MOUNT@registrationInformation':
+			window.URL.revokeObjectURL(state.form.avatarImg);
+			return Object.assign({}, initialState);
+
 		case 'REQUEST_ACTIVATION':
 			return Object.assign({}, state, {
 				isRequestingActivation: true,
@@ -61,19 +72,64 @@ export default (state = initialState, action) => {
 				isEditMode: true,
 				form: {
 					...state.form,
+					currentAvatarImg: action.payload.avatar,
 					avatarImg: action.payload.avatar,
 					nickname: action.payload.nickname,
 					email: action.payload.email,
-				}
-			});
-
-		case 'INPUT_AVATAR@registrationInformation':
-			return Object.assign({}, state, {
-				form: {
-					...state.form,
-					avatar: action.payload.file,
 				},
 			});
+
+		case 'INPUT_AVATAR@registrationInformation': {
+			window.URL.revokeObjectURL(state.form.avatarImg);
+			const file = action.payload.file;
+			console.log(file);
+			if(file instanceof File) {
+				return Object.assign({}, state, {
+					form: {
+						...state.form,
+						avatarImg: window.URL.createObjectURL(file),
+						avatar: file,
+					},
+					validationAvatar: validator.validateImageFile(file),
+				});
+			}else {
+				return Object.assign({}, state, {
+					form: {
+						...state.form,
+						avatarImg: state.form.currentAvatarImg,
+						avatar: '',
+					},
+					validationAvatar: true,
+				});
+			}
+		}
+
+		case 'TOGGLE_RESTORING_AVATAR': {
+			if(state.form.restoringAvatarChecked) {
+				return Object.assign({}, state, {
+					form: {
+						...state.form,
+						avatarImg: state.form.currentAvatarImg,
+						avatar: '',
+						avatarDisabled: false,
+						restoringAvatarChecked: false,
+					},
+					validationAvatar: true,
+				});
+			}else {
+				window.URL.revokeObjectURL(state.form.avatarImg);
+				return Object.assign({}, state, {
+					form: {
+						...state.form,
+						avatarImg: `${config.apiServer}/uploads/avatars/default.jpg`,
+						avatar: '',
+						avatarDisabled: true,
+						restoringAvatarChecked: true,
+					},
+					validationAvatar: true,
+				})
+			}
+		}
 
 		case 'INPUT_NICKNAME@registrationInformation':
 			const nickname = action.payload.nickname;
@@ -134,6 +190,7 @@ export default (state = initialState, action) => {
 			});
 
 		case 'PATCH_REGISTRATION_INFORMATION_SUCCESS':
+			window.URL.revokeObjectURL(state.form.avatarImg);
 			return Object.assign({}, initialState);
 
 		case 'PATCH_REGISTRATION_INFORMATION_FAILED':

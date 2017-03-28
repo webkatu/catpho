@@ -6,6 +6,7 @@ import content from './routes/content.js';
 import comments from './routes/comments.js';
 import comment from './routes/comment.js';
 import users from './routes/users.js';
+import user from './routes/user.js';
 import uploads from './routes/uploads.js';
 import activation from './routes/activation.js';
 
@@ -14,15 +15,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*
 app.use((req, res, next) => {
 	const fullURL = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
 	const urlObj = url.parse(fullURL);
 	req.URL = { ...urlObj, origin: `${urlObj.protocol}//${urlObj.host}`, };
 	next();
 });
+*/
 
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, HEADER, OPTIONS');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
@@ -48,6 +52,8 @@ app.use('/contents/:contentId/comments', comments);
 app.use('/contents/:contentId/comments/:commentId', comment);
 
 app.use('/users', users);
+
+app.use('/users/:userName', user);
 
 app.use('/activation', activation);
 

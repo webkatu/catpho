@@ -150,7 +150,7 @@ router.get('/', (req, res) => {
 			contents: contents.map((content) => {
 				return {
 					...content,
-					thumbnail: `${req.URL.origin}/uploads/contents/thumbnails/${content.filename}`
+					thumbnail: `${config.thumbnailsUrl}/${content.filename}`
 				};
 			}),
 		},

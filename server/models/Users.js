@@ -66,13 +66,6 @@ export default class Users extends MySQLModel {
 		return this.query(sql, [id]);
 	}
 
-	updateUser(setData, id) {
-		const wherePhrase = 'where ?? = ?';
-		const whereData = { id };
-
-		return this.update(setData, wherePhrase, whereData);
-	}
-
 	updateUserWithPassword(setData, id, password) {
 		const wherePhrase = 'where ?? = ? and ?? = ?';
 		const whereData = { id, password };

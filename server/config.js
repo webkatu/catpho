@@ -1,7 +1,10 @@
 import secret from './secret.js';
+const appServer = 'http://192.168.1.138:3000';
+const apiServer = 'http://192.168.1.138:3001';
 
 export default {
-	appServer: 'http://192.168.1.138:3000',
+	appServer,
+	apiServer,
 	mysql: {
 		host: 'localhost',
 		user: secret.mysql.user,
@@ -11,8 +14,13 @@ export default {
 	mongodb: {
 		uri: 'mongodb://localhost/catpho',
 	},
+	uploadsDir: __dirname + '/uploads',
+	avatarsDir: __dirname + '/uploads/avatars',
 	contentsDir: __dirname + '/uploads/contents',
 	tmpDir: __dirname + '/uploads/tmp',
+	avatarsUrl: apiServer + '/uploads/avatars',
+	contentsUrl: apiServer + '/uploads/contents',
+	thumbnailsUrl: apiServer + '/uploads/contents/thumbnails',
 	bcrypt: {
 		salt: secret.bcrypt.salt,
 	},

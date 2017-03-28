@@ -1,5 +1,11 @@
 import config from '../config.js';
 
+export const mount = () => {
+	return {
+		type: 'MOUNT@registrationInformation',
+	};
+}
+
 const _requestActivation = () => {
 	return {
 		type: 'REQUEST_ACTIVATION',
@@ -59,8 +65,14 @@ export const startEdit = (user) => {
 
 export const inputAvatar = (file) => {
 	return {
-		type: 'INPUY_AVATAR@registrationInformation',
+		type: 'INPUT_AVATAR@registrationInformation',
 		payload: { file },
+	};
+}
+
+export const toggleRestoringAvatar = () => {
+	return {
+		type: 'TOGGLE_RESTORING_AVATAR',
 	};
 }
 
@@ -134,11 +146,11 @@ export const patchRegistrationInformation = (form, userName) => {
 				body: formData,
 			});
 			if(! response.ok) throw new Error(response.status);
-			const json = await response.json();
-			if(! json.success) throw new Error(json.error);
 
+			const json = await response.json();
 			dispatch(patchRegistrationInformationSuccess(json.payload));
 		}catch(e) {
+			console.log(e);
 			dispatch(patchRegistrationInformationFailed());
 		}
 	}

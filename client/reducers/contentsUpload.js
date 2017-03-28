@@ -18,7 +18,7 @@ const initialState = {
 	possibleSubmit() {
 		return this.validationFile
 			&& this.validationName
-			&& this. validationAge
+			&& this.validationAge
 			&& this.validationTag
 			&& this.validationDescription
 			&& ! this.isPosting;
@@ -87,6 +87,9 @@ export default (state = initialState, action) => {
 			});
 
 		case 'POST_CONTENTS_SUCCESS':
+			state.files.forEach((file) => {
+				window.URL.revokeObjectURL(file.url);
+			});
 			return Object.assign({}, initialState, {
 				isPosting: false,
 			});

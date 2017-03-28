@@ -2,12 +2,12 @@ import bcrypt from 'bcrypt';
 import config from '../config.js';
 
 export default {
-	createHash(data) {
-		return this.hash(data, config.bcrypt.salt);
+	async createHash(data) {
+		return await this.hash(data, config.bcrypt.salt);
 	},
 
-	hash(data, salt) {
-		return new Promise((res, rej) => {
+	async hash(data, salt) {
+		return await new Promise((res, rej) => {
 			bcrypt.hash(data, salt, (err, encrypted) => {
 				if(err) return rej(err);
 				res(encrypted);
@@ -15,8 +15,8 @@ export default {
 		});
 	},
 
-	compare(data, encrypted) {
-		return new Promise((res, rej) => {
+	async compare(data, encrypted) {
+		return await new Promise((res, rej) => {
 			bcrypt.compare(data, encrypted, (err, same) => {
 				if(err) return rej(err);
 				res(same);

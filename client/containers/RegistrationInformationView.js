@@ -1,6 +1,24 @@
 import React from 'react';
+import * as ReactRedux from 'react-redux';
+import * as actions from '../actions/registrationInformation.js';
 
-export default class RegistrationInformationView extends React.Component {
+class RegistrationInformationView extends React.Component {
+	handleActivationButtonClick() {
+		if(this.props.registrationInformation.isRequestingActivation) return;
+		if(this.props.registrationInformation.isAlreadyRequestingActivation) return;
+
+		this.props.dispatch(actions.requestActivation(this.props.user.email));
+	}
+
+	handleDialogCloseButtonClick() {
+		this.props.dispatch(actions.closeDialog());
+	}
+
+	handleEditButtonClick(e) {
+		e.preventDefault();
+		this.props.dispatch(actions.startEdit(this.props.user));
+	}
+
 	render() {
 		const registrationInformation = this.props.registrationInformation;
 		const user = this.props.user;
@@ -9,7 +27,7 @@ export default class RegistrationInformationView extends React.Component {
 			<button
 				type="button"
 				disabled={registrationInformation.isAlreadyRequestingActivation || registrationInformation.isRequestingActivation}
-				onClick={this.props.onActivationButtonClick}
+				onClick={::this.handleActivationButtonClick}
 			>所有権を確認</button>
 		);
 		const activationButtonNode = (user.hasBeenActivated)
@@ -19,7 +37,7 @@ export default class RegistrationInformationView extends React.Component {
 		const dialog = (
 			<aside class="dialog">
 				<p>所有権確認のメールを送りました。メールを確認してください。</p>
-				<button type="button" onClick={this.props.onDialogCloseButtonClick}>閉じる</button>
+				<button type="button" onClick={::this.handleDialogCloseButtonClick}>閉じる</button>
 			</aside>
 		);
 		const dialogNode = (
@@ -38,9 +56,18 @@ export default class RegistrationInformationView extends React.Component {
 				</dl>
 
 				{dialogNode}
-				<a href="" onClick={this.props.onEditButtonClick}>登録情報を変更する</a>
+				<a href="" onClick={::this.handleEditButtonClick}>登録情報を変更する</a>
 				<a href="">退会する</a>
 			</div>
 		);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		registrationInformation: state.registrationInformation,
+		user: state.user,
+	}
+}
+
+export default ReactRedux.connect(mapStateToProps)(RegistrationInformationView);

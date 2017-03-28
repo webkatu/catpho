@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
 					sex: content.sex,
 					description: content.description,
 					postedDate: content.created,
-					imageURL: `${req.URL.origin}/uploads/contents/${content.filename}`,
+					imageURL: `${config.contentsUrl}/${content.filename}`,
 					poster: await getPoster(content.userId),
 					favoritesCount: await favorites.count('*', '?? = ?', {contentId: content.id}),
 					tags: await tags.selectTags(content.id),

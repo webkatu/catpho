@@ -65,6 +65,7 @@ class ContentsUpload extends React.Component {
 							})}
 							type="text"
 							name="name"
+							value={contentsUpload.name}
 							onChange={::this.handleNameInputChange}
 						/>
 					</label>
@@ -82,6 +83,7 @@ class ContentsUpload extends React.Component {
 							name="age"
 							min={contentsUpload.ageMin}
 							max={contentsUpload.ageMax}
+							value={contentsUpload.age}
 							onChange={::this.handleAgeInputChange}
 						/>
 					</label>
@@ -92,6 +94,7 @@ class ContentsUpload extends React.Component {
 							})}
 							type="text"
 							name="tag"
+							value={contentsUpload.tag}
 							onChange={::this.handleTagInputChange}
 						/>
 					</label>
@@ -102,8 +105,9 @@ class ContentsUpload extends React.Component {
 							})}
 							name="description"
 							placeholder="説明"
-							ref="description"
+							value={contentsUpload.description}
 							onChange={::this.handleDescriptionTextareaChange}
+							ref="description"
 						></textarea>
 						<span className="characterCount">
 							{contentsUpload.descriptionMaxLength - contentsUpload.description.trim().length}
