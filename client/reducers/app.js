@@ -11,6 +11,7 @@ export default (state = initialState, action) => {
 				isSignedIn: true,
 			});
 
+		case 'DELETE_USER_SUCCESS':
 		case 'SIGN_OUT':
 			localStorage.removeItem('userToken');
 			return Object.assign({}, state, {

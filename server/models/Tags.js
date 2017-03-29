@@ -13,7 +13,7 @@ export default class Tags extends MySQLModel {
 
 	async saveTags(tags) {
 		const idArray = await Promise.all(tags.map(async (tag) => {
-			const result = await this.select(['id'], '?? = ?', { name: tag });
+			const result = await this.selectOnce(['id'], '?? = ?', { name: tag });
 			if(result !== null) return result.id;
 
 			const [ OkPacket ] = await this.insert({ name: tag });
@@ -21,6 +21,13 @@ export default class Tags extends MySQLModel {
 		}));
 
 		return idArray;
+	}
+
+	async deleteUnusedTags() {
+		return await this.delete(
+			`not exists (select * from ?? where ${this.tableName}.id = tagId)`,
+			[new TagMap().tableName]
+		);
 	}
 
 	selectIdByName(name) {

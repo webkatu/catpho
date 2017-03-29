@@ -17,7 +17,7 @@ const initialState = {
 	},
 	isRequestingActivation: false,
 	isAlreadyRequestingActivation: false,
-	shouldDisplayDialog: false,
+	shouldDisplayActivationDialog: false,
 	isEditMode: false,
 	validationAvatar: true,
 	validationNickname: true,
@@ -37,6 +37,10 @@ const initialState = {
 			! this.isPatching
 		);
 	},
+	shouldDisplayWithdrawalDialog: false,
+	didConfirmToWithdraw: false,
+	isDeletingUser: false,
+	didWithdraw: false,
 }
 
 export default (state = initialState, action) => {
@@ -53,7 +57,7 @@ export default (state = initialState, action) => {
 		case 'REQUEST_ACTIVATION_SUCCESS':
 			return Object.assign({}, state, {
 				isRequestingActivation: false,
-				shouldDisplayDialog: true,
+				shouldDisplayActivationDialog: true,
 				isAlreadyRequestingActivation: true,
 			});
 
@@ -62,9 +66,9 @@ export default (state = initialState, action) => {
 				isRequestingActivation: false,
 			});
 
-		case 'CLOSE_DIALOG@registrationInformation':
+		case 'CLOSE_ACTIVATION_DIALOG':
 			return Object.assign({}, state, {
-				shouldDisplayDialog: false,
+				shouldDisplayActivationDialog: false,
 			});
 
 		case 'START_EDIT':
@@ -197,6 +201,41 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				isPatching: false,
 			});
+
+		case 'OPEN_WITHDRAWAL_DIALOG':
+			return Object.assign({}, state, {
+				shouldDisplayWithdrawalDialog: true,
+			});
+
+		case 'CANCEL_WITHDRAWAL':
+			return Object.assign({}, state, {
+				shouldDisplayWithdrawalDialog: false,
+				didConfirmToWithdraw: false,
+			});
+
+		case 'CONFIRM_WITHDRAWAL':
+			return Object.assign({}, state, {
+				didConfirmToWithdraw: true,
+			});
+
+		case 'DELETE_USER':
+			return Object.assign({}, state, {
+				isDeletingUser: true,
+			});
+
+		case 'DELETE_USER_SUCCESS':
+			return Object.assign({}, state, {
+				isDeletingUser: false,
+				didWithdraw: true,
+			});
+
+		case 'DELETE_USER_FAILED':
+			return Object.assign({}, state, {
+				isDeletingUser: false,
+			});
+
+		case 'MOVE_TO_HOME@registrationInformation':
+			return Object.assign({}, initialState);
 	}
 	return state;
 }

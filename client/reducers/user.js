@@ -20,6 +20,7 @@ export default (state = initialState, action) => {
 				hasBeenActivated: Boolean(action.payload.activation)
 			});
 
+		case 'DELETE_USER_SUCCESS':
 		case 'SIGN_OUT':
 			return { ...initialState };
 

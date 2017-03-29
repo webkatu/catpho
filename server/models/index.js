@@ -124,9 +124,9 @@ export class MySQLModel {
 		return this.query(sql, [...dataArray, ...otherDataArray]);
 	}
 
-	selectOnce(cols, wherePhrase, whereData) {
+	selectOnce(cols, wherePhrase, whereData, otherPhrase = '', otherDataArray) {
 		return (async () => {
-			const results = await this.select(cols, wherePhrase, whereData, 'limit 1');
+			const results = await this.select(cols, wherePhrase, whereData, `${otherPhrase} limit 1`, otherDataArray);
 			let result = results[0][0];
 			if(result === undefined) result = null;
 			return result;

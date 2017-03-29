@@ -182,11 +182,16 @@ router.post('/',
 			next();
 		});
 	},
+
 	async (req, res, next) => {
+		try {
+			const decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
+			var userId = decoded.userId;
+		}catch(e) {
+			return res.sendStatus(401);
+		}
 
-		Object.assign(req.body, formatBody(req.body));
-		req.body.userId = 1;
-
+		Object.assign(req.body, formatBody(req.body), { userId });
 		if(! validator.validateContentBody(req.body)) return res.sendStatus(400);
 		console.log(req.body);
 		console.log(req.files);
@@ -205,8 +210,11 @@ router.post('/',
 					var tagIdArray = await new Tags().saveTags(req.body.tags);
 					await new TagMap().saveTagMap(contentIdArray, tagIdArray);
 
-					mysql.commit((err) => { if(err) throw err; });
-					res.sendStatus(204);
+					mysql.commit((err) => {
+						if(err) throw err;
+
+						res.sendStatus(204);
+					});
 				}catch(e) {
 					console.log(e);
 					mysql.rollback();
@@ -243,13 +251,12 @@ function formatBody(body) {
 }
 
 async function changeFilename(files) {
-	const contents = new Contents();
-
-	let count = await contents.count();
+	const result = await new Contents().selectOnce(['id'], undefined, undefined, 'order by id desc');
+	let count = (result === null) ? 0 : result.id;
 
 	files.forEach((file) => {
-		count++;
 		file.filename = count + '_' + file.filename;
+		count++;
 	});
 }
 

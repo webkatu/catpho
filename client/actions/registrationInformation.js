@@ -50,9 +50,9 @@ export const requestActivation = (email) => {
 	}
 }
 
-export const closeDialog = () => {
+export const closeActivationDialog = () => {
 	return {
-		type: 'CLOSE_DIALOG@registrationInformation',
+		type: 'CLOSE_ACTIVATION_DIALOG',
 	};
 }
 
@@ -137,7 +137,7 @@ export const patchRegistrationInformation = (form, userName) => {
 		const formData = new FormData(form);
 		formData.append('userToken', localStorage.getItem('userToken'));
 		try {
-			const response = await fetch(config.apiServer + '/users/' + userName, {
+			const response = await fetch(`${config.apiServer}/users/${userName}`, {
 				method: 'PATCH',
 				mode: 'cors',
 				headers: {
@@ -154,4 +154,67 @@ export const patchRegistrationInformation = (form, userName) => {
 			dispatch(patchRegistrationInformationFailed());
 		}
 	}
+}
+
+export const openWithdrawalDialog = () => {
+	return {
+		type: 'OPEN_WITHDRAWAL_DIALOG',
+	};
+}
+
+export const cancelWithdrawal = () => {
+	return {
+		type: 'CANCEL_WITHDRAWAL',
+	};
+}
+
+export const confirmWithdrawal = () => {
+	return {
+		type: 'CONFIRM_WITHDRAWAL',
+	};
+}
+
+const _deleteUser = () => {
+	return {
+		type: 'DELETE_USER',
+	};
+}
+
+const deleteUserSuccess = () => {
+	return {
+		type: 'DELETE_USER_SUCCESS',
+	};
+}
+
+const deleteUserFailed = () => {
+	return {
+		type: 'DELETE_USER_FAILED',
+	};
+}
+
+export const deleteUser = (userName) => {
+	return async (dispatch) => {
+		dispatch(_deleteUser());
+
+		try {
+			const response = await fetch(`${config.apiServer}/users/${userName}?userToken=${localStorage.getItem('userToken')}`, {
+				method: 'DELETE',
+				mode: 'cors',
+				headers: { ...config.defaultHeaders },
+
+			});
+			if(! response.ok) throw new Error(response.status);
+
+			dispatch(deleteUserSuccess());
+		}catch(e) {
+			console.log(e);
+			dispatch(deleteUserFailed());
+		}
+	};
+}
+
+export const moveToHome = () => {
+	return {
+		type: 'MOVE_TO_HOME@registrationInformation',
+	};
 }

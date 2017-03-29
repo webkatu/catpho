@@ -1,4 +1,5 @@
 import { MySQLModel } from './index.js';
+import Contents from './Contents.js';
 
 export default class Favorites extends MySQLModel {
 	createTable() {
@@ -9,6 +10,13 @@ export default class Favorites extends MySQLModel {
 		);`;
 
 		return this.query(sql);
+	}
+
+	async deleteByWithdrawal(userId) {
+		return await this.delete(
+			`userId = ? or contentId in (select id from ?? where userId = ?)`,
+			[userId, new Contents().tableName, userId],
+		);
 	}
 
 	isFavorite(userId, contentId) {

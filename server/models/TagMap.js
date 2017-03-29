@@ -1,4 +1,5 @@
 import { MySQLModel } from './index.js';
+import Contents from './Contents.js';
 
 export default class TagMap extends MySQLModel {
 	createTable() {
@@ -22,6 +23,13 @@ export default class TagMap extends MySQLModel {
 		});
 
 		return await this.insertMultiple(dataArray);
+	}
+
+	async deleteByUserId(userId) {
+		return await this.delete(
+			'contentId in (select id from ?? where userId = ?)',
+			[new Contents().tableName, userId],
+		);
 	}
 
 }

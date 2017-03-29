@@ -7,6 +7,9 @@ import jwtManager from '../common/jwtManager.js';
 import validator from '../common/validator.js';
 import imageProcessor from '../common/imageProcessor.js';
 import Users from '../models/Users';
+import Contents from '../models/Contents';
+import TagMap from '../models/TagMap';
+import Tags from '../models/Tags';
 import Favorites from '../models/Favorites';
 
 const router = express.Router({ mergeParams: true });
@@ -65,6 +68,7 @@ router.patch('/',
 				await imageProcessor.createAvatar(req.file.path, `${config.avatarsDir}/${req.file.filename}`);
 				fs.unlink(req.file.path, () => {});
 			}
+			//avatarが変更されたら以前のavatarを消す;
 			if(data.avatar) {
 				if(currentUser.avatar !== config.defaultAvatarFileName) {
 					fs.unlink(`${config.avatarsDir}/${currentUser.avatar}`, () => {});
@@ -108,6 +112,55 @@ async function validate(currentUser, body, file) {
 
 	return true;
 }
+
+router.delete('/', async (req, res, next) => {
+	try {
+		const decoded = await jwtManager.verifyUserAuthToken(req.query.userToken);
+		var userId = decoded.userId;
+		if(decoded.userName !== req.params.userName) throw new Error();
+	}catch(e) {
+		return res.sendStatus(401);
+	}
+
+	const users = new Users();
+	const contents = new Contents();
+	const mysql = users.mysql;
+	mysql.beginTransaction(async (err) => {
+		try {
+			if(err) throw err;
+
+			await new Favorites().deleteByWithdrawal(userId);
+			await new TagMap().deleteByUserId(userId);
+			await new Tags().deleteUnusedTags();
+			
+			const { avatar } = await users.selectOnce('avatar', 'id = ?', [userId]);
+			const [ deletedFilenames ] = await contents.select('filename', '?? = ?', { userId });
+			
+			await users.delete('id = ?', [userId]);
+			await contents.delete('?? = ?', { userId });
+
+			mysql.commit((err) => {
+				if(err) throw err;
+				
+				if(avatar !== config.defaultAvatarFileName) {
+					fs.unlink(`${config.avatarsDir}/${avatar}`, ()=>{});
+				}
+
+				deletedFilenames.forEach((obj) => {
+					fs.unlink(`${config.contentsDir}/${obj.filename}`, ()=>{});
+					fs.unlink(`${config.contentsDir}/thumbnails/${obj.filename}`, ()=>{});
+				});
+
+				res.sendStatus(204);
+			});
+		}catch(e) {
+			console.log(e);
+			mysql.rollback();
+			res.sendStatus(500);
+		}
+	})
+
+})
 
 router.post('/favorites', async (req, res) => {
 	const contentId = Number(req.body.contentId);
