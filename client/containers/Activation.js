@@ -1,44 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import classnames from 'classnames';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/activation.js';
 
 class Activation extends React.Component {
 	componentDidMount() {
-		if(! this.props.app.isSignedIn) return;
-		this.props.dispatch(actions.request());
+		if(this.props.activation.shouldRequestActivation) {
+			this.props.dispatch(actions.requestActivation(this.props.user.userName));
+		}
 	}
 
 	componentDidUpdate() {
-		if(! this.props.app.isSignedIn) return;
-		if(this.props.activation.isSuccess !== null) return;
-		this.props.dispatch(actions.request());
+		if(this.props.activation.shouldRequestActivation) {
+			this.props.dispatch(actions.requestActivation(this.props.user.userName));
+		}
 	}
 
 	render() {
+		const activation = this.props.activation;
+
 		let textNode = null;
 
-		if(this.props.activation.isSuccess === true) {
-			textNode = '認証されました';
-		}else if(this.props.activation.isSuccess === false) {
-			switch(this.props.activation.errorMessage) {
-				case '500':
-					textNode = '500 server error';
-					break;
+		if(! this.props.app.isSignedIn) textNode = 'サインインしてください';
+		else if(activation.isRequesting) textNode = '認証中...';
+		else if(activation.didRequestSucceed) textNode = '認証されました';
+		else if(activation.didRequestSucceed === false) textNode = '認証に失敗しました';
 
-				case '404':
-					textNode = '404 not found';
-					break;
-
-				case 'expired':
-					textNode = '期限切れのURLです';
-					break;
-
-				default:
-					textNode = '認証に失敗しました。';
-			}
-		}
 		return (
 			<div className="activation">
 				{textNode}
@@ -50,6 +36,7 @@ class Activation extends React.Component {
 function mapStateToProps(state) {
 	return {
 		app: state.app,
+		user: state.user,
 		activation: state.activation,
 	}
 }

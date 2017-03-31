@@ -40,12 +40,12 @@ const routes = (
 		<ReactRouter.Route path="signup" component={SignUp} />
 		<ReactRouter.Route path="signIn" component={SignIn} />
 		<ReactRouter.Route component={UserOnly}>
-			<ReactRouter.Route path="activation/*" component={Activation} />
 			<ReactRouter.Route path="mypage" component={MyPage}>
 				<ReactRouter.IndexRoute component={RegistrationInformation} />
 				<ReactRouter.Route path="myposts" component={MyPosts} />
 				<ReactRouter.Route path="favorites" component={Favorites} />
 				<ReactRouter.Route path="mycomments" component={MyComments} />
+				<ReactRouter.Route path="activation/*" component={Activation} />
 			</ReactRouter.Route>
 		</ReactRouter.Route>
 		<ReactRouter.Route path="*" component={NotFound} />

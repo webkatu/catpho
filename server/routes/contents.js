@@ -191,14 +191,10 @@ router.post('/',
 			return res.sendStatus(401);
 		}
 
-		Object.assign(req.body, formatBody(req.body), { userId });
-		if(! validator.validateContentBody(req.body)) return res.sendStatus(400);
-		console.log(req.body);
-		console.log(req.files);
-
 		try {
+			Object.assign(req.body, formatBody(req.body), { userId });
+			if(! validator.validateContentBody(req.body)) return res.sendStatus(400);
 			await changeFilename(req.files);
-			await saveUploadFiles(req.files);
 
 			const contents = new Contents();
 			const mysql = contents.mysql;
@@ -209,6 +205,7 @@ router.post('/',
 					var contentIdArray = await contents.saveContents(req.files, req.body);
 					var tagIdArray = await new Tags().saveTags(req.body.tags);
 					await new TagMap().saveTagMap(contentIdArray, tagIdArray);
+					await saveUploadFiles(req.files);
 
 					mysql.commit((err) => {
 						if(err) throw err;

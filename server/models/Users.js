@@ -48,6 +48,10 @@ export default class Users extends MySQLModel {
 		return user;
 	}
 
+	async activate(id) {
+		return await this.update({ activation: 1 }, '?? = ?', { id });
+	}
+
 	selectUserByEmailOrUserName(emailOrUserName) {
 		const sql = `select * from ${this.tableName} where email = ? or userName = ?;`;
 		return this.query(sql, [emailOrUserName, emailOrUserName]);
@@ -61,10 +65,6 @@ export default class Users extends MySQLModel {
 		})();
 	}
 
-	activate(id) {
-		const sql = `update ${this.tableName} set activation = 1 where id = ?;`;
-		return this.query(sql, [id]);
-	}
 
 	updateUserWithPassword(setData, id, password) {
 		const wherePhrase = 'where ?? = ? and ?? = ?';

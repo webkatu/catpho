@@ -1,8 +1,7 @@
 const initialState = {
 	shouldRequestActivation: false,
 	isRequesting: false,
-	isSuccess: null,
-	errorMessage: '',
+	didRequestSucceed: null,
 }
 
 export default (state = initialState, action) => {
@@ -21,14 +20,13 @@ export default (state = initialState, action) => {
 		case 'REQUEST_ACTIVATION_SUCCESS':
 			return Object.assign({}, state, {
 				isRequesting: false,
-				isSuccess: true,
+				didRequestSucceed: true,
 			});
 
 		case 'REQUEST_ACTIVATION_FAILURE':
 			return Object.assign({}, state, {
 				isRequesting: false,
-				isSuccess: false,
-				errorMessage: action.payload.message,
+				didRequestSucceed: false,
 			});
 
 	}

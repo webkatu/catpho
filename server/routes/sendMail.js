@@ -46,7 +46,7 @@ router.post('/',
 		try {
 			await mailer.sendActivationMail({
 				to: req.body.to,
-				activationToken: req.body.activationToken,
+				activationToken,
 			});
 		}catch(e) {
 			console.log(e);

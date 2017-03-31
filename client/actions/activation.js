@@ -1,6 +1,6 @@
 import config from '../config.js';
 
-const requestActivation = () => {
+const _requestActivation = () => {
 	return {
 		type: 'REQUEST_ACTIVATION',
 	}
@@ -12,19 +12,18 @@ const requestActivationSuccess = () => {
 	}
 }
 
-const requestActivationFailure = (error) => {
+const requestActivationFailure = () => {
 	return {
 		type: 'REQUEST_ACTIVATION_FAILURE',
-		payload: error,
 	}
 }
 
-export const request = () => {
+export const requestActivation = (userName) => {
 	return async (dispatch) => {
-		dispatch(requestActivation);
+		dispatch(_requestActivation());
 		try {
-			const response = await fetch(config.apiServer + location.pathname, {
-				method: 'POST',
+			const response = await fetch(`${config.apiServer}/users/${userName}`, {
+				method: 'PATCH',
 				mode: 'cors',
 				headers: {
 					...config.defaultHeaders,
@@ -32,18 +31,15 @@ export const request = () => {
 				},
 				body: JSON.stringify({
 					userToken: localStorage.getItem('userToken'),
+					activationToken: new URLSearchParams(location.search.slice(1)).get('token'),
 				}),
 			});
-
 			if(! response.ok) throw new Error(response.status);
-
-			const json = await response.json();
-			if(! json.success) throw json.error;
 
 			dispatch(requestActivationSuccess());
 		}catch(e) {
 			console.log(e);
-			dispatch(requestActivationFailure(e));
+			dispatch(requestActivationFailure());
 		}
 	}
 }

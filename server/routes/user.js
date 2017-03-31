@@ -28,6 +28,40 @@ const upload = multer({
 }).single('avatar');
 
 router.patch('/',
+	//validation
+	async (req, res, next) => {
+		try {
+			const decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
+			if(req.params.userName !== decoded.userName) throw new Error();
+
+			res.locals.userId = decoded.userId;
+			res.locals.userName = decoded.userName;
+			next();
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(401);
+		}
+	},
+	//activation
+	async (req, res, next) => {
+		if(req.body.activationToken === undefined) return next();
+
+		try {
+			const decoded = await jwtManager.verifyActivationToken(req.body.activationToken);
+			if(decoded.userName !== res.locals.userName) throw new Error();
+		}catch(e){
+			return res.sendStatus(400);
+		}
+
+		try {
+			await new Users().activate(res.locals.userId);
+			return res.json({ payload: { activation: 1 } });
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);
+		}
+	},
+
 	(req, res, next) => {
 		upload(req, res, (err) => {
 			if(err || req.fileValidationError) {
@@ -49,7 +83,7 @@ router.patch('/',
 		}
 
 		try {
-			const currentUser = await new Users().selectOnce('*', 'id = ?', [decoded.userId]);
+			const currentUser = await new Users().selectOnce('*', 'id = ?', [res.locals.userId]);
 			if(! await validate(currentUser, req.body, req.file)) return res.sendStatus(400);
 
 			const data = {};
@@ -62,7 +96,7 @@ router.patch('/',
 			if(req.body.restoringAvatar) data.avatar = config.defaultAvatarFileName
 			if(req.file) data.avatar = req.file.filename;
 
-			await new Users().update(data, 'id = ?', [decoded.userId]);
+			await new Users().update(data, 'id = ?', [res.locals.userId]);
 			
 			if(req.file) {
 				await imageProcessor.createAvatar(req.file.path, `${config.avatarsDir}/${req.file.filename}`);

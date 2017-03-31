@@ -26,6 +26,11 @@ export default (state = initialState, action) => {
 
 		case 'PATCH_REGISTRATION_INFORMATION_SUCCESS':
 			return Object.assign({}, state, action.payload);
+
+		case 'REQUEST_ACTIVATION_SUCCESS':
+			return Object.assign({}, state, {
+				hasBeenActivated: true,
+			});
 	}
 
 	return state;

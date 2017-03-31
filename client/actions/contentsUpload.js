@@ -76,7 +76,7 @@ export const postContents = (form, files) => {
 				mode: 'cors',
 				body: formData,
 			});
-			if(! response.ok) throw new TypeError();
+			if(! response.ok) throw new Error(response.status);
 			dispatch(postContentsSuccess());
 			form.reset();
 			return;
