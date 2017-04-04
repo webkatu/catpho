@@ -28,6 +28,16 @@ const upload = multer({
 }).single('avatar');
 
 router.patch('/',
+	(req, res, next) => {
+		upload(req, res, (err) => {
+			if(err || req.fileValidationError) {
+				console.log(err, req.fileValidationError);
+				return res.sendStatus(400);
+			}
+			next();
+		});
+	},
+
 	//validation
 	async (req, res, next) => {
 		try {
@@ -62,25 +72,8 @@ router.patch('/',
 		}
 	},
 
-	(req, res, next) => {
-		upload(req, res, (err) => {
-			if(err || req.fileValidationError) {
-				console.log(err, req.fileValidationError);
-				return res.sendStatus(400);
-			}
-			next();
-		});
-	},
-
 	async (req, res) => {
 		console.log(req.file, req.body);
-		try {
-			var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
-			if(req.params.userName !== decoded.userName) throw new Error();
-		}catch(e) {
-			console.log(e);
-			return res.sendStatus(401);
-		}
 
 		try {
 			const currentUser = await new Users().selectOnce('*', 'id = ?', [res.locals.userId]);
