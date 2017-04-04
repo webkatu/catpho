@@ -32,9 +32,9 @@ const requestSignInSuccess = (payload) => {
 	};
 }
 
-const requestSignInFailed = () => {
+const requestSignInFailure = () => {
 	return {
-		type: 'REQUEST_SIGN_IN_FAILED',
+		type: 'REQUEST_SIGN_IN_FAILURE',
 	};
 }
 
@@ -57,7 +57,7 @@ export const signIn = (form) => {
 			dispatch(requestSignInSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(requestSignInFailed());
+			dispatch(requestSignInFailure());
 		}
 	};
 }

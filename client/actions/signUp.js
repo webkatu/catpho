@@ -40,9 +40,9 @@ const requestSignUpSuccess = (payload) => {
 	};
 }
 
-const requestSignUpFailed = () => {
+const requestSignUpFailure = () => {
 	return {
-		type: 'REQUEST_SIGN_UP_FAILED',
+		type: 'REQUEST_SIGN_UP_FAILURE',
 	};
 }
 
@@ -75,7 +75,7 @@ export const signUp = (form) => {
 			dispatch(requestSignUpSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(requestSignUpFailed());
+			dispatch(requestSignUpFailure());
 		}
 	};
 }

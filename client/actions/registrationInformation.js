@@ -18,9 +18,9 @@ const requestActivationSuccess = () => {
 	};
 }
 
-const requestActivationFailed = () => {
+const requestActivationFailure = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_FAILED',
+		type: 'REQUEST_ACTIVATION_FAILURE',
 	};
 }
 
@@ -45,7 +45,7 @@ export const requestActivation = (email) => {
 			if(! response.ok) throw new Error(response.status);
 			dispatch(requestActivationSuccess());
 		}catch(e) {
-			dispatch(requestActivationFailed());
+			dispatch(requestActivationFailure());
 		}
 	}
 }
@@ -124,9 +124,9 @@ const patchRegistrationInformationSuccess = (payload) => {
 	};
 }
 
-const patchRegistrationInformationFailed = () => {
+const patchRegistrationInformationFailure = () => {
 	return {
-		type: 'PATCH_REGISTRATION_INFORMATION_FAILED',
+		type: 'PATCH_REGISTRATION_INFORMATION_FAILURE',
 	};
 }
 
@@ -151,7 +151,7 @@ export const patchRegistrationInformation = (form, userName) => {
 			dispatch(patchRegistrationInformationSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(patchRegistrationInformationFailed());
+			dispatch(patchRegistrationInformationFailure());
 		}
 	}
 }
@@ -186,9 +186,9 @@ const deleteUserSuccess = () => {
 	};
 }
 
-const deleteUserFailed = () => {
+const deleteUserFailure = () => {
 	return {
-		type: 'DELETE_USER_FAILED',
+		type: 'DELETE_USER_FAILURE',
 	};
 }
 
@@ -208,7 +208,7 @@ export const deleteUser = (userName) => {
 			dispatch(deleteUserSuccess());
 		}catch(e) {
 			console.log(e);
-			dispatch(deleteUserFailed());
+			dispatch(deleteUserFailure());
 		}
 	};
 }

@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
 				isFetching: false,
 			});
 
-		case 'FETCH_CONTENTS_FAILED':
+		case 'FETCH_CONTENTS_FAILURE':
 			return Object.assign({}, state, {
 				isFetching: false,
 			});

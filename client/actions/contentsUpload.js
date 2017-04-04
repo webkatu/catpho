@@ -54,9 +54,9 @@ const postContentsSuccess = () => {
 	};
 };
 
-const postContentsFailed = () => {
+const postContentsFailure = () => {
 	return {
-		type: 'POST_CONTENTS_FAILED',
+		type: 'POST_CONTENTS_FAILURE',
 	};
 };
 
@@ -81,7 +81,7 @@ export const postContents = (form, files) => {
 			form.reset();
 			return;
 		}catch(e) {
-			return dispatch(postContentsFailed());
+			return dispatch(postContentsFailure());
 		}
 
 	}

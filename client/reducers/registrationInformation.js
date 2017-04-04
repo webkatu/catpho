@@ -61,7 +61,7 @@ export default (state = initialState, action) => {
 				isAlreadyRequestingActivation: true,
 			});
 
-		case 'REQUEST_ACTIVATION_FAILED':
+		case 'REQUEST_ACTIVATION_FAILURE':
 			return Object.assign({}, state, {
 				isRequestingActivation: false,
 			});
@@ -197,7 +197,7 @@ export default (state = initialState, action) => {
 			window.URL.revokeObjectURL(state.form.avatarImg);
 			return Object.assign({}, initialState);
 
-		case 'PATCH_REGISTRATION_INFORMATION_FAILED':
+		case 'PATCH_REGISTRATION_INFORMATION_FAILURE':
 			return Object.assign({}, state, {
 				isPatching: false,
 			});
@@ -229,7 +229,7 @@ export default (state = initialState, action) => {
 				didWithdraw: true,
 			});
 
-		case 'DELETE_USER_FAILED':
+		case 'DELETE_USER_FAILURE':
 			return Object.assign({}, state, {
 				isDeletingUser: false,
 			});

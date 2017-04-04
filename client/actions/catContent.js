@@ -24,9 +24,9 @@ const addFavoriteSuccess = () => {
 	};
 }
 
-const addFavoriteFailed = (error) => {
+const addFavoriteFailure = (error) => {
 	return {
-		type: 'ADD_FAVORITE_FAILED',
+		type: 'ADD_FAVORITE_FAILURE',
 		payload: error,
 	};
 }
@@ -51,7 +51,7 @@ export const addFavorite = (userName, contentId) => {
 			if(! response.ok) throw new Error(response.status);
 			dispatch(addFavoriteSuccess());
 		}catch(e) {
-			dispatch(addFavoriteFailed(e));
+			dispatch(addFavoriteFailure(e));
 		}
 	}
 }
@@ -68,9 +68,9 @@ const removeFavoriteSuccess = () => {
 	};
 }
 
-const removeFavoriteFailed = (error) => {
+const removeFavoriteFailure = (error) => {
 	return {
-		type: 'REMOVE_FAVORITE_FAILED',
+		type: 'REMOVE_FAVORITE_FAILURE',
 		payload: error,
 	};
 }
@@ -94,7 +94,7 @@ export const removeFavorite = (userName, contentId) => {
 			if(! response.ok) throw new Error(response.status);
 			dispatch(removeFavoriteSuccess());
 		}catch(e) {
-			dispatch(removeFavoriteFailed(e));
+			dispatch(removeFavoriteFailure(e));
 		}
 	}
 }
@@ -126,9 +126,9 @@ const deleteContentSuccess = (contentId) => {
 	};
 }
 
-const deleteContentFailed = (error) => {
+const deleteContentFailure = (error) => {
 	return {
-		type: 'DELETE_CONTENT_FAILED',
+		type: 'DELETE_CONTENT_FAILURE',
 		payload: error,
 	};
 }
@@ -153,7 +153,7 @@ export const deleteContent = (contentId) => {
 			dispatch(deleteContentSuccess(contentId));
 		}catch(e) {
 			console.log(e);
-			dispatch(deleteContentFailed(e));
+			dispatch(deleteContentFailure(e));
 		}
 	}
 }
@@ -177,9 +177,9 @@ const fetchCommentsSuccess = (payload) => {
 	};
 }
 
-const fetchCommentsFailed = (error) => {
+const fetchCommentsFailure = (error) => {
 	return {
-		type: 'FETCH_COMMENTS_FAILED',
+		type: 'FETCH_COMMENTS_FAILURE',
 		payload: error,
 	};
 }
@@ -200,7 +200,7 @@ export const fetchComments = (contentId) => {
 			const json = await response.json();
 			dispatch(fetchCommentsSuccess(json.payload));
 		}catch(e) {
-			dispatch(fetchCommentsFailed(e));
+			dispatch(fetchCommentsFailure(e));
 		}
 	}
 }
@@ -231,9 +231,9 @@ const postCommentSuccess = (payload) => {
 	};
 }
 
-const postCommentFailed = (error) => {
+const postCommentFailure = (error) => {
 	return {
-		type: 'POST_COMMENT_FAILED',
+		type: 'POST_COMMENT_FAILURE',
 		payload: error,
 	};
 }
@@ -258,7 +258,7 @@ export const postComment = (form, contentId) => {
 			const json = await response.json();
 			dispatch(postCommentSuccess(json.payload));
 		}catch(e) {
-			dispatch(postCommentFailed(e));
+			dispatch(postCommentFailure(e));
 		}
 	}
 }
@@ -290,9 +290,9 @@ const deleteCommentSuccess = (payload) => {
 	};
 }
 
-const deleteCommentFailed = (error) => {
+const deleteCommentFailure = (error) => {
 	return {
-		type: 'DELETE_COMMENT_FAILED',
+		type: 'DELETE_COMMENT_FAILURE',
 		payload: error,
 	};
 }
@@ -317,7 +317,7 @@ export const deleteComment = (contentId, commentId) => {
 			const json = await response.json();
 			dispatch(deleteCommentSuccess(json.payload));
 		}catch(e) {
-			dispatch(deleteCommentFailed(e));
+			dispatch(deleteCommentFailure(e));
 		}
 	}
 }

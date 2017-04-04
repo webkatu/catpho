@@ -94,7 +94,7 @@ export default (state = initialState, action) => {
 				isPosting: false,
 			});
 
-		case 'POST_CONTENTS_FAILED':
+		case 'POST_CONTENTS_FAILURE':
 			return Object.assign({}, state, {
 				isPosting: false,
 			});

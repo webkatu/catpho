@@ -27,9 +27,9 @@ const fetchContentsSuccess = (payload) => {
 	};
 }
 
-const fetchContentsFailed = (error, path) => {
+const fetchContentsFailure = (error, path) => {
 	return {
-		type: 'FETCH_CONTENTS_FAILED',
+		type: 'FETCH_CONTENTS_FAILURE',
 		payload: { ...error, path }
 	};
 }
@@ -57,7 +57,7 @@ export const fetchContents = (basePath = '/contents' + location.search, page) =>
 			dispatch(fetchContentsSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchContentsFailed(e, path));
+			dispatch(fetchContentsFailure(e, path));
 		}
 	}
 }

@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
 				commentsCount: action.payload.commentsCount,
 			});
 
-		case 'FETCH_CONTENT_FAILED':
+		case 'FETCH_CONTENT_FAILURE':
 			return Object.assign({}, state, {
 				content: Object.assign({}, initialState.content),
 				isFetchingContent: false,
@@ -82,7 +82,7 @@ export default (state = initialState, action) => {
 				favoritesCount: state.favoritesCount + 1,
 			});
 
-		case 'ADD_FAVORITE_FAILED':
+		case 'ADD_FAVORITE_FAILURE':
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 			});
@@ -99,7 +99,7 @@ export default (state = initialState, action) => {
 				favoritesCount: state.favoritesCount - 1,
 			});
 
-		case 'REMOVE_FAVORITE_FAILED':
+		case 'REMOVE_FAVORITE_FAILURE':
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 			});
@@ -126,7 +126,7 @@ export default (state = initialState, action) => {
 				content: initialState.content,
 			});
 
-		case 'DELETE_CONTENT_FAILED':
+		case 'DELETE_CONTENT_FAILURE':
 			return Object.assign({}, state, {
 				isDeletingContent: false,
 			});
@@ -149,7 +149,7 @@ export default (state = initialState, action) => {
 				commentsCount: action.payload.comments.length,
 			});
 
-		case 'FETCH_COMMENTS_FAILED':
+		case 'FETCH_COMMENTS_FAILURE':
 			return Object.assign({}, state, {
 				isFetchingComment: false,
 				fetchingCommentSuccess: false,

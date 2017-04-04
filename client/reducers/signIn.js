@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
 				shouldViewResult: true,
 			});
 
-		case 'REQUEST_SIGN_IN_FAILED':
+		case 'REQUEST_SIGN_IN_FAILURE':
 			return Object.assign({}, state, {
 				isRequesting: false,
 				shouldViewResult: true,

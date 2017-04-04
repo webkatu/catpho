@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
 				postCommentText: '',
 			});
 
-		case 'POST_COMMENT_FAILED':
+		case 'POST_COMMENT_FAILURE':
 			return Object.assign({}, state, {
 				isPostingComment: false,
 			});
@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
 				comments: action.payload.comments,
 			});
 
-		case 'DELETE_COMMENT_FAILED':
+		case 'DELETE_COMMENT_FAILURE':
 			return Object.assign({}, state, {
 				isDeletingComment: false,
 				shouldDisplayDeletionConfirmation: false,

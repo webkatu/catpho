@@ -13,9 +13,9 @@ const fetchContentSuccess = (payload) => {
 	};
 }
 
-const fetchContentFailed = (error) => {
+const fetchContentFailure = (error) => {
 	return {
-		type: 'FETCH_CONTENT_FAILED',
+		type: 'FETCH_CONTENT_FAILURE',
 		payload: error,
 	};
 }
@@ -41,7 +41,7 @@ export const fetchContent = (contentId) => {
 			dispatch(fetchContentSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchContentFailed(e));
+			dispatch(fetchContentFailure(e));
 		}
 	}
 }
