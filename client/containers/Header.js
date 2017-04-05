@@ -60,7 +60,7 @@ class Header extends React.Component {
 
 		const myPageButton = (
 			<a
-				href="/mypage"
+				href="/mypage/"
 				onClick={::this.handleMyPageButtonClick}
 			>
 				<img src={this.props.user.avatar} />

@@ -81,8 +81,10 @@ export default (state = initialState, action) => {
 			let basePathOfFetch;
 			switch(action.payload.pathname) {
 				case '/':
-				case '/contents':
 				case '/contents/':
+					basePathOfFetch = '/contents/';
+					break;
+				case '/mypage/mypost/':
 			}
 			return Object.assign({}, state, {
 				shouldClearContents: true,
