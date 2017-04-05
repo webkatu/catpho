@@ -78,8 +78,15 @@ export default (state = initialState, action) => {
 			});
 
 		case 'CHANGE_LOCATION@simpleImageListViewer':
+			let basePathOfFetch;
+			switch(action.payload.pathname) {
+				case '/':
+				case '/contents':
+				case '/contents/':
+			}
 			return Object.assign({}, state, {
 				shouldClearContents: true,
+				shouldDisplayContentViewer: false,
 			});
 
 		case 'CLEAR@simpleImageListViewer':

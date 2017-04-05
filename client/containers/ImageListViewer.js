@@ -47,7 +47,7 @@ class ImageListViewer extends React.Component {
 			<article className="imageListViewer">
 				<ImageListViewerNav onAutoReloadButtonClick={::this.onAutoReloadButtonClick} />
 				<SimpleImageListViewer
-					basePathOfFetch='/contents'
+					basePathOfFetch={'/contents' + location.search}
 					ref="simpleImageListViewer"
 				/>
 			</article>

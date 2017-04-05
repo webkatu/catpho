@@ -1,6 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/catContent';
+import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import FavoriteButton from '../components/CatContent/FavoriteButton.js'
 import CommentBoxDisplayButton from '../components/CatContent/CommentBoxDisplayButton.js'
 import DeletionConfirmation from '../components/CatContent/DeletionConfirmation.js'
@@ -9,9 +10,10 @@ import CommentBox from '../components/CatContent/CommentBox.js'
 import User from '../components/common/User.js'
 
 class CatContent extends React.Component {
-	handleAnchorClick(e) {
+	handleTagAnchorClick(e) {
 		e.preventDefault();
 		this.context.router.push(e.target.pathname + e.target.search);
+		this.props.dispatch(simpleImageListViewerActions.changeLocation());
 	}
 
 	handleUserAnchorClick(e) {
@@ -115,7 +117,7 @@ class CatContent extends React.Component {
 		const tagNodes = content.tags.map((tag, i) => {
 			return (
 				<span key={i}>
-					<a href={'/contents/?tags=' + tag} onClick={::this.handleAnchorClick}>{tag}</a>
+					<a href={'/contents/?tag=' + tag} onClick={::this.handleTagAnchorClick}>{tag}</a>
 					{' '}
 				</span>
 			);
@@ -144,7 +146,7 @@ class CatContent extends React.Component {
 		const shareViewNode = (
 			(! catContent.shouldDisplayShareView)
 			? null
-			: <ShareView url={`${location.origin}/contents/${this.props.content.id}`}/>
+			: <ShareView url={`${location.origin}/contents/${this.props.content.id}/`}/>
 		);
 
 		const commentBoxNode = (
@@ -197,6 +199,10 @@ class CatContent extends React.Component {
 			</article>
 		);
 	}
+
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
 }
 
 function mapStateToProps(state) {

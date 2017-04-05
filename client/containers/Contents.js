@@ -6,15 +6,10 @@ class Content extends React.Component {
 	render() {
 		return (
 			<div className="contents">
-				<ImageListViewer />
+				<ImageListViewer location={this.props.location}/>
 			</div>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-	};
-}
-
-export default ReactRedux.connect(mapStateToProps)(Content);
+export default ReactRedux.connect()(Content);

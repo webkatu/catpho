@@ -34,17 +34,18 @@ const history = ReactRouterRedux.syncHistoryWithStore(ReactRouter.browserHistory
 const routes = (
 	<ReactRouter.Route path="/" component={App}>
 		<ReactRouter.IndexRoute component={Contents} />
-		<ReactRouter.Route path="contents/:id" component={ContentViewer} />
+		<ReactRouter.Route path="contents/" component={Contents} />
+		<ReactRouter.Route path="contents/:id/" component={ContentViewer} />
 		<ReactRouter.Route path="test" component={Contents} />
 		<ReactRouter.Route path="upload" component={ContentsUpload} />
 		<ReactRouter.Route path="signup" component={SignUp} />
 		<ReactRouter.Route path="signIn" component={SignIn} />
 		<ReactRouter.Route component={UserOnly}>
-			<ReactRouter.Route path="mypage" component={MyPage}>
+			<ReactRouter.Route path="mypage/" component={MyPage}>
 				<ReactRouter.IndexRoute component={RegistrationInformation} />
-				<ReactRouter.Route path="myposts" component={MyPosts} />
-				<ReactRouter.Route path="favorites" component={Favorites} />
-				<ReactRouter.Route path="mycomments" component={MyComments} />
+				<ReactRouter.Route path="myposts/" component={MyPosts} />
+				<ReactRouter.Route path="favorites/" component={Favorites} />
+				<ReactRouter.Route path="mycomments/" component={MyComments} />
 				<ReactRouter.Route path="activation/*" component={Activation} />
 			</ReactRouter.Route>
 		</ReactRouter.Route>

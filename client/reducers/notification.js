@@ -41,6 +41,12 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
+		case 'FETCH_CONTENTS_FAILURE':
+			return Object.assign({}, state, {
+				text: `コンテンツの取得に失敗しました (Error: ${action.payload.error.message})`,
+				displayTime: 5000,
+			});
+
 		case 'POST_CONTENTS':
 			return Object.assign({}, state, {
 				text: 'コンテンツを投稿しています...',

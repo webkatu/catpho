@@ -27,10 +27,10 @@ const fetchContentsSuccess = (payload) => {
 	};
 }
 
-const fetchContentsFailure = (error, path) => {
+const fetchContentsFailure = (error) => {
 	return {
 		type: 'FETCH_CONTENTS_FAILURE',
-		payload: { ...error, path }
+		payload: { error }
 	};
 }
 
@@ -43,7 +43,8 @@ export const fetchContents = (basePath = '/contents' + location.search, page) =>
 	if(page) query.page = page;
 	else delete query.page;
 	const path = url.pathname + '?' + qs.stringify(query);
-	
+	console.log(path);
+
 	return async (dispatch) => {
 		dispatch(_fetchContents());
 		try {
@@ -57,7 +58,7 @@ export const fetchContents = (basePath = '/contents' + location.search, page) =>
 			dispatch(fetchContentsSuccess(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchContentsFailure(e, path));
+			dispatch(fetchContentsFailure(e));
 		}
 	}
 }
@@ -72,9 +73,12 @@ export const openViewer = (contents, selectedIndex) => {
 	};
 }
 
-export const changeLocation = () => {
+export const changeLocation = (pathname) => {
 	return {
 		type: 'CHANGE_LOCATION@simpleImageListViewer',
+		payload: {
+			pathname,
+		},
 	};
 }
 

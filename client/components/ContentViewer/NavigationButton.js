@@ -9,7 +9,7 @@ class NavigationButton extends React.Component {
 		return (
 			<div className="navigationButton">
 				<a
-					href={`/contents/${this.props.contentId}`}
+					href={`/contents/${this.props.contentId}/`}
 					onClick={this.props.onClick}
 				>{this.props.children}</a>
 			</div>
