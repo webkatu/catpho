@@ -7,7 +7,6 @@ import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.
 import SimpleImageListViewer from './SimpleImageListViewer.js';
 import ImageListViewBox from '../components/ImageListViewer/ImageListViewBox.js';
 import ImageListViewerNav from '../components/ImageListViewer/ImageListViewerNav.js';
-import { createPagerPath } from '../common/index.js'
 
 class ImageListViewer extends React.Component {
 	componentWillMount() {

@@ -2,14 +2,14 @@ import qs from 'querystring';
 
 export const createPagerPath = (pageNumber) => {
 	const pathname = location.pathname;
-	const query = qs.parse(location.search.slice(1));
+	const params = new URLSearchParams(location.search);
 	if(Number(pageNumber) === 1) {
-		delete query.page;
-		const queryString = qs.stringify(query);
+		params.delete('page');
+		const queryString = params.toString();
 		if(queryString === '') return pathname;
 		return pathname + '?' + queryString;
 	}
 
-	query.page = pageNumber;
-	return pathname + '?' + qs.stringify(query);
+	params.set('page', pageNumber);
+	return pathname + '?' + params.toString();
 }
