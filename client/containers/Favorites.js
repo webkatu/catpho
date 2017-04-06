@@ -7,16 +7,10 @@ class Favorites extends React.Component {
 		return (
 			<article className="favorites">
 				<h1>お気に入り</h1>
-				<SimpleImageListViewer basePathOfFetch={`/contents/?favoritesOf=${this.props.user.userName}&userToken=${localStorage.getItem('userToken')}`} />
+				<SimpleImageListViewer />
 			</article>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		user: state.user,
-	};
-}
-
-export default ReactRedux.connect(mapStateToProps)(Favorites);
+export default ReactRedux.connect()(Favorites);

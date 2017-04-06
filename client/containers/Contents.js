@@ -6,7 +6,7 @@ class Content extends React.Component {
 	render() {
 		return (
 			<div className="contents">
-				<ImageListViewer location={this.props.location}/>
+				<ImageListViewer />
 			</div>
 		);
 	}

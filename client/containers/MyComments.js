@@ -7,16 +7,10 @@ class MyComments extends React.Component {
 		return (
 			<article className="myComments">
 				<h1>コメントした画像</h1>
-				<SimpleImageListViewer basePathOfFetch={`/contents/?includingCommentsOf=${this.props.user.userName}`} />
+				<SimpleImageListViewer />
 			</article>
 		);
 	}
 }
 
-function mapStateToProps(state) {
-	return {
-		user: state.user,
-	};
-}
-
-export default ReactRedux.connect(mapStateToProps)(MyComments);
+export default ReactRedux.connect()(MyComments);

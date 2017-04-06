@@ -1,4 +1,3 @@
-import qs from 'querystring';
 import URL from 'url';
 import config from '../config.js';
 
@@ -35,15 +34,17 @@ const fetchContentsFailure = (error) => {
 }
 
 export const fetchContents = (basePath = '/contents' + location.search, page) => {
-	//引数からfetch先のpathを作成;
-	if(page === undefined) page = qs.parse(location.search.slice(1)).page;
+	//locationと引数からfetch先のpathを作成;
+
+	const params = new URLSearchParams(location.search);
+	if(page) params.set('page', page);
 
 	const url = URL.parse(basePath);
-	const query = qs.parse(url.query);
-	if(page) query.page = page;
-	else delete query.page;
-	const path = url.pathname + '?' + qs.stringify(query);
-	console.log(path);
+	const query = new URLSearchParams(url.query);
+	query.delete('null');
+	for(const p of params.entries()) query.append(p[0], p[1]);
+
+	const path = url.pathname + '?' + query.toString();
 
 	return async (dispatch) => {
 		dispatch(_fetchContents());
@@ -73,13 +74,39 @@ export const openViewer = (contents, selectedIndex) => {
 	};
 }
 
-export const changeLocation = (pathname) => {
-	return {
-		type: 'CHANGE_LOCATION@simpleImageListViewer',
-		payload: {
-			pathname,
-		},
-	};
+export const changeLocation = () => {
+	return (dispatch, getState) => {
+		const { user } = getState();
+
+		let basePathOfFetch;
+		switch(location.pathname) {
+			case '/':
+			case '/contents/':
+				const params = new URLSearchParams(location.search);
+				if(params.has('tag')) {
+					basePathOfFetch = '/contents/?tag'
+				}
+				basePathOfFetch = '/contents/';
+				break;
+			case '/mypage/myposts/':
+				basePathOfFetch = `/contents/?poster=${user.userName}`;
+				break;
+			case '/mypage/favorites/':
+				basePathOfFetch = `/contents/?favoritesOf=${user.userName}&userToken=${localStorage.getItem('userToken')}`;
+				break;
+			case '/mypage/mycomments/':
+				basePathOfFetch = `/contents/?includingCommentsOf=${user.userName}`;
+				break;
+		}
+
+		dispatch({
+			type: 'CHANGE_LOCATION@simpleImageListViewer',
+			payload: {
+				basePathOfFetch,
+			},
+		});
+
+	}
 }
 
 export const clear = () => {

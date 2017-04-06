@@ -10,7 +10,6 @@ class SimpleImageListViewer extends React.Component {
 	componentWillMount() {
 		this._handlePopstate = ::this.handlePopstate
 		window.addEventListener('popstate', this._handlePopstate);
-		this.props.dispatch(actions.mount(this.props.basePathOfFetch));
 		this.props.dispatch(actions.changeLocation());
 	}
 
@@ -84,10 +83,6 @@ class SimpleImageListViewer extends React.Component {
 			</div>
 		);
 	}
-
-	static propTypes = {
-		basePathOfFetch: React.PropTypes.string.isRequired,
-	};
 
 	static contextTypes = {
 		router: React.PropTypes.object.isRequired,
