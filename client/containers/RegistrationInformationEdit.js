@@ -37,7 +37,7 @@ class RegistrationInformationEdit extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 		if(this.props.registrationInformation.isPatching) return;
-		this.props.dispatch(actions.patchRegistrationInformation(e.target, this.props.user.userName));
+		this.props.dispatch(actions.patchRegistrationInformation(e.target, this.props.myUser.userName));
 	}
 
 	handleQuittingButtonClick(e) {
@@ -48,7 +48,7 @@ class RegistrationInformationEdit extends React.Component {
 	render() {
 		const registrationInformation = this.props.registrationInformation;
 		const form = this.props.form;
-		const user = this.props.user;
+		const myUser = this.props.myUser;
 		return (
 			<form className="registrationInformationEdit" onSubmit={::this.handleSubmit}>
 				<dl>
@@ -91,7 +91,7 @@ class RegistrationInformationEdit extends React.Component {
 						<input
 							type="text"
 							disabled={true}
-							defaultValue={user.userName}
+							defaultValue={myUser.userName}
 						/>
 					</dd>
 					<dt>メールアドレス: </dt><dd>
@@ -156,7 +156,7 @@ function mapStateToProps(state) {
 	return {
 		registrationInformation: state.registrationInformation,
 		form: state.registrationInformation.form,
-		user: state.user,
+		myUser: state.myUser,
 	};
 }
 

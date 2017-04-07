@@ -1,36 +1,39 @@
 const initialState = {
-	id: 0,
 	userName: '',
-	email: '',
 	nickname: '',
 	avatar: '',
-	hasBeenActivated: false,
+	created: '',
+	postCount: 0,
+	isFetchingUser: false,
+	didFailFetchingUser: false,
 };
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-		case 'REQUEST_SIGN_UP_SUCCESS': 
-		case 'REQUEST_SIGN_IN_SUCCESS':
+		case 'FETCH_USER':
 			return Object.assign({}, state, {
-				id: action.payload.id,
+				isFetchingUser: true,
+			});
+
+		case 'FETCH_USER_SUCCESS':
+			return Object.assign({}, state, {
 				userName: action.payload.userName,
-				email: action.payload.email,
 				nickname: action.payload.nickname,
 				avatar: action.payload.avatar,
-				hasBeenActivated: Boolean(action.payload.activation)
+				created: action.payload.created,
+				postCount: action.payload.postCount,
+				isFetchingUser: false,
+				didFailFetchingUser: false,
 			});
 
-		case 'DELETE_USER_SUCCESS':
-		case 'SIGN_OUT':
-			return { ...initialState };
-
-		case 'PATCH_REGISTRATION_INFORMATION_SUCCESS':
-			return Object.assign({}, state, action.payload);
-
-		case 'REQUEST_ACTIVATION_SUCCESS':
+		case 'FETCH_USER_FAILURE':
 			return Object.assign({}, state, {
-				hasBeenActivated: true,
+				isFetchingUser: false,
+				didFailFetchingUser: true,
 			});
+
+		case 'UNMOUNT@user':
+			return Object.assign({}, initialState);
 	}
 
 	return state;

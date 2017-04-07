@@ -5,7 +5,6 @@ import * as actions from '../actions/contentsUpload.js';
 import SelectedImageViewBox from '../components/ContentsUpload/SelectedImageViewBox.js';
 
 class ContentsUpload extends React.Component {
-
 	handleFileInputChange(e) {
 		this.props.dispatch(actions.addFiles(e.target.files));
 		e.target.value = '';

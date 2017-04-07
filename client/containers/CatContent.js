@@ -17,6 +17,7 @@ class CatContent extends React.Component {
 	}
 
 	handleUserAnchorClick(e) {
+		e.preventDefault();
 		this.context.router.push(e.target.pathname);
 	}
 
@@ -25,14 +26,14 @@ class CatContent extends React.Component {
 		
 		if(this.props.catContent.isFavorite) {
 			this.props.dispatch(actions.removeFavorite(
-				this.props.user.userName,
+				this.props.myUser.userName,
 				this.props.content.id,
 			));
 			return;
 		}
 
 		this.props.dispatch(actions.addFavorite(
-			this.props.user.userName,
+			this.props.myUser.userName,
 			this.props.content.id,
 		));
 	}
@@ -154,7 +155,7 @@ class CatContent extends React.Component {
 			? null
 			: <CommentBox
 				comment={this.props.comment}
-				user={this.props.user}
+				myUser={this.props.myUser}
 				onUserAnchorClick={::this.handleUserAnchorClick}
 				onCommentDeleteButtonClick={::this.handleCommentDeleteButtonClick}
 				isSignedIn={this.props.app.isSignedIn}
@@ -211,7 +212,7 @@ function mapStateToProps(state) {
 		catContent: state.catContent,
 		content: state.catContent.content,
 		comment: state.comment,
-		user: state.user,
+		myUser: state.myUser,
 	}
 }
 

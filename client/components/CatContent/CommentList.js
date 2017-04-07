@@ -8,7 +8,8 @@ export default class CommentList extends React.Component {
 				<Comment
 					key={i}
 					comment={comment}
-					myself={this.props.user.userName === comment.userName}
+					myself={this.props.myUser.userName === comment.userName}
+					onUserAnchorClick={this.props.onUserAnchorClick}
 					onDeleteButtonClick={this.props.onCommentDeleteButtonClick}
 				/>
 			);

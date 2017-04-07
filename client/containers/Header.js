@@ -63,7 +63,7 @@ class Header extends React.Component {
 				href="/mypage/"
 				onClick={::this.handleMyPageButtonClick}
 			>
-				<img src={this.props.user.avatar} />
+				<img src={this.props.myUser.avatar} />
 			</a>
 		);
 
@@ -134,7 +134,7 @@ class Header extends React.Component {
 function mapStateToProps(state) {
 	return {
 		app: state.app,
-		user: state.user,
+		myUser: state.myUser,
 		header: state.header,
 	};
 }

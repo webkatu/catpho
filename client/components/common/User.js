@@ -5,7 +5,7 @@ export default class User extends React.Component {
 		const userNameNode = (
 			(this.props.userName === '')
 			? this.props.nickname
-			: <a href={'/users/' + this.props.userName} onClick={this.props.onUserAnchorClick}
+			: <a href={`/users/${this.props.userName}/`} onClick={this.props.onUserAnchorClick}
 			>
 				{this.props.nickname}
 			</a>

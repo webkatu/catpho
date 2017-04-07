@@ -14,6 +14,39 @@ import Favorites from '../models/Favorites';
 
 const router = express.Router({ mergeParams: true });
 
+router.get('/', async (req, res, next) => {
+	try {
+		const result = await new Users().selectOnce(
+			['id', 'userName', 'nickname', 'avatar', 'created'],
+			'?? = ?',
+			{ userName: req.params.userName }
+		);
+		if(result === null) return res.sendStatus(404);
+
+		const postCount = await new Contents().count(
+			'*', 
+			'?? = ?',
+			{ userId: result.id }
+		);
+
+		res.json({
+			payload: {
+				userName: result.userName,
+				nickname: result.nickname,
+				avatar: config.avatarsUrl + '/' + result.avatar,
+				created: (() => {
+					const date = new Date(result.created);
+					return `${date.getFullYear()}/${date.getMonth() + 1}`;
+				})(),
+				postCount,
+			},
+		});
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
+})
+
 const upload = multer({
 	dest: config.tmpDir,
 	limits: {

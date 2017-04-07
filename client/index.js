@@ -8,8 +8,8 @@ import thunk from 'redux-thunk';
 import catphoApp from './reducers/index.js';
 import App from './containers/App.js';
 import NotFound from './components/NotFound.js';
+import User from './containers/User.js';
 import Contents from './containers/Contents.js';
-import ImageListViewer from './containers/ImageListViewer.js';
 import ContentViewer from './containers/ContentViewer.js';
 import ContentsUpload from './containers/ContentsUpload.js';
 import SignUp from './containers/SignUp.js';
@@ -36,6 +36,7 @@ const routes = (
 		<ReactRouter.IndexRoute component={Contents} />
 		<ReactRouter.Route path="contents/" component={Contents} />
 		<ReactRouter.Route path="contents/:id/" component={ContentViewer} />
+		<ReactRouter.Route path="users/:userName/" component={User} />
 		<ReactRouter.Route path="test" component={Contents} />
 		<ReactRouter.Route path="upload" component={ContentsUpload} />
 		<ReactRouter.Route path="signup" component={SignUp} />

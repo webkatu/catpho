@@ -14,7 +14,7 @@ class RegistrationInformationView extends React.Component {
 		if(this.props.registrationInformation.isRequestingActivation) return;
 		if(this.props.registrationInformation.isAlreadyRequestingActivation) return;
 
-		this.props.dispatch(actions.requestActivation(this.props.user.email));
+		this.props.dispatch(actions.requestActivation(this.props.myUser.email));
 	}
 
 	handleActivationDialogCloseButtonClick() {
@@ -23,7 +23,7 @@ class RegistrationInformationView extends React.Component {
 
 	handleEditButtonClick(e) {
 		e.preventDefault();
-		this.props.dispatch(actions.startEdit(this.props.user));
+		this.props.dispatch(actions.startEdit(this.props.myUser));
 	}
 
 	handleWithdrawalDialogDisplayButtonClick(e) {
@@ -36,7 +36,7 @@ class RegistrationInformationView extends React.Component {
 			return this.props.dispatch(actions.confirmWithdrawal());
 		}
 
-		this.props.dispatch(actions.deleteUser(this.props.user.userName));
+		this.props.dispatch(actions.deleteUser(this.props.myUser.userName));
 	}
 
 	handleWithdrawalCancelButtonClick(e) {
@@ -45,7 +45,7 @@ class RegistrationInformationView extends React.Component {
 
 	render() {
 		const registrationInformation = this.props.registrationInformation;
-		const user = this.props.user;
+		const myUser = this.props.myUser;
 
 		const activationButton = (
 			<button
@@ -70,7 +70,7 @@ class RegistrationInformationView extends React.Component {
 			</aside>
 		);
 
-		const activationButtonNode = (user.hasBeenActivated)
+		const activationButtonNode = (myUser.hasBeenActivated)
 			? <span>認証済み</span>
 			: activationButton;
 
@@ -89,10 +89,10 @@ class RegistrationInformationView extends React.Component {
 		return (
 			<div className="registrationInformationView">
 				<dl>
-					<dt>アバター: </dt><dd><img src={user.avatar} alt="" /></dd>
-					<dt>ニックネーム: </dt><dd>{user.nickname}</dd>
-					<dt>ユーザー名: </dt><dd>{user.userName}</dd>
-					<dt>メールアドレス: </dt><dd><span>{user.email}</span>{activationButtonNode}</dd>
+					<dt>アバター: </dt><dd><img src={myUser.avatar} alt="" /></dd>
+					<dt>ニックネーム: </dt><dd>{myUser.nickname}</dd>
+					<dt>ユーザー名: </dt><dd>{myUser.userName}</dd>
+					<dt>メールアドレス: </dt><dd><span>{myUser.email}</span>{activationButtonNode}</dd>
 				</dl>
 
 				<a href="" onClick={::this.handleEditButtonClick}>登録情報を変更する</a>
@@ -112,7 +112,7 @@ class RegistrationInformationView extends React.Component {
 function mapStateToProps(state) {
 	return {
 		registrationInformation: state.registrationInformation,
-		user: state.user,
+		myUser: state.myUser,
 	}
 }
 

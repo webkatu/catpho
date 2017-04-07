@@ -5,13 +5,13 @@ import * as actions from '../actions/activation.js';
 class Activation extends React.Component {
 	componentDidMount() {
 		if(this.props.activation.shouldRequestActivation) {
-			this.props.dispatch(actions.requestActivation(this.props.user.userName));
+			this.props.dispatch(actions.requestActivation(this.props.myUser.userName));
 		}
 	}
 
 	componentDidUpdate() {
 		if(this.props.activation.shouldRequestActivation) {
-			this.props.dispatch(actions.requestActivation(this.props.user.userName));
+			this.props.dispatch(actions.requestActivation(this.props.myUser.userName));
 		}
 	}
 
@@ -36,7 +36,7 @@ class Activation extends React.Component {
 function mapStateToProps(state) {
 	return {
 		app: state.app,
-		user: state.user,
+		myUser: state.myUser,
 		activation: state.activation,
 	}
 }

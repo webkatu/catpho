@@ -18,7 +18,7 @@ export default class CommentBox extends React.Component {
 			<article className="commentBox">
 				<CommentList
 					comments={this.props.comment.comments}
-					user={this.props.user}
+					myUser={this.props.myUser}
 					onUserAnchorClick={this.props.onUserAnchorClick}
 					onCommentDeleteButtonClick={this.props.onCommentDeleteButtonClick}
 				/>
@@ -35,6 +35,6 @@ export default class CommentBox extends React.Component {
 	}
 
 	static defaultProps = {
-		user: {},
+		myUser: {},
 	}
 }
