@@ -12,6 +12,7 @@ class ImageListViewer extends React.Component {
 	componentWillMount() {
 		this._handleScroll = ::this.handleScroll;
 		window.addEventListener('scroll', this._handleScroll);
+		this.props.dispatch(actions.fetchTags());
 	}
 
 	componentWillUnmount() {
@@ -37,18 +38,40 @@ class ImageListViewer extends React.Component {
 		));
 	}
 
-	onAutoReloadButtonClick(checked) {
+	handleAutoReloadButtonClick(checked) {
 		this.props.dispatch(actions.toggleAutoReload(checked));
 	}
 
+	handleTagsViewDisplayButtonClick(e) {
+		this.props.dispatch(actions.toggleTagsView());
+	}
+
+	handleTagAnchorClick(e) {
+		e.preventDefault();
+		this.context.router.push(e.target.pathname + e.target.search);
+		this.props.dispatch(simpleImageListViewerActions.changeLocation());
+	}
+
 	render() {
+		const imageListViewer = this.props.imageListViewer;
 		return (
 			<article className="imageListViewer">
-				<ImageListViewerNav onAutoReloadButtonClick={::this.onAutoReloadButtonClick} />
+				<ImageListViewerNav
+					tags={this.props.tags}
+					shouldDisplayTagsView={imageListViewer.shouldDisplayTagsView}
+					isFetchingTags={imageListViewer.isFetchingTags}
+					handleAutoReloadButtonClick={::this.handleAutoReloadButtonClick} 
+					handleTagsViewDisplayButtonClick={::this.handleTagsViewDisplayButtonClick}
+					handleTagAnchorClick={::this.handleTagAnchorClick}
+				/>
 				<SimpleImageListViewer ref="simpleImageListViewer" />
 			</article>
 		);
 	}
+
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
 }
 
 
@@ -56,6 +79,7 @@ function mapStateToProps(state) {
 	return {
 		imageListViewer: state.imageListViewer,
 		simpleImageListViewer: state.simpleImageListViewer,
+		tags: state.tags.tags,
 	}
 }
 
