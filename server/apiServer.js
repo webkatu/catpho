@@ -9,6 +9,7 @@ import users from './routes/users.js';
 import user from './routes/user.js';
 import uploads from './routes/uploads.js';
 import activation from './routes/activation.js';
+import tags from './routes/tags.js';
 
 const app = express();
 
@@ -56,6 +57,8 @@ app.use('/users', users);
 app.use('/users/:userName', user);
 
 app.use('/activation', activation);
+
+app.use('/tags', tags);
 
 app.listen(3001, () => {
 	console.log('server started.');

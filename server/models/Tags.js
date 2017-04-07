@@ -30,6 +30,13 @@ export default class Tags extends MySQLModel {
 		);
 	}
 
+	async getAll() {
+		return await this.query(
+			'select t.name, count(t.name) as count from ?? t join ?? m on t.id = m.tagId group by t.name order by t.name asc;',
+			[this.tableName, new TagMap().tableName],
+		);
+	}
+
 	selectIdByName(name) {
 		return (async () => {
 			const sql = `select id from ${this.tableName} where name = ?;`;

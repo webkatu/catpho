@@ -17,7 +17,7 @@ import TagMap from '../models/TagMap.js';
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-	res.locals.interval = 20;
+	res.locals.interval = 1;
 	const page = Math.floor(req.query.page);
 	res.locals.currentPage = (page <= 0 || Number.isNaN(page)) ? 1 : page;
 	res.locals.offset = (res.locals.currentPage - 1) * res.locals.interval;
@@ -28,8 +28,40 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/', 
+	//tagによる検索;
+	async (req, res, next) => {
+		if(req.query.tag === undefined) return next();
+		//同じqueryが複数ある時は対応しない;
+		if(Array.isArray(req.query.tag)) return next('route');
+
+		try {
+			const result = await new Tags().selectOnce(['id'], '?? = ?', { name: req.query.tag });
+			if(result === null) return next('route');
+			const tagId = result.id;
+
+			const count = await new TagMap().count('*', '?? = ?', { tagId });
+			const [ results ] = await new Contents().select(
+				['id', 'filename'],
+				'id in (select contentId from ?? where tagId = ?)',
+				[new TagMap().tableName, tagId],
+				'order by id desc limit ? offset ?',
+				[res.locals.interval, res.locals.offset],
+			);
+
+			res.locals.count = count;
+			res.locals.contents = results;
+			return next('route');
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);
+		}
+	},
+
+	//投稿者による検索;
 	async (req, res, next) => {
 		if(req.query.poster === undefined) return next();
+		//同じqueryが複数ある時は対応しない;
+		if(Array.isArray(req.query.poster)) return next('route');
 
 		try {
 			const users = new Users();
@@ -45,20 +77,23 @@ router.get('/',
 				'?? = ?', 
 				{ userId: userId },
 				'order by id desc limit ? offset ?',
-				[ res.locals.interval, res.locals.offset ]
+				[res.locals.interval, res.locals.offset]
 			);
 
 			res.locals.count = count;
 			res.locals.contents = results;
+			return next('route');
 		}catch(e) {
 			console.log(e);
 			return res.sendStatus(500);
 		}
-		next('route');
 	},
 	
+	//お気に入り検索;
 	async (req, res, next) => {
 		if(req.query.favoritesOf === undefined) return next();
+		//同じqueryが複数ある時は対応しない;
+		if(Array.isArray(req.query.favoritesOf)) return next('route');
 
 		if(req.query.userToken === undefined) return next('route');
 		try {
@@ -81,15 +116,18 @@ router.get('/',
 
 			res.locals.count = count;
 			res.locals.contents = results;
+			return next('route');
 		}catch(e) {
 			console.log(e);
 			return res.sendStatus(500);
 		}
-		next('route');
 	},
 
+	//コメント投稿者による検索;
 	async (req, res, next) => {
 		if(req.query.includingCommentsOf === undefined) return next();
+		//同じqueryが複数ある時は対応しない;
+		if(Array.isArray(req.query.includingCommentsOf)) return next('route');
 
 		try {
 			const users = new Users();
@@ -111,13 +149,14 @@ router.get('/',
 
 			res.locals.count = count;
 			res.locals.contents = results;
+			return next('route');
 		}catch(e) {
 			console.log(e);
 			return res.sendStatus(500);
 		}
-		next('route');
 	},
 
+	//条件なし検索;
 	async (req, res, next) => {
 		const contents = new Contents();
 		try {
@@ -132,11 +171,11 @@ router.get('/',
 
 			res.locals.count = count;
 			res.locals.contents = results;
+			return next('route');
 		}catch(e) {
 			console.log(e);
 			return res.sendStatus(500);
 		}
-		next('route');
 	}
 );
 
@@ -240,7 +279,8 @@ function formatBody(body) {
 	}
 
 	const tag = String(body.tag).trim();
-	const tags = (tag === '') ? [] : tag.split(/[\s ]+/);
+	//tag文字列を配列にすると同時に重複は消す;
+	const tags = (tag === '') ? [] : [ ...new Set(tag.split(/[\s ]+/)) ];
 
 	const description = String(body.description).trim();
 
