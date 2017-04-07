@@ -7,7 +7,7 @@ const initialState = {
 
 const imageListViewer = (state = initialState, action) => {
 	switch(action.type) {
-		case 'FETCH_CONTENTS_SUCCESS':
+		case 'FETCH_CONTENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				hasNextPage: action.payload.currentPage < action.payload.maxPage,
 			});
@@ -27,12 +27,12 @@ const imageListViewer = (state = initialState, action) => {
 				isFetchingTags: true,
 			});
 
-		case 'FETCH_TAGS_SUCCESS':
+		case 'FETCH_TAGS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isFetchingTags: false,
 			});
 
-		case 'FETCH_TAGS_FAILURE':
+		case 'FETCH_TAGS_FAILED':
 			return Object.assign({}, state, {
 				isFetchingTags: false,
 			});

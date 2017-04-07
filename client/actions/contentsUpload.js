@@ -48,15 +48,15 @@ const _postContents = () => {
 	}
 };
 
-const postContentsSuccess = () => {
+const postContentsSuccessful = () => {
 	return {
-		type: 'POST_CONTENTS_SUCCESS',
+		type: 'POST_CONTENTS_SUCCESSFUL',
 	};
 };
 
-const postContentsFailure = () => {
+const postContentsFailed = () => {
 	return {
-		type: 'POST_CONTENTS_FAILURE',
+		type: 'POST_CONTENTS_FAILED',
 	};
 };
 
@@ -77,11 +77,11 @@ export const postContents = (form, files) => {
 				body: formData,
 			});
 			if(! response.ok) throw new Error(response.status);
-			dispatch(postContentsSuccess());
+			dispatch(postContentsSuccessful());
 			form.reset();
 			return;
 		}catch(e) {
-			return dispatch(postContentsFailure());
+			return dispatch(postContentsFailed());
 		}
 
 	}

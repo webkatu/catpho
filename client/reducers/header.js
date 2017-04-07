@@ -21,12 +21,12 @@ export default (state = initialState, action) => {
 				shouldDisplayContentsUpload: ! state.shouldDisplayContentsUpload,
 			});
 
-		case 'REQUEST_SIGN_UP_SUCCESS':
-		case 'REQUEST_SIGN_IN_SUCCESS':
+		case 'REQUEST_SIGN_UP_SUCCESSFUL':
+		case 'REQUEST_SIGN_IN_SUCCESSFUL':
 		case 'SIGN_OUT':
 			return Object.assign({}, initialState);
 
-		case 'POST_CONTENTS_SUCCESS':
+		case 'POST_CONTENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				shouldDisplayContentsUpload: false,
 			});

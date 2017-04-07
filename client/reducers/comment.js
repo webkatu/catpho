@@ -18,7 +18,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-		case 'FETCH_COMMENTS_SUCCESS':
+		case 'FETCH_COMMENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				comments: action.payload.comments,
 			});
@@ -34,14 +34,14 @@ export default (state = initialState, action) => {
 				isPostingComment: true,
 			});
 
-		case 'POST_COMMENT_SUCCESS':
+		case 'POST_COMMENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isPostingComment: false,
 				comments: action.payload.comments,
 				postCommentText: '',
 			});
 
-		case 'POST_COMMENT_FAILURE':
+		case 'POST_COMMENT_FAILED':
 			return Object.assign({}, state, {
 				isPostingComment: false,
 			});
@@ -63,14 +63,14 @@ export default (state = initialState, action) => {
 				isDeletingComment: true,
 			});
 
-		case 'DELETE_COMMENT_SUCCESS':
+		case 'DELETE_COMMENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isDeletingComment: false,
 				shouldDisplayDeletionConfirmation: false,
 				comments: action.payload.comments,
 			});
 
-		case 'DELETE_COMMENT_FAILURE':
+		case 'DELETE_COMMENT_FAILED':
 			return Object.assign({}, state, {
 				isDeletingComment: false,
 				shouldDisplayDeletionConfirmation: false,

@@ -9,8 +9,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-		case 'REQUEST_SIGN_UP_SUCCESS': 
-		case 'REQUEST_SIGN_IN_SUCCESS':
+		case 'REQUEST_SIGN_UP_SUCCESSFUL': 
+		case 'REQUEST_SIGN_IN_SUCCESSFUL':
 			return Object.assign({}, state, {
 				id: action.payload.id,
 				userName: action.payload.userName,
@@ -20,14 +20,14 @@ export default (state = initialState, action) => {
 				hasBeenActivated: Boolean(action.payload.activation)
 			});
 
-		case 'DELETE_USER_SUCCESS':
+		case 'DELETE_USER_SUCCESSFUL':
 		case 'SIGN_OUT':
 			return { ...initialState };
 
-		case 'PATCH_REGISTRATION_INFORMATION_SUCCESS':
+		case 'PATCH_REGISTRATION_INFORMATION_SUCCESSFUL':
 			return Object.assign({}, state, action.payload);
 
-		case 'REQUEST_ACTIVATION_SUCCESS':
+		case 'REQUEST_ACTIVATION_SUCCESSFUL':
 			return Object.assign({}, state, {
 				hasBeenActivated: true,
 			});

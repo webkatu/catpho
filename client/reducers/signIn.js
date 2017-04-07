@@ -40,14 +40,14 @@ export default (state = initialState, action) => {
 				isRequesting: true,
 			});
 
-		case 'REQUEST_SIGN_IN_SUCCESS':
+		case 'REQUEST_SIGN_IN_SUCCESSFUL':
 			return Object.assign({}, initialState, {
 				isRequesting: false,
 				shouldResetForm: true,
 				shouldViewResult: true,
 			});
 
-		case 'REQUEST_SIGN_IN_FAILURE':
+		case 'REQUEST_SIGN_IN_FAILED':
 			return Object.assign({}, state, {
 				isRequesting: false,
 				shouldViewResult: true,

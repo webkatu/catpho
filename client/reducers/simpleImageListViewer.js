@@ -25,7 +25,7 @@ export default (state = initialState, action) => {
 				shouldFetchContents: false,
 			});
 
-		case 'FETCH_CONTENTS_SUCCESS':
+		case 'FETCH_CONTENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				contents: [...state.contents, ...action.payload.contents],
 				pagerInfo: {
@@ -37,17 +37,17 @@ export default (state = initialState, action) => {
 				isFetching: false,
 			});
 
-		case 'FETCH_CONTENTS_FAILURE':
+		case 'FETCH_CONTENTS_FAILED':
 			return Object.assign({}, state, {
 				isFetching: false,
 			});
 
-		case 'POST_CONTENTS_SUCCESS':
+		case 'POST_CONTENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				shouldClearContents: true,
 			});
 
-		case 'DELETE_CONTENT_SUCCESS':
+		case 'DELETE_CONTENT_SUCCESSFUL':
 			//contentsとlistsから該当コンテンツを削除;
 			const deletedContents = [];
 			const contents = [...state.contents];

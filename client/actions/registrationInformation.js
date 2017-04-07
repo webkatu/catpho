@@ -12,15 +12,15 @@ const _requestActivation = () => {
 	};
 }
 
-const requestActivationSuccess = () => {
+const requestActivationSuccessful = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_SUCCESS',
+		type: 'REQUEST_ACTIVATION_SUCCESSFUL',
 	};
 }
 
-const requestActivationFailure = () => {
+const requestActivationFailed = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_FAILURE',
+		type: 'REQUEST_ACTIVATION_FAILED',
 	};
 }
 
@@ -43,9 +43,9 @@ export const requestActivation = (email) => {
 			});
 
 			if(! response.ok) throw new Error(response.status);
-			dispatch(requestActivationSuccess());
+			dispatch(requestActivationSuccessful());
 		}catch(e) {
-			dispatch(requestActivationFailure());
+			dispatch(requestActivationFailed());
 		}
 	}
 }
@@ -117,16 +117,16 @@ const _patchRegistrationInformation = () => {
 	};
 }
 
-const patchRegistrationInformationSuccess = (payload) => {
+const patchRegistrationInformationSuccessful = (payload) => {
 	return {
-		type: 'PATCH_REGISTRATION_INFORMATION_SUCCESS',
+		type: 'PATCH_REGISTRATION_INFORMATION_SUCCESSFUL',
 		payload,
 	};
 }
 
-const patchRegistrationInformationFailure = () => {
+const patchRegistrationInformationFailed = () => {
 	return {
-		type: 'PATCH_REGISTRATION_INFORMATION_FAILURE',
+		type: 'PATCH_REGISTRATION_INFORMATION_FAILED',
 	};
 }
 
@@ -148,10 +148,10 @@ export const patchRegistrationInformation = (form, userName) => {
 			if(! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
-			dispatch(patchRegistrationInformationSuccess(json.payload));
+			dispatch(patchRegistrationInformationSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(patchRegistrationInformationFailure());
+			dispatch(patchRegistrationInformationFailed());
 		}
 	}
 }
@@ -180,15 +180,15 @@ const _deleteUser = () => {
 	};
 }
 
-const deleteUserSuccess = () => {
+const deleteUserSuccessful = () => {
 	return {
-		type: 'DELETE_USER_SUCCESS',
+		type: 'DELETE_USER_SUCCESSFUL',
 	};
 }
 
-const deleteUserFailure = () => {
+const deleteUserFailed = () => {
 	return {
-		type: 'DELETE_USER_FAILURE',
+		type: 'DELETE_USER_FAILED',
 	};
 }
 
@@ -205,10 +205,10 @@ export const deleteUser = (userName) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 
-			dispatch(deleteUserSuccess());
+			dispatch(deleteUserSuccessful());
 		}catch(e) {
 			console.log(e);
-			dispatch(deleteUserFailure());
+			dispatch(deleteUserFailed());
 		}
 	};
 }

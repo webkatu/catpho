@@ -33,16 +33,16 @@ const requestSignUp = () => {
 	};
 }
 
-const requestSignUpSuccess = (payload) => {
+const requestSignUpSuccessful = (payload) => {
 	return {
-		type: 'REQUEST_SIGN_UP_SUCCESS',
+		type: 'REQUEST_SIGN_UP_SUCCESSFUL',
 		payload,
 	};
 }
 
-const requestSignUpFailure = () => {
+const requestSignUpFailed = () => {
 	return {
-		type: 'REQUEST_SIGN_UP_FAILURE',
+		type: 'REQUEST_SIGN_UP_FAILED',
 	};
 }
 
@@ -72,10 +72,10 @@ export const signUp = (form) => {
 					activationToken: json.payload.activationToken,
 				}),
 			}).then((res) => { console.log(res); });
-			dispatch(requestSignUpSuccess(json.payload));
+			dispatch(requestSignUpSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(requestSignUpFailure());
+			dispatch(requestSignUpFailed());
 		}
 	};
 }

@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
 				isFetchingUser: true,
 			});
 
-		case 'FETCH_USER_SUCCESS':
+		case 'FETCH_USER_SUCCESSFUL':
 			return Object.assign({}, state, {
 				userName: action.payload.userName,
 				nickname: action.payload.nickname,
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
 				didFailFetchingUser: false,
 			});
 
-		case 'FETCH_USER_FAILURE':
+		case 'FETCH_USER_FAILED':
 			return Object.assign({}, state, {
 				isFetchingUser: false,
 				didFailFetchingUser: true,

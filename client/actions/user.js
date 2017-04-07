@@ -6,16 +6,16 @@ const _fetchUser = () => {
 	};
 }
 
-const fetchUserSuccess = (payload) => {
+const fetchUserSuccessful = (payload) => {
 	return {
-		type: 'FETCH_USER_SUCCESS',
+		type: 'FETCH_USER_SUCCESSFUL',
 		payload,
 	};
 }
 
-const fetchUserFailure = (error) => {
+const fetchUserFailed = (error) => {
 	return {
-		type: 'FETCH_USER_FAILURE',
+		type: 'FETCH_USER_FAILED',
 		payload: { error },
 	};
 }
@@ -32,10 +32,10 @@ export const fetchUser = (userName) => {
 			if(! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
-			dispatch(fetchUserSuccess(json.payload));
+			dispatch(fetchUserSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchUserFailure(e));
+			dispatch(fetchUserFailed(e));
 		}
 	}
 }

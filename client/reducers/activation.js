@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-		case 'REQUEST_SIGN_IN_SUCCESS': 
+		case 'REQUEST_SIGN_IN_SUCCESSFUL': 
 			return Object.assign({}, state, {
 				shouldRequestActivation: true,
 			});
@@ -17,13 +17,13 @@ export default (state = initialState, action) => {
 				isRequesting: true,
 			});
 
-		case 'REQUEST_ACTIVATION_SUCCESS':
+		case 'REQUEST_ACTIVATION_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isRequesting: false,
 				didRequestSucceed: true,
 			});
 
-		case 'REQUEST_ACTIVATION_FAILURE':
+		case 'REQUEST_ACTIVATION_FAILED':
 			return Object.assign({}, state, {
 				isRequesting: false,
 				didRequestSucceed: false,

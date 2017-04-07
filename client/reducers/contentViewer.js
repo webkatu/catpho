@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
 				shouldFetchContent: false,
 			});
 
-		case 'FETCH_CONTENT_SUCCESS':
+		case 'FETCH_CONTENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				prevId: action.payload.prevId,
 				nextId: action.payload.nextId,

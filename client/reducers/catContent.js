@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
 				shouldDisplayCommentBox: false,
 			});
 
-		case 'FETCH_CONTENT_SUCCESS':
+		case 'FETCH_CONTENT_SUCCESSFUL':
 			const content = (
 				(action.payload.content.id)
 				? Object.assign({}, state.content, action.payload.content)
@@ -53,7 +53,7 @@ export default (state = initialState, action) => {
 				commentsCount: action.payload.commentsCount,
 			});
 
-		case 'FETCH_CONTENT_FAILURE':
+		case 'FETCH_CONTENT_FAILED':
 			return Object.assign({}, state, {
 				content: Object.assign({}, initialState.content),
 				isFetchingContent: false,
@@ -75,14 +75,14 @@ export default (state = initialState, action) => {
 				isRequestingFavorite: true,
 			});
 
-		case 'ADD_FAVORITE_SUCCESS':
+		case 'ADD_FAVORITE_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 				isFavorite: true,
 				favoritesCount: state.favoritesCount + 1,
 			});
 
-		case 'ADD_FAVORITE_FAILURE':
+		case 'ADD_FAVORITE_FAILED':
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 			});
@@ -92,14 +92,14 @@ export default (state = initialState, action) => {
 				isRequestingFavorite: true,
 			});
 
-		case 'REMOVE_FAVORITE_SUCCESS':
+		case 'REMOVE_FAVORITE_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 				isFavorite: false,
 				favoritesCount: state.favoritesCount - 1,
 			});
 
-		case 'REMOVE_FAVORITE_FAILURE':
+		case 'REMOVE_FAVORITE_FAILED':
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 			});
@@ -119,14 +119,14 @@ export default (state = initialState, action) => {
 				isDeletingContent: true,
 			});
 
-		case 'DELETE_CONTENT_SUCCESS':
+		case 'DELETE_CONTENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isDeletingContent: false,
 				shouldDisplayDeletionConfirmation: false,
 				content: initialState.content,
 			});
 
-		case 'DELETE_CONTENT_FAILURE':
+		case 'DELETE_CONTENT_FAILED':
 			return Object.assign({}, state, {
 				isDeletingContent: false,
 			});
@@ -141,7 +141,7 @@ export default (state = initialState, action) => {
 				isFetchingComment: true,
 			});
 
-		case 'FETCH_COMMENTS_SUCCESS':
+		case 'FETCH_COMMENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isFetchingComment: false,
 				fetchingCommentSuccess: true,
@@ -149,7 +149,7 @@ export default (state = initialState, action) => {
 				commentsCount: action.payload.comments.length,
 			});
 
-		case 'FETCH_COMMENTS_FAILURE':
+		case 'FETCH_COMMENTS_FAILED':
 			return Object.assign({}, state, {
 				isFetchingComment: false,
 				fetchingCommentSuccess: false,
@@ -160,12 +160,12 @@ export default (state = initialState, action) => {
 				shouldDisplayCommentBox: false,
 			});
 
-		case 'POST_COMMENT_SUCCESS':
+		case 'POST_COMMENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				commentsCount: action.payload.comments.length,
 			});
 
-		case 'DELETE_COMMENT_SUCCESS':
+		case 'DELETE_COMMENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				commentsCount: action.payload.comments.length,
 			});

@@ -47,13 +47,13 @@ export default (state = initialState, action) => {
 				isRequesting: true,
 			});
 
-		case 'REQUEST_SIGN_UP_SUCCESS':
+		case 'REQUEST_SIGN_UP_SUCCESSFUL':
 			return Object.assign({}, initialState, {
 				isRequesting: false,
 				shouldResetForm: true,
 			});
 
-		case 'REQUEST_SIGN_UP_FAILURE':
+		case 'REQUEST_SIGN_UP_FAILED':
 			return Object.assign({}, state, {
 				isRequesting: false,
 			});

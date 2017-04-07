@@ -11,25 +11,25 @@ export default (state = initialState, action) => {
 				displayTime: 0,
 			});
 		
-		case 'REQUEST_SIGN_UP_SUCCESS':
+		case 'REQUEST_SIGN_UP_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: '登録されました',
 				displayTime: 5000,
 			});
 
-		case 'REQUEST_SIGN_UP_FAILURE':
+		case 'REQUEST_SIGN_UP_FAILED':
 			return Object.assign({}, state, {
 				text: '登録に失敗しました',
 				displayTime: 5000,
 			});
 /*
-		case 'REQUEST_SIGN_IN_SUCCESS':
+		case 'REQUEST_SIGN_IN_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: 'サインインしました',
 				displayTime: 5000,
 			});
 */
-		case 'REQUEST_SIGN_IN_FAILURE':
+		case 'REQUEST_SIGN_IN_FAILED':
 			return Object.assign({}, state, {
 				text: 'サインインに失敗しました',
 				displayTime: 5000,
@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'FETCH_CONTENTS_FAILURE':
+		case 'FETCH_CONTENTS_FAILED':
 			return Object.assign({}, state, {
 				text: `コンテンツの取得に失敗しました (Error: ${action.payload.error.message})`,
 				displayTime: 5000,
@@ -53,13 +53,13 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'POST_CONTENTS_SUCCESS':
+		case 'POST_CONTENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: 'コンテンツの投稿に成功しました',
 				displayTime: 5000,
 			});
 
-		case 'POST_CONTENTS_FAILURE':
+		case 'POST_CONTENTS_FAILED':
 			return Object.assign({}, state, {
 				text: 'コンテンツの投稿に失敗しました',
 				displayTime: 5000,
@@ -71,13 +71,13 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'DELETE_CONTENT_SUCCESS':
+		case 'DELETE_CONTENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: 'コンテンツの削除に成功しました',
 				displayTime: 5000,
 			});
 
-		case 'DELETE_CONTENT_FAILURE':
+		case 'DELETE_CONTENT_FAILED':
 			return Object.assign({}, state, {
 				text: 'コンテンツの削除に失敗しました',
 				displayTime: 5000,
@@ -89,13 +89,13 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'POST_COMMENT_SUCCESS':
+		case 'POST_COMMENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: 'コメントの投稿に成功しました',
 				displayTime: 5000,
 			});
 
-		case 'POST_COMMENT_FAILURE':
+		case 'POST_COMMENT_FAILED':
 			return Object.assign({}, state, {
 				text: 'コメントの投稿に失敗しました',
 				displayTime: 5000,
@@ -107,13 +107,13 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'DELETE_COMMENT_SUCCESS':
+		case 'DELETE_COMMENT_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: 'コメントの削除に成功しました',
 				displayTime: 5000,
 			});
 
-		case 'DELETE_COMMENT_FAILURE':
+		case 'DELETE_COMMENT_FAILED':
 			return Object.assign({}, state, {
 				text: 'コメントの削除に失敗しました',
 				displayTime: 5000,
@@ -125,13 +125,13 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'PATCH_REGISTRATION_INFORMATION_SUCCESS':
+		case 'PATCH_REGISTRATION_INFORMATION_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: 'ユーザー情報を変更しました',
 				displayTime: 5000,
 			});
 
-		case 'PATCH_REGISTRATION_INFORMATION_FAILURE':
+		case 'PATCH_REGISTRATION_INFORMATION_FAILED':
 			return Object.assign({}, state, {
 				text: 'ユーザー情報の変更に失敗しました',
 				displayTime: 5000,
@@ -143,13 +143,13 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
-		case 'DELETE_USER_SUCCESS':
+		case 'DELETE_USER_SUCCESSFUL':
 			return Object.assign({}, state, {
 				text: '退会しました',
 				displayTime: 5000,
 			});
 
-		case 'DELETE_USER_FAILURE':
+		case 'DELETE_USER_FAILED':
 			return Object.assign({}, state, {
 				text: '退会できませんでした',
 				displayTime: 5000,

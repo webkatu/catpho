@@ -6,15 +6,15 @@ const _requestActivation = () => {
 	}
 }
 
-const requestActivationSuccess = () => {
+const requestActivationSuccessful = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_SUCCESS',
+		type: 'REQUEST_ACTIVATION_SUCCESSFUL',
 	}
 }
 
-const requestActivationFailure = () => {
+const requestActivationFailed = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_FAILURE',
+		type: 'REQUEST_ACTIVATION_FAILED',
 	}
 }
 
@@ -36,10 +36,10 @@ export const requestActivation = (userName) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 
-			dispatch(requestActivationSuccess());
+			dispatch(requestActivationSuccessful());
 		}catch(e) {
 			console.log(e);
-			dispatch(requestActivationFailure());
+			dispatch(requestActivationFailed());
 		}
 	}
 }

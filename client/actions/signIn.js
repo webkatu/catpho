@@ -25,16 +25,16 @@ const requestSignIn = () => {
 	};
 }
 
-const requestSignInSuccess = (payload) => {
+const requestSignInSuccessful = (payload) => {
 	return {
-		type: 'REQUEST_SIGN_IN_SUCCESS',
+		type: 'REQUEST_SIGN_IN_SUCCESSFUL',
 		payload,
 	};
 }
 
-const requestSignInFailure = () => {
+const requestSignInFailed = () => {
 	return {
-		type: 'REQUEST_SIGN_IN_FAILURE',
+		type: 'REQUEST_SIGN_IN_FAILED',
 	};
 }
 
@@ -54,10 +54,10 @@ export const signIn = (form) => {
 			if(! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
-			dispatch(requestSignInSuccess(json.payload));
+			dispatch(requestSignInSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(requestSignInFailure());
+			dispatch(requestSignInFailed());
 		}
 	};
 }

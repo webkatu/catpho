@@ -7,7 +7,7 @@ const _fetchContents = () => {
 	}
 }
 
-const fetchContentsSuccess = (payload) => {
+const fetchContentsSuccessful = (payload) => {
 	const contents = payload.contents.map((content) => {
 		return {
 			id: content.id,
@@ -17,7 +17,7 @@ const fetchContentsSuccess = (payload) => {
 	});
 
 	return {
-		type: 'FETCH_CONTENTS_SUCCESS',
+		type: 'FETCH_CONTENTS_SUCCESSFUL',
 		payload: {
 			contents,
 			currentPage: payload.currentPage,
@@ -26,9 +26,9 @@ const fetchContentsSuccess = (payload) => {
 	};
 }
 
-const fetchContentsFailure = (error) => {
+const fetchContentsFailed = (error) => {
 	return {
-		type: 'FETCH_CONTENTS_FAILURE',
+		type: 'FETCH_CONTENTS_FAILED',
 		payload: { error }
 	};
 }
@@ -56,10 +56,10 @@ export const fetchContents = (basePath = '/contents' + location.search, page) =>
 			});
 			if (! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			dispatch(fetchContentsSuccess(json.payload));
+			dispatch(fetchContentsSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchContentsFailure(e));
+			dispatch(fetchContentsFailed(e));
 		}
 	}
 }

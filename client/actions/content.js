@@ -6,16 +6,16 @@ const _fetchContent = () => {
 	};
 }
 
-const fetchContentSuccess = (payload) => {
+const fetchContentSuccessful = (payload) => {
 	return {
-		type: 'FETCH_CONTENT_SUCCESS',
+		type: 'FETCH_CONTENT_SUCCESSFUL',
 		payload,
 	};
 }
 
-const fetchContentFailure = (error) => {
+const fetchContentFailed = (error) => {
 	return {
-		type: 'FETCH_CONTENT_FAILURE',
+		type: 'FETCH_CONTENT_FAILED',
 		payload: error,
 	};
 }
@@ -38,10 +38,10 @@ export const fetchContent = (contentId) => {
 			if(fetchId !== fetchContentId) return;
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			dispatch(fetchContentSuccess(json.payload));
+			dispatch(fetchContentSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchContentFailure(e));
+			dispatch(fetchContentFailed(e));
 		}
 	}
 }

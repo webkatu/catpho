@@ -86,7 +86,7 @@ export default (state = initialState, action) => {
 				isPosting: true,
 			});
 
-		case 'POST_CONTENTS_SUCCESS':
+		case 'POST_CONTENTS_SUCCESSFUL':
 			state.files.forEach((file) => {
 				window.URL.revokeObjectURL(file.url);
 			});
@@ -94,7 +94,7 @@ export default (state = initialState, action) => {
 				isPosting: false,
 			});
 
-		case 'POST_CONTENTS_FAILURE':
+		case 'POST_CONTENTS_FAILED':
 			return Object.assign({}, state, {
 				isPosting: false,
 			});

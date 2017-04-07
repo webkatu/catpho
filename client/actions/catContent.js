@@ -18,15 +18,15 @@ const _addFavorite = () => {
 	};
 }
 
-const addFavoriteSuccess = () => {
+const addFavoriteSuccessful = () => {
 	return {
-		type: 'ADD_FAVORITE_SUCCESS',
+		type: 'ADD_FAVORITE_SUCCESSFUL',
 	};
 }
 
-const addFavoriteFailure = (error) => {
+const addFavoriteFailed = (error) => {
 	return {
-		type: 'ADD_FAVORITE_FAILURE',
+		type: 'ADD_FAVORITE_FAILED',
 		payload: error,
 	};
 }
@@ -49,9 +49,9 @@ export const addFavorite = (userName, contentId) => {
 				}),
 			});
 			if(! response.ok) throw new Error(response.status);
-			dispatch(addFavoriteSuccess());
+			dispatch(addFavoriteSuccessful());
 		}catch(e) {
-			dispatch(addFavoriteFailure(e));
+			dispatch(addFavoriteFailed(e));
 		}
 	}
 }
@@ -62,15 +62,15 @@ const _removeFavorite = () => {
 	};
 }
 
-const removeFavoriteSuccess = () => {
+const removeFavoriteSuccessful = () => {
 	return {
-		type: 'REMOVE_FAVORITE_SUCCESS',
+		type: 'REMOVE_FAVORITE_SUCCESSFUL',
 	};
 }
 
-const removeFavoriteFailure = (error) => {
+const removeFavoriteFailed = (error) => {
 	return {
-		type: 'REMOVE_FAVORITE_FAILURE',
+		type: 'REMOVE_FAVORITE_FAILED',
 		payload: error,
 	};
 }
@@ -92,9 +92,9 @@ export const removeFavorite = (userName, contentId) => {
 				}),
 			});
 			if(! response.ok) throw new Error(response.status);
-			dispatch(removeFavoriteSuccess());
+			dispatch(removeFavoriteSuccessful());
 		}catch(e) {
-			dispatch(removeFavoriteFailure(e));
+			dispatch(removeFavoriteFailed(e));
 		}
 	}
 }
@@ -117,18 +117,18 @@ const _deleteContent = () => {
 	};
 }
 
-const deleteContentSuccess = (contentId) => {
+const deleteContentSuccessful = (contentId) => {
 	return {
-		type: 'DELETE_CONTENT_SUCCESS',
+		type: 'DELETE_CONTENT_SUCCESSFUL',
 		payload: {
 			contentId,
 		}
 	};
 }
 
-const deleteContentFailure = (error) => {
+const deleteContentFailed = (error) => {
 	return {
-		type: 'DELETE_CONTENT_FAILURE',
+		type: 'DELETE_CONTENT_FAILED',
 		payload: error,
 	};
 }
@@ -150,10 +150,10 @@ export const deleteContent = (contentId) => {
 				}),
 			});
 			if(! response.ok) throw new Error(response.status);
-			dispatch(deleteContentSuccess(contentId));
+			dispatch(deleteContentSuccessful(contentId));
 		}catch(e) {
 			console.log(e);
-			dispatch(deleteContentFailure(e));
+			dispatch(deleteContentFailed(e));
 		}
 	}
 }
@@ -170,16 +170,16 @@ const _fetchComments = () => {
 	};
 }
 
-const fetchCommentsSuccess = (payload) => {
+const fetchCommentsSuccessful = (payload) => {
 	return {
-		type: 'FETCH_COMMENTS_SUCCESS',
+		type: 'FETCH_COMMENTS_SUCCESSFUL',
 		payload,
 	};
 }
 
-const fetchCommentsFailure = (error) => {
+const fetchCommentsFailed = (error) => {
 	return {
-		type: 'FETCH_COMMENTS_FAILURE',
+		type: 'FETCH_COMMENTS_FAILED',
 		payload: error,
 	};
 }
@@ -198,9 +198,9 @@ export const fetchComments = (contentId) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			dispatch(fetchCommentsSuccess(json.payload));
+			dispatch(fetchCommentsSuccessful(json.payload));
 		}catch(e) {
-			dispatch(fetchCommentsFailure(e));
+			dispatch(fetchCommentsFailed(e));
 		}
 	}
 }
@@ -224,16 +224,16 @@ const _postComment = () => {
 	};
 }
 
-const postCommentSuccess = (payload) => {
+const postCommentSuccessful = (payload) => {
 	return {
-		type: 'POST_COMMENT_SUCCESS',
+		type: 'POST_COMMENT_SUCCESSFUL',
 		payload,
 	};
 }
 
-const postCommentFailure = (error) => {
+const postCommentFailed = (error) => {
 	return {
-		type: 'POST_COMMENT_FAILURE',
+		type: 'POST_COMMENT_FAILED',
 		payload: error,
 	};
 }
@@ -256,9 +256,9 @@ export const postComment = (form, contentId) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			dispatch(postCommentSuccess(json.payload));
+			dispatch(postCommentSuccessful(json.payload));
 		}catch(e) {
-			dispatch(postCommentFailure(e));
+			dispatch(postCommentFailed(e));
 		}
 	}
 }
@@ -282,17 +282,17 @@ const _deleteComment = () => {
 	};
 }
 
-const deleteCommentSuccess = (payload) => {
+const deleteCommentSuccessful = (payload) => {
 	console.log(payload)
 	return {
-		type: 'DELETE_COMMENT_SUCCESS',
+		type: 'DELETE_COMMENT_SUCCESSFUL',
 		payload,
 	};
 }
 
-const deleteCommentFailure = (error) => {
+const deleteCommentFailed = (error) => {
 	return {
-		type: 'DELETE_COMMENT_FAILURE',
+		type: 'DELETE_COMMENT_FAILED',
 		payload: error,
 	};
 }
@@ -315,9 +315,9 @@ export const deleteComment = (contentId, commentId) => {
 			});
 			if(! response.ok) throw new Error(response.status);
 			const json = await response.json();
-			dispatch(deleteCommentSuccess(json.payload));
+			dispatch(deleteCommentSuccessful(json.payload));
 		}catch(e) {
-			dispatch(deleteCommentFailure(e));
+			dispatch(deleteCommentFailed(e));
 		}
 	}
 }

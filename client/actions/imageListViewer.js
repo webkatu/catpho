@@ -21,16 +21,16 @@ const _fetchTags = () => {
 	};
 }
 
-const fetchTagsSuccess = (payload) => {
+const fetchTagsSuccessful = (payload) => {
 	return {
-		type: 'FETCH_TAGS_SUCCESS',
+		type: 'FETCH_TAGS_SUCCESSFUL',
 		payload,
 	};
 }
 
-const fetchTagsFailure = () => {
+const fetchTagsFailed = () => {
 	return {
-		type: 'FETCH_TAGS_FAILURE',
+		type: 'FETCH_TAGS_FAILED',
 	};
 }
 
@@ -47,11 +47,11 @@ export const fetchTags = () => {
 			if(! response.ok) throw new Error(response.status);
 
 			const json = await response.json();
-			dispatch(fetchTagsSuccess(json.payload));
+			dispatch(fetchTagsSuccessful(json.payload));
 
 		}catch(e) {
 			console.log(e);
-			dispatch(fetchTagsFailure());
+			dispatch(fetchTagsFailed());
 		}
 
 	}
