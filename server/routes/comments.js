@@ -14,7 +14,6 @@ router.get('/', async (req, res) => {
 		const results = await comments.selectComments(req.params.contentId);
 
 		res.json({
-			success: true,
 			payload: {
 				comments: results,
 			}
@@ -44,7 +43,6 @@ router.post('/', multer().none(), async (req, res) => {
 		const results = await comments.selectComments(req.params.contentId);
 
 		res.json({
-			success: true,
 			payload: {
 				comments: results,
 				commentId: OkPacket.insertId,

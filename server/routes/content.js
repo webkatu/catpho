@@ -41,7 +41,6 @@ router.get('/', async (req, res) => {
 		const tags = new Tags();
 
 		res.json({
-			success: true,
 			payload: {
 				content: {
 					id: content.id,

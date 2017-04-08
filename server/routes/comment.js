@@ -22,7 +22,6 @@ router.delete('/', async (req, res) => {
 		const results = await comments.selectComments(req.params.contentId);
 
 		res.json({
-			success: true,
 			payload: {
 				comments: results,
 			},
