@@ -167,6 +167,7 @@ class CatContent extends React.Component {
 		);
 		return (
 			<article className="catContent">
+				<h1>{content.id}</h1>
 				<img className="contentImg" src={content.imageURL} alt=""/>
 				<ul className="contentInfo">
 					<li className="poster">{posterNode}</li>
