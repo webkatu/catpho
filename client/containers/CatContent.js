@@ -96,10 +96,20 @@ class CatContent extends React.Component {
 		const catContent = this.props.catContent;
 		const content = this.props.content;
 
+		if(catContent.isFetchingContent) {
+			return (
+				<article className="catContent">
+					<h1></h1>
+					<p>読み込み中...</p>				
+				</article>
+			);
+		}
+
 		if(content.id === '') {
 			return (
 				<article className="catContent">
-					コンテンツがありません。
+					<h1></h1>
+					<p>コンテンツがありません</p>
 				</article>
 			);
 		}
@@ -175,7 +185,16 @@ class CatContent extends React.Component {
 					<li className="tags">{tagNodes}</li>
 					<li className="name">{content.name}</li>
 					<li className="age">{content.age}</li>
-					<li className="sex">{content.sex}</li>
+					<li className="sex">{(() => {
+						switch(content.sex) {
+							case 'none':
+								return 'none';
+							case 'male':
+								return '♂';
+							case 'female':
+								return '♀';
+						}
+					})()}</li>
 					<li className="description">{content.description}</li>
 				</ul>
 				<FavoriteButton

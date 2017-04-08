@@ -1,7 +1,7 @@
 import { MySQLModel } from './index.js';
 
 export default class Contents extends MySQLModel {
-	createTable() {
+	async createTable() {
 		const sql = `create table ${this.tableName} (
 			id int not null auto_increment primary key,
 			userId int not null,
@@ -15,7 +15,7 @@ export default class Contents extends MySQLModel {
 			modified timestamp
 		);`;
 
-		return this.query(sql);
+		return await this.query(sql);
 	}
 
 	async saveContents(files, body) {
@@ -40,12 +40,12 @@ export default class Contents extends MySQLModel {
 		});
 	}
 
-	selectContent(id) {
+	async selectContent(id) {
 		const sql = `(select * from ${this.tableName} where id = ?)
 			union all
 			(select * from ${this.tableName} where id < ? order by id desc limit 1)
 			union all
 			(select * from ${this.tableName} where id > ? order by id asc limit 1);`;
-		return this.query(sql, [id, id, id]);
+		return await this.query(sql, [id, id, id]);
 	}
 }

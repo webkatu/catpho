@@ -53,4 +53,5 @@ export default {
 		avatarSize: 100,
 	},
 	defaultAvatarFileName: 'default.jpg',
+	contentsInterval: 20,
 }

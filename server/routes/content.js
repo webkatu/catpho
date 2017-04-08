@@ -67,8 +67,7 @@ router.get('/', async (req, res) => {
 });
 
 async function getContent(id) {
-	const contents = new Contents();
-	const [ results ] = await contents.selectContent(id);
+	const [ results ] = await new Contents().selectContent(id);
 
 	let content = {};
 	let prevId = 0;
@@ -150,6 +149,7 @@ router.delete('/', async (req, res) => {
 			});	
 			res.sendStatus(204);
 		}catch(e) {
+			console.log(e);
 			contents.mysql.rollback();
 			return res.sendStatus(500);
 		}

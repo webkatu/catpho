@@ -3,7 +3,7 @@ import Users from './Users.js';
 import config from '../config.js';
 
 export default class Comments extends MySQLModel {
-	createTable() {
+	async createTable() {
 		const sql = `create table ${this.tableName} (
 			id int not null auto_increment primary key,
 			contentId int not null,
@@ -11,7 +11,7 @@ export default class Comments extends MySQLModel {
 			comment text
 		);`;
 
-		return this.query(sql);
+		return await this.query(sql);
 	}
 
 	async selectComments(contentId) {

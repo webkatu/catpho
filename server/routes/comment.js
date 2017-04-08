@@ -26,7 +26,10 @@ router.delete('/', async (req, res) => {
 				comments: results,
 			},
 		});
-	}catch(e) { return res.sendStatus(500); }
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
 });
 
 export default router;

@@ -17,7 +17,7 @@ import TagMap from '../models/TagMap.js';
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-	res.locals.interval = 1;
+	res.locals.interval = config.contentsInterval;
 	const page = Math.floor(req.query.page);
 	res.locals.currentPage = (page <= 0 || Number.isNaN(page)) ? 1 : page;
 	res.locals.offset = (res.locals.currentPage - 1) * res.locals.interval;

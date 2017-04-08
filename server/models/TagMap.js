@@ -2,14 +2,14 @@ import { MySQLModel } from './index.js';
 import Contents from './Contents.js';
 
 export default class TagMap extends MySQLModel {
-	createTable() {
+	async createTable() {
 		const sql = `create table ${this.tableName} (
 			id int not null auto_increment primary key,
 			contentId int not null,
 			tagId int not null
 		);`;
 
-		return this.query(sql);
+		return await this.query(sql);
 	}
 
 	async saveTagMap(contentIdArray, tagIdArray) {

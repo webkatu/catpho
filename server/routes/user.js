@@ -236,8 +236,11 @@ router.post('/favorites', async (req, res) => {
 			contentId: contentId,
 		});
 
-		res.sendStatus(201);
-	}catch(e) { return res.sendStatus(500); }
+		res.sendStatus(204);
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
 });
 
 router.delete('/favorites/:contentId', async (req, res) => {
@@ -249,11 +252,18 @@ router.delete('/favorites/:contentId', async (req, res) => {
 	}catch(e) { return res.sendStatus(400); }
 
 	try {
-		const [ OkPacket ] = await new Favorites().remove(decoded.userId, contentId);
+		const sql = `delete from ${this.tableName} where userId = ? and contentId = ?;`;
+		const [ OkPacket ] = await new Favorites().delete(
+			'userId = ? and contentId = ?',
+			[decoded.userId, contentId],
+		);
 		if(OkPacket.affectedRows === 0) return res.sendStatus(400);
 		
 		res.sendStatus(204);
-	}catch(e) { return res.sendStatus(500); }
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
 });
 
 export default router;

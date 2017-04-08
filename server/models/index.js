@@ -10,12 +10,12 @@ export class MySQLModel {
 		}
 	}
 
-	dropTable() {
+	async dropTable() {
 		const sql = `drop table ${this.tableName};`;
-		return this.query(sql);
+		return await this.query(sql);
 	}
 
-	insert(...args) {
+	async insert(...args) {
 		let columns, values;
 		switch(args.length) {
 			case 1:
@@ -34,10 +34,10 @@ export class MySQLModel {
 		}
 
 		const sql = `insert into ${this.tableName} (??) values (?);`;
-		return this.query(sql, [columns, values]);
+		return await this.query(sql, [columns, values]);
 	}
 
-	insertMultiple(...args) {
+	async insertMultiple(...args) {
 		let columns, valuesArray;
 		switch(args.length) {
 			case 1:
@@ -68,10 +68,10 @@ export class MySQLModel {
 
 		const sql = `insert into ${this.tableName} (??) values ${valuesSql};`;
 
-		return this.query(sql, [columns, ...valuesArray]);
+		return await this.query(sql, [columns, ...valuesArray]);
 	}
 
-	update(setData, wherePhrase = '', whereData = []) {
+	async update(setData, wherePhrase = '', whereData = []) {
 		if(wherePhrase === '') throw new Error();
 		wherePhrase = 'where ' + wherePhrase;
 		const dataArray = [];
@@ -88,10 +88,10 @@ export class MySQLModel {
 
 		const sql = `update ${this.tableName} ${setPhrase} ${wherePhrase};`;
 
-		return this.query(sql, dataArray);
+		return await this.query(sql, dataArray);
 	}
 
-	delete(wherePhrase = '', whereData = []) {
+	async delete(wherePhrase = '', whereData = []) {
 		if(wherePhrase === '') throw new Error();
 		wherePhrase = 'where ' + wherePhrase;
 		const dataArray = [];
@@ -100,10 +100,10 @@ export class MySQLModel {
 		else for(const prop in whereData) dataArray.push(prop, whereData[prop]);
 
 		const sql = `delete from ${this.tableName} ${wherePhrase};`;
-		return this.query(sql, dataArray);
+		return await this.query(sql, dataArray);
 	}
 
-	select(cols, wherePhrase = '', whereData = [], otherPhrase = '', otherDataArray = []) {
+	async select(cols, wherePhrase = '', whereData = [], otherPhrase = '', otherDataArray = []) {
 		if(wherePhrase) wherePhrase = 'where ' + wherePhrase;
 		const dataArray = [];
 
@@ -121,19 +121,17 @@ export class MySQLModel {
 		else for(const prop in whereData) dataArray.push(prop, whereData[prop]);
 
 		const sql = `select ${colsPhrase} from ${this.tableName} ${wherePhrase} ${otherPhrase};`;
-		return this.query(sql, [...dataArray, ...otherDataArray]);
+		return await this.query(sql, [...dataArray, ...otherDataArray]);
 	}
 
-	selectOnce(cols, wherePhrase, whereData, otherPhrase = '', otherDataArray) {
-		return (async () => {
-			const results = await this.select(cols, wherePhrase, whereData, `${otherPhrase} limit 1`, otherDataArray);
-			let result = results[0][0];
-			if(result === undefined) result = null;
-			return result;
-		})();
+	async selectOnce(cols, wherePhrase, whereData, otherPhrase = '', otherDataArray) {
+		const results = await this.select(cols, wherePhrase, whereData, `${otherPhrase} limit 1`, otherDataArray);
+		let result = results[0][0];
+		if(result === undefined) result = null;
+		return result;
 	}
 
-	count(col = '*', wherePhrase = '', whereData = []) {
+	async count(col = '*', wherePhrase = '', whereData = []) {
 		if(wherePhrase) wherePhrase = 'where ' + wherePhrase;
 		const dataArray = [col];
 
@@ -142,42 +140,14 @@ export class MySQLModel {
 
 		const sql = `select count(?) from ${this.tableName} ${wherePhrase};`;
 
-		return (async () => {
-			const [ results ] = await this.query(sql, dataArray);
-			const count = results[0][`count('${col}')`];
-			return count;
-		})();
+		const [ results ] = await this.query(sql, dataArray);
+		const count = results[0][`count('${col}')`];
+		return count;
 	}
 
-	countOf(col, value) {
-		const sql = `select count(*) from ${this.tableName} where ?? = ?;`;
-
-		return (async () => {
-			const [results] = await this.query(sql, [col, value]);
-			const count = results[0]['count(*)'];
-			return count;
-		})();
-	}
-
-	selectBy(col, value) {
-		const sql = `select * from ${this.tableName} where ?? = ?;`;
-		return this.query(sql, [col, value]);
-	}
-
-	selectAll() {
-		const sql = `select * from ${this.tableName};`;
-
-		return this.query(sql);
-	}
-
-	deleteBy(col, value) {
-		const sql = `delete from ${this.tableName} where ?? = ?;`;
-		return this.query(sql, [col, value]);
-	}
-
-	query(...args) {
+	async query(...args) {
 		console.log(args);
-		return new Promise((res, rej) => {
+		return await new Promise((res, rej) => {
 			mysql.query(...args, (...args) => {
 				const err = args[0];
 				if(err) { return rej(err); }

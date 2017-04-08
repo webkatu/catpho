@@ -10,24 +10,26 @@ const router = express.Router({ mergeParams: true });
 
 router.get('/', async (req, res) => {
 	try {
-		const comments = new Comments();
-		const results = await comments.selectComments(req.params.contentId);
+		const results = await new Comments().selectComments(req.params.contentId);
 
 		res.json({
 			payload: {
 				comments: results,
 			}
 		});
-	}catch(e) { return res.sendStatus(500); }
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
 });
 
-
-router.post('/', multer().none(), async (req, res) => {
+const upload = multer().none();
+router.post('/', upload, async (req, res) => {
 	try {
 		if(! validator.validateComment(req.body.comment)) throw new Error();
 		var decoded = await jwtManager.verifyUserAuthToken(req.body.userToken);
-		const [ results ] = await new Contents().select('*', 'id = ?', [req.params.contentId]);
-		if(results.length === 0) throw new Error();
+		const result = await new Contents().selectOnce('*', 'id = ?', [req.params.contentId]);
+		if(result === null) throw new Error();
 	}catch(e) {
 		return res.sendStatus(400);
 	}
@@ -48,7 +50,10 @@ router.post('/', multer().none(), async (req, res) => {
 				commentId: OkPacket.insertId,
 			},
 		});
-	}catch(e) { console.log(e);return res.sendStatus(500); }
+	}catch(e) {
+		console.log(e);
+		return res.sendStatus(500);
+	}
 });
 
 export default router;

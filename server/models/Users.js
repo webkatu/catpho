@@ -3,7 +3,7 @@ import bcrypt from '../common/bcrypt.js';
 import { MySQLModel } from './index.js';
 
 export default class Users extends MySQLModel {
-	createTable() {
+	async createTable() {
 		const sql = `create table ${this.tableName} (
 			id int not null auto_increment primary key,
 			email varchar(255) not null unique,
@@ -16,7 +16,7 @@ export default class Users extends MySQLModel {
 			modified timestamp
 		);`;
 
-		return this.query(sql);
+		return await this.query(sql);
 	}
 
 	async register(body) {
@@ -50,26 +50,5 @@ export default class Users extends MySQLModel {
 
 	async activate(id) {
 		return await this.update({ activation: 1 }, '?? = ?', { id });
-	}
-
-	selectUserByEmailOrUserName(emailOrUserName) {
-		const sql = `select * from ${this.tableName} where email = ? or userName = ?;`;
-		return this.query(sql, [emailOrUserName, emailOrUserName]);
-	}
-
-	exists(col, val) {
-		const sql = `select id from ${this.tableName} where ?? = ?;`;
-		return (async () => {
-			const [results] = await this.query(sql, [col, val]);
-			return results.length !== 0;
-		})();
-	}
-
-
-	updateUserWithPassword(setData, id, password) {
-		const wherePhrase = 'where ?? = ? and ?? = ?';
-		const whereData = { id, password };
-
-		return this.update(setData, wherePhrase, whereData);
 	}
 }

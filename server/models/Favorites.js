@@ -19,19 +19,11 @@ export default class Favorites extends MySQLModel {
 		);
 	}
 
-	isFavorite(userId, contentId) {
-		return (async () => {
-			const [ results ] = await this.select(
-				['id'],
-				'userId = ? and contentId = ?',
-				[userId, contentId]);
-			return results.length !== 0
-		})();
-	}
-
-	remove(userId, contentId) {
-		const sql = `delete from ${this.tableName} where userId = ? and contentId = ?;`;
-
-		return this.query(sql, [userId, contentId]);
+	async isFavorite(userId, contentId) {
+		const result = await this.selectOnce(
+			['id'],
+			'userId = ? and contentId = ?',
+			[userId, contentId]);
+		return results !== null;
 	}
 }
