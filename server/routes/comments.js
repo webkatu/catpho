@@ -1,5 +1,6 @@
 import express from 'express';
 import multer from 'multer';
+import config from '../config.js';
 import jwtManager from '../common/jwtManager.js'
 import validator from '../common/validator.js'
 import Contents from '../models/Contents.js';
@@ -10,7 +11,8 @@ const router = express.Router({ mergeParams: true });
 router.get('/', async (req, res) => {
 	try {
 		const comments = new Comments();
-		const [ results ] = await comments.selectComments(req.params.contentId);
+		const results = await comments.selectComments(req.params.contentId);
+
 		res.json({
 			success: true,
 			payload: {
@@ -39,7 +41,7 @@ router.post('/', multer().none(), async (req, res) => {
 			comment: req.body.comment,
 		});
 
-		const [ results ] = await comments.selectComments(req.params.contentId);
+		const results = await comments.selectComments(req.params.contentId);
 
 		res.json({
 			success: true,

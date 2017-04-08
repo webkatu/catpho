@@ -107,13 +107,16 @@ async function getPoster(userId) {
 		nickname: '',
 	};
 
-	const users = new Users();
-	const [ results ] = await users.select('*', '?? = ?', {id: userId});
-	if(results.length !== 0) {
-		const user = results[0];
-		for(const prop in poster) poster[prop] = user[prop];
-	}
-	return poster;
+	const result = await new Users().selectOnce(
+		['userName', 'nickname', 'avatar'],
+		'?? = ?',
+		{id: userId}
+	);
+	if(result === null) return poster;
+	
+	return Object.assign(poster, result, {
+		avatar: `${config.avatarsUrl}/${result.avatar}`,
+	});
 }
 
 router.delete('/', async (req, res) => {

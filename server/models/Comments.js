@@ -1,5 +1,6 @@
 import { MySQLModel } from './index.js';
 import Users from './Users.js';
+import config from '../config.js';
 
 export default class Comments extends MySQLModel {
 	createTable() {
@@ -13,8 +14,12 @@ export default class Comments extends MySQLModel {
 		return this.query(sql);
 	}
 
-	selectComments(contentId) {
-		const sql = `select c.id, c.userId, c.comment, u.userName, u.nickname, u.avatar from ${this.tableName} c, ${new Users().tableName} u where c.contentId = ? and c.userId = u.id;`;
-		return this.query(sql, [contentId]);
+	async selectComments(contentId) {
+		const sql = `select c.id, c.userId, c.comment, u.userName, u.nickname, u.avatar from ${this.tableName} c join ${new Users().tableName} u on c.userId = u.id where c.contentId = ?;`;
+		const [ results ] = await this.query(sql, [contentId]);
+		results.forEach((result) => {
+			result.avatar = `${config.avatarsUrl}/${result.avatar}`;
+		});
+		return results;
 	}
 }
