@@ -302,7 +302,7 @@ export const deleteComment = (contentId, commentId) => {
 		dispatch(_deleteComment());
 
 		try {
-			const response = await fetch(`${config.apiServer}/${contentId}/comments/${commentId}`, {
+			const response = await fetch(`${config.apiServer}/contents/${contentId}/comments/${commentId}`, {
 				method: 'DELETE',
 				mode: 'cors',
 				headers: {

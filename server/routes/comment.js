@@ -4,7 +4,7 @@ import Comments from '../models/Comments.js';
 
 const router = express.Router({ mergeParams: true });
 
-router.delete('/:id/comments/:commentId', async (req, res) => {
+router.delete('/', async (req, res) => {
 	try {
 		if(Number.isNaN(req.params.contentId)) throw new Error();
 		if(Number.isNaN(req.params.commentId)) throw new Error();
@@ -19,7 +19,7 @@ router.delete('/:id/comments/:commentId', async (req, res) => {
 		);
 		if(OkPacket.affectedRows === 0) return res.sendStatus(400);
 
-		const [ results ] = await comments.selectComments(req.params.contentId);
+		const results = await comments.selectComments(req.params.contentId);
 
 		res.json({
 			success: true,
