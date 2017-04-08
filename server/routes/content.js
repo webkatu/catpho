@@ -89,8 +89,10 @@ async function getContent(id) {
 			else nextId = results[1].id;
 		}
 	}else if(results.length === 1) {
+		//コンテンツが1個しかないとき;
+		if(results[0].id === id) content = results[0];
 		//コンテンツが無くかつidが先頭か末尾のとき;
-		if(results[0].id < id) prevId = results[0].id;
+		else if(results[0].id < id) prevId = results[0].id;
 		else nextId = results[0].id;
 	}
 
@@ -137,6 +139,7 @@ router.delete('/', async (req, res) => {
 			if(OkPacket.affectedRows === 0) return res.sendStatus(400).end();
 
 			await new TagMap().delete('contentId = ?', [req.params.contentId]);
+			await new Tags().deleteUnusedTags();
 			await new Comments().delete('contentId = ?', [req.params.contentId]);
 			await new Favorites().delete('contentId = ?', [req.params.contentId]);
 
