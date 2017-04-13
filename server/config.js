@@ -35,7 +35,6 @@ export default {
 		},
 		from: 'mail@catpho.webkatu.com',
 	},
-	activationCodeTimeLimit: 1000 * 60 * 60 * 24 * 1,
 	userAuthJWT: {
 		secretKey: secret.userAuthJWT.secretKey,
 		expiresIn: 60 * 60 * 24 * 14,
