@@ -10,6 +10,7 @@ class App extends React.Component {
 		this.props.dispatch(signInActions.signIn());
 	}
 	render() {
+		document.title = this.props.app.title;
 		return (
 			<div>
 				<Notification />
@@ -20,4 +21,10 @@ class App extends React.Component {
 	}
 }
 
-export default ReactRedux.connect()(App);
+function mapStateToProps(state) {
+	return {
+		app: state.app,
+	};
+}
+
+export default ReactRedux.connect(mapStateToProps)(App);

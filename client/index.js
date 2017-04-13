@@ -51,7 +51,7 @@ const routes = (
 				<ReactRouter.Route path="myposts/" component={MyPosts} />
 				<ReactRouter.Route path="favorites/" component={Favorites} />
 				<ReactRouter.Route path="mycomments/" component={MyComments} />
-				<ReactRouter.Route path="activation/*" component={Activation} />
+				<ReactRouter.Route path="activation/" component={Activation} />
 			</ReactRouter.Route>
 		</ReactRouter.Route>
 		<ReactRouter.Route path="*" component={NotFound} />
