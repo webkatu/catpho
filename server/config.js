@@ -11,9 +11,6 @@ export default {
 		password: secret.mysql.password,
 		database: 'catpho',
 	},
-	mongodb: {
-		uri: 'mongodb://localhost/catpho',
-	},
 	uploadsDir: __dirname + '/uploads',
 	avatarsDir: __dirname + '/uploads/avatars',
 	contentsDir: __dirname + '/uploads/contents',
@@ -36,7 +33,7 @@ export default {
 				ciphers: 'SSLv3',
 			},
 		},
-		from: 'mail@webkatu.com',
+		from: 'mail@catpho.webkatu.com',
 	},
 	activationCodeTimeLimit: 1000 * 60 * 60 * 24 * 1,
 	userAuthJWT: {
