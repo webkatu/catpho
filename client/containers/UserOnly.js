@@ -6,7 +6,7 @@ class UserOnly extends React.Component {
 	render() {
 		const component = (this.props.isSignedIn)
 			? this.props.children
-			: <SignIn />;
+			: <div>サインインしてください</div>;
 
 		return component;
 	}

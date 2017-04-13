@@ -1,6 +1,6 @@
 import React from 'react';
 import PagerItem from './PagerItem.js';
-import { createPagerPath } from '../../common/index.js';
+import createPagerPath from '../../common/createPagerPath.js';
 
 export default class Pager extends React.Component {
 

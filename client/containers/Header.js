@@ -10,18 +10,22 @@ import SiteTitle from '../components/Header/SiteTitle.js';
 
 class Header extends React.Component {
 	handleSignUpButtonClick(e) {
+		e.preventDefault();
 		this.props.dispatch(actions.toggleSignUpView());
 	}
 
 	handleSignInButtonClick(e) {
+		e.preventDefault();
 		this.props.dispatch(actions.toggleSignInView());
 	}
 
 	handleContentsUploadButtonClick(e) {
+		e.preventDefault();
 		this.props.dispatch(actions.toggleContentsUploadView());
 	}
 
 	handleSignOutButtonClick(e) {
+		e.preventDefault();
 		this.props.dispatch(appActions.signOut());
 	}
 
@@ -35,27 +39,15 @@ class Header extends React.Component {
 		const header = this.props.header;
 
 		const signUpButton = (
-			<button
-				type="button"
-				value="SignUp"
-				onClick={::this.handleSignUpButtonClick}
-			>登録</button>
+			<a onClick={::this.handleSignUpButtonClick}>登録</a>
 		);
 
 		const signInButton = (
-			<button
-				type="button"
-				value="SignIn"
-				onClick={::this.handleSignInButtonClick}
-			>ログイン</button>
+			<a onClick={::this.handleSignInButtonClick}>ログイン</a>
 		);
 
 		const signOutButton = (
-			<button
-				type="button"
-				value="SignOut"
-				onClick={::this.handleSignOutButtonClick}
-			>サインアウト</button>
+			<a onClick={::this.handleSignOutButtonClick}>サインアウト</a>
 		);
 
 		const myPageButton = (
@@ -68,11 +60,7 @@ class Header extends React.Component {
 		);
 
 		const contentsUploadButton = (
-			<button
-				type="button"
-				value="Upload"
-				onClick={::this.handleContentsUploadButtonClick}
-			>アップロード</button>
+			<a onClick={::this.handleContentsUploadButtonClick}>アップロード</a>
 		);
 
 		let signUpButtonNode = null;

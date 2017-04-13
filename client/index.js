@@ -41,10 +41,6 @@ const routes = (
 		<ReactRouter.Route path="other/">
 			<ReactRouter.Route path="passwordreissue/" component={PasswordReissue} />
 		</ReactRouter.Route>
-		<ReactRouter.Route path="test" component={Contents} />
-		<ReactRouter.Route path="upload" component={ContentsUpload} />
-		<ReactRouter.Route path="signup" component={SignUp} />
-		<ReactRouter.Route path="signIn" component={SignIn} />
 		<ReactRouter.Route component={UserOnly}>
 			<ReactRouter.Route path="mypage/" component={MyPage}>
 				<ReactRouter.IndexRoute component={RegistrationInformation} />
