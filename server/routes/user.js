@@ -94,7 +94,6 @@ router.patch('/',
 
 		try {
 			const password = await new Users().reissuePassword(userId);
-			console.log(email, password);
 			mailer.sendPasswordReissueMail({
 				to: email,
 				password,

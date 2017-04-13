@@ -20,7 +20,6 @@ export default (state = initialState, action) => {
 			});
 
 		case '@@router/LOCATION_CHANGE':
-			console.log(action.payload);
 			const pathname = action.payload.pathname;
 			const query = action.payload.query;
 			let title = '';

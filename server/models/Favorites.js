@@ -24,6 +24,6 @@ export default class Favorites extends MySQLModel {
 			['id'],
 			'userId = ? and contentId = ?',
 			[userId, contentId]);
-		return results !== null;
+		return result !== null;
 	}
 }

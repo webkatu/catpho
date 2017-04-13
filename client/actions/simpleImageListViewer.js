@@ -33,7 +33,7 @@ const fetchContentsFailed = (error) => {
 	};
 }
 
-export const fetchContents = (basePath = '/contents' + location.search, page) => {
+export const fetchContents = (basePath, page) => {
 	//locationと引数からfetch先のpathを作成;
 
 	const params = new URLSearchParams(location.search);
@@ -76,7 +76,7 @@ export const openViewer = (contents, selectedIndex) => {
 
 export const changeLocation = () => {
 	return (dispatch, getState) => {
-		const { user } = getState();
+		const { myUser } = getState();
 
 		let basePathOfFetch;
 		switch(location.pathname) {
@@ -89,13 +89,13 @@ export const changeLocation = () => {
 				basePathOfFetch = '/contents/';
 				break;
 			case '/mypage/myposts/':
-				basePathOfFetch = `/contents/?poster=${user.userName}`;
+				basePathOfFetch = `/contents/?poster=${myUser.userName}`;
 				break;
 			case '/mypage/favorites/':
-				basePathOfFetch = `/contents/?favoritesOf=${user.userName}&userToken=${localStorage.getItem('userToken')}`;
+				basePathOfFetch = `/contents/?favoritesOf=${myUser.userName}&userToken=${localStorage.getItem('userToken')}`;
 				break;
 			case '/mypage/mycomments/':
-				basePathOfFetch = `/contents/?includingCommentsOf=${user.userName}`;
+				basePathOfFetch = `/contents/?includingCommentsOf=${myUser.userName}`;
 				break;
 		}
 
