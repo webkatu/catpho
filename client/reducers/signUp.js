@@ -6,17 +6,17 @@ const initialState = {
 	password: '',
 	emailMaxLength: validator.rule.emailMaxLength,
 	userNameMaxLength: validator.rule.userNameMaxLength,
-	validationEmail: false,
-	validationUserName: false,
-	validationPassword: false,
+	validEmail: false,
+	validUserName: false,
+	validPassword: false,
 	isRequesting: false,
 	shouldResetForm: false,
 
 	possibleSubmit() {
 		return (
-			this.validationEmail
-			&& this.validationUserName
-			&& this.validationPassword
+			this.validEmail
+			&& this.validUserName
+			&& this.validPassword
 			&& ! this.isRequesting
 		);
 	},
@@ -27,19 +27,19 @@ export default (state = initialState, action) => {
 		case 'INPUT_EMAIL@signUp':
 			return Object.assign({}, state, {
 				email: action.payload.email,
-				validationEmail: validator.validateEmail(action.payload.email),
+				validEmail: validator.validateEmail(action.payload.email),
 			});
 
 		case 'INPUT_USER_NAME@signUp':
 			return Object.assign({}, state, {
 				userName: action.payload.userName,
-				validationUserName: validator.validateUserName(action.payload.userName),
+				validUserName: validator.validateUserName(action.payload.userName),
 			});
 
 		case 'INPUT_PASSWORD@signUp':
 			return Object.assign({}, state, {
 				password: action.payload.password,
-				validationPassword: validator.validatePassword(action.payload.password),
+				validPassword: validator.validatePassword(action.payload.password),
 			});
 
 		case 'REQUEST_SIGN_UP':

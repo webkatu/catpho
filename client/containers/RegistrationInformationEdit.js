@@ -55,7 +55,7 @@ class RegistrationInformationEdit extends React.Component {
 					<dt>アバター: </dt><dd>
 						<input 
 							className={classnames({
-								error: ! registrationInformation.validationAvatar
+								error: ! registrationInformation.validAvatar
 							})}
 							type="file"
 							name="avatar"
@@ -79,7 +79,7 @@ class RegistrationInformationEdit extends React.Component {
 					<dt>ニックネーム: </dt><dd>
 						<input
 							className={classnames({
-								error: ! registrationInformation.validationNickname
+								error: ! registrationInformation.validNickname
 							})}
 							type="text"
 							name="nickname"
@@ -97,7 +97,7 @@ class RegistrationInformationEdit extends React.Component {
 					<dt>メールアドレス: </dt><dd>
 						<input
 							className={classnames({
-								error: ! registrationInformation.validationEmail
+								error: ! registrationInformation.validEmail
 							})}
 							type="email"
 							name="email"
@@ -108,7 +108,7 @@ class RegistrationInformationEdit extends React.Component {
 					<dt>現在のパスワード: </dt><dd>
 						<input
 							className={classnames({
-								error: ! registrationInformation.validationCurrentPassword
+								error: ! registrationInformation.validCurrentPassword
 							})}
 							type="password"
 							name="currentPassword"
@@ -119,7 +119,7 @@ class RegistrationInformationEdit extends React.Component {
 					<dt>新しいパスワード: </dt><dd>
 						<input
 							className={classnames({
-								error: ! registrationInformation.validationPassword
+								error: ! registrationInformation.validPassword
 							})}
 							type="password"
 							name="password"
@@ -130,7 +130,7 @@ class RegistrationInformationEdit extends React.Component {
 					<dt>新しいパスワード(確認): </dt><dd>
 						<input
 							className={classnames({
-								error: ! registrationInformation.validationRePassword
+								error: ! registrationInformation.validRePassword
 							})}
 							type="password"
 							value={form.rePassword}

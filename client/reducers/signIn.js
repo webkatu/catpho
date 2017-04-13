@@ -4,16 +4,16 @@ const initialState = {
 	emailOrUserName: '',
 	password: '',
 	emailOrUserNameMaxLength: validator.rule.emailMaxLength,
-	validationEmailOrUserName: false,
-	validationPassword: false,
+	validEmailOrUserName: false,
+	validPassword: false,
 	isRequesting: false,
 	shouldResetForm: false,
 	shouldDisplayPasswordReissueForm: false,
 
 	possibleSubmit() {
 		return (
-			this.validationEmailOrUserName
-			&& this.validationPassword
+			this.validEmailOrUserName
+			&& this.validPassword
 			&& ! this.isRequesting
 		);
 	},
@@ -25,14 +25,14 @@ export default (state = initialState, action) => {
 			const emailOrUserName = action.payload.emailOrUserName;
 			return Object.assign({}, state, {
 				emailOrUserName,
-				validationEmailOrUserName: validator.validateEmail(emailOrUserName) || validator.validateUserName(emailOrUserName),
+				validEmailOrUserName: validator.validateEmail(emailOrUserName) || validator.validateUserName(emailOrUserName),
 			});
 		}
 
 		case 'INPUT_PASSWORD@signIn':
 			return Object.assign({}, state, {
 				password: action.payload.password,
-				validationPassword: validator.validatePassword(action.payload.password),
+				validPassword: validator.validatePassword(action.payload.password),
 			});
 
 		case 'REQUEST_SIGN_IN':

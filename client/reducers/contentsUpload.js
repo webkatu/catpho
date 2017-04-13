@@ -10,17 +10,17 @@ const initialState = {
 	ageMin: validator.rule.ageMin,
 	ageMax: validator.rule.ageMax,
 	descriptionMaxLength: validator.rule.descriptionMaxLength,
-	validationFile: false,
-	validationName: true,
-	validationAge: true,
-	validationTag: true,
-	validationDescription: true,
+	validFile: false,
+	validName: true,
+	validAge: true,
+	validTag: true,
+	validDescription: true,
 	possibleSubmit() {
-		return this.validationFile
-			&& this.validationName
-			&& this.validationAge
-			&& this.validationTag
-			&& this.validationDescription
+		return this.validFile
+			&& this.validName
+			&& this.validAge
+			&& this.validTag
+			&& this.validDescription
 			&& ! this.isPosting;
 	},
 	isPosting: false,
@@ -42,7 +42,7 @@ export default (state = initialState, action) => {
 
 			return Object.assign({}, state, {
 				files,
-				validationFile: Boolean(files.length),
+				validFile: Boolean(files.length),
 			});
 		}
 
@@ -53,32 +53,32 @@ export default (state = initialState, action) => {
 
 			return Object.assign({}, state, {
 				files,
-				validationFile: Boolean(files.length),
+				validFile: Boolean(files.length),
 			});
 		}
 
 		case 'INPUT_NAME@contentsUpload':
 			return Object.assign({}, state, {
 				name: action.payload.name,
-				validationName: validator.validateName(action.payload.name),
+				validName: validator.validateName(action.payload.name),
 			});
 
 		case 'INPUT_AGE@contentsUpload':
 			return Object.assign({}, state, {
 				age: action.payload.age,
-				validationAge: validator.validateAge(action.payload.age),
+				validAge: validator.validateAge(action.payload.age),
 			});
 
 		case 'INPUT_TAG@contentsUpload':
 			return Object.assign({}, state, {
 				tag: action.payload.tag,
-				validationTag: validator.validateTag(action.payload.tag),
+				validTag: validator.validateTag(action.payload.tag),
 			});
 
 		case 'INPUT_DESCRIPTION@contentsUpload':
 			return Object.assign({}, state, {
 				description: action.payload.description,
-				validationDescription: validator.validateDescription(action.payload.description),
+				validDescription: validator.validateDescription(action.payload.description),
 			});
 
 		case 'POST_CONTENTS':

@@ -56,7 +56,7 @@ class SignIn extends React.Component {
 				<input
 					type="email"
 					className={classnames({
-						error: ! passwordReissueRequest.validationEmail
+						error: ! passwordReissueRequest.validEmail
 					})}
 					name="email"
 					placeholder="メールアドレス"
@@ -82,7 +82,7 @@ class SignIn extends React.Component {
 				<form className="signInForm" ref="form" onSubmit={::this.handleSubmit}>
 					<input
 						type="text"
-						className={classnames({error: ! signIn.validationEmailOrUserName})}
+						className={classnames({error: ! signIn.validEmailOrUserName})}
 						name="emailOrUserName"
 						placeholder="メールアドレスまたはユーザー名"
 						maxLength={signIn.emailOrUserNameMaxLength}
@@ -91,7 +91,7 @@ class SignIn extends React.Component {
 					/>
 					<input
 						type="password"
-						className={classnames({error: ! signIn.validationPassword})}
+						className={classnames({error: ! signIn.validPassword})}
 						name="password"
 						placeholder="パスワード"
 						value={signIn.password}

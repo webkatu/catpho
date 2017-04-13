@@ -46,7 +46,7 @@ class ContentsUpload extends React.Component {
 				<form className="contentsUploadForm" onSubmit={::this.handleSubmit}>
 					<input
 						className={classnames({
-							error: ! contentsUpload.validationFile,
+							error: ! contentsUpload.validFile,
 						})}
 						type="file"
 						multiple
@@ -60,7 +60,7 @@ class ContentsUpload extends React.Component {
 					<label>名: 
 						<input
 							className={classnames({
-								error: ! contentsUpload.validationName,
+								error: ! contentsUpload.validName,
 							})}
 							type="text"
 							name="name"
@@ -76,7 +76,7 @@ class ContentsUpload extends React.Component {
 					<label>年: 
 						<input
 							className={classnames({
-								error: ! contentsUpload.validationAge,
+								error: ! contentsUpload.validAge,
 							})}
 							type="number"
 							name="age"
@@ -89,7 +89,7 @@ class ContentsUpload extends React.Component {
 					<label>タグ: 
 						<input
 							className={classnames({
-								error: ! contentsUpload.validationTag,
+								error: ! contentsUpload.validTag,
 							})}
 							type="text"
 							name="tag"
@@ -100,7 +100,7 @@ class ContentsUpload extends React.Component {
 					<label>
 						<textarea
 							className={classnames({
-								error: ! contentsUpload.validationDescription,
+								error: ! contentsUpload.validDescription,
 							})}
 							name="description"
 							placeholder="説明"

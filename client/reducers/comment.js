@@ -4,13 +4,13 @@ const initialState = {
 	comments: [],
 	postCommentText: '',
 	selectedId: 0,
-	validationPostCommentText: false,
+	validPostCommentText: false,
 	shouldDisplayDeletionConfirmation: false,
 	isPostingComment: false,
 	isDeletingComment: false,
 	possibleSubmit() {
 		return (
-			this.validationPostCommentText &&
+			this.validPostCommentText &&
 			! this.isPostingComment
 		);
 	},
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
 		case 'INPUT_POST_COMMENT_TEXT':
 			return Object.assign({}, state, {
 				postCommentText: action.payload.value,
-				validationPostCommentText: validator.validatePostCommentText(action.payload.value),
+				validPostCommentText: validator.validatePostCommentText(action.payload.value),
 			});
 
 		case 'POST_COMMENT':

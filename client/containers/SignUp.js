@@ -38,7 +38,7 @@ class SignUp extends React.Component {
 				<form className="signUpForm" onSubmit={::this.handleSubmit} ref="form">
 					<input
 						type="email"
-						className={classnames({error: ! signUp.validationEmail})}
+						className={classnames({error: ! signUp.validEmail})}
 						name="email"
 						placeholder="メールアドレス"
 						maxLength={signUp.emailMaxLength}
@@ -47,7 +47,7 @@ class SignUp extends React.Component {
 					/>
 					<input
 						type="text"
-						className={classnames({error: ! signUp.validationUserName})}
+						className={classnames({error: ! signUp.validUserName})}
 						name="userName"
 						placeholder="ユーザー名(半角英数字4文字以上)"
 						maxLength={signUp.userNameMaxLength}
@@ -56,7 +56,7 @@ class SignUp extends React.Component {
 					/>
 					<input
 						type="password"
-						className={classnames({error: ! signUp.validationPassword})}
+						className={classnames({error: ! signUp.validPassword})}
 						name="password"
 						placeholder="パスワード(8文字以上)"
 						value={signUp.password}
