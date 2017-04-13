@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = [
@@ -7,7 +8,6 @@ module.exports = [
 			path: __dirname + '/public/js',
 			filename: 'bundle.js',
 		},
-
 		module: {
 			loaders: [
 				{
@@ -17,9 +17,18 @@ module.exports = [
 				},
 			],
 		},
-
-		devtool: 'inline-source-map'
+		plugins: [
+			/*
+			new webpack.optimize.UglifyJsPlugin({
+				compress: {
+					warnings: false,
+				}
+			}),
+			*/
+		],
+		devtool: 'inline-source-map',
 	},
+
 	{
 		entry: {
 			common: __dirname + '/client/scss/index.scss'
@@ -42,6 +51,24 @@ module.exports = [
 		},
 		plugins: [
 			new ExtractTextPlugin('index.css')
+		],
+	},
+
+	{
+		entry: __dirname + '/client/polyfills/index.js',
+		output: {
+			path: __dirname + '/public/js',
+			filename: 'polyfills.js',
+		},
+		plugins: [
+			new webpack.IgnorePlugin(/vertx/),
+			/*
+			new webpack.optimize.UglifyJsPlugin({
+				compress: {
+					warnings: false,
+				}
+			}),
+			*/
 		],
 	},
 ];
