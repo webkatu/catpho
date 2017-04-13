@@ -20,7 +20,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 */
-window.URLSearchParams = URLSearchParams || (function () {
+window.URLSearchParams = window.URLSearchParams || (function () {
 'use strict';
 
 function URLSearchParams(query) {
