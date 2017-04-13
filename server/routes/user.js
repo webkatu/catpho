@@ -6,6 +6,7 @@ import bcrypt from '../common/bcrypt';
 import jwtManager from '../common/jwtManager.js';
 import validator from '../common/validator.js';
 import imageProcessor from '../common/imageProcessor.js';
+import mailer from '../common/mailer.js';
 import Users from '../models/Users';
 import Contents from '../models/Contents';
 import TagMap from '../models/TagMap';
@@ -45,7 +46,8 @@ router.get('/', async (req, res, next) => {
 		console.log(e);
 		return res.sendStatus(500);
 	}
-})
+});
+
 
 const upload = multer({
 	dest: config.tmpDir,
@@ -71,6 +73,40 @@ router.patch('/',
 		});
 	},
 
+	//passwordReissue
+	async (req, res, next) => {
+		if(req.body.passwordReissueToken === undefined) return next();
+
+		try {
+			const decoded = await jwtManager.verifyPasswordReissueToken(req.body.passwordReissueToken);
+			const result = await new Users().selectOnce(
+				['id'],
+				'userName = ? and email = ?',
+				[req.params.userName, decoded.email],
+			);
+			if(result === null) throw new Error();
+
+			var userId = result.id;
+			var email = decoded.email;
+		}catch(e) {
+			return res.sendStatus(400);
+		}
+
+		try {
+			const password = await new Users().reissuePassword(userId);
+			console.log(email, password);
+			mailer.sendPasswordReissueMail({
+				to: email,
+				password,
+			}).catch((err) => { console.log(err); });
+
+			return res.sendStatus(204);
+		}catch(e) {
+			console.log(e);
+			return res.sendStatus(500);
+		}
+	},
+
 	//validation
 	async (req, res, next) => {
 		try {
@@ -85,6 +121,7 @@ router.patch('/',
 			return res.sendStatus(401);
 		}
 	},
+
 	//activation
 	async (req, res, next) => {
 		if(req.body.activationToken === undefined) return next();

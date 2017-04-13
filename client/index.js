@@ -14,6 +14,7 @@ import ContentViewer from './containers/ContentViewer.js';
 import ContentsUpload from './containers/ContentsUpload.js';
 import SignUp from './containers/SignUp.js';
 import SignIn from './containers/SignIn.js';
+import PasswordReissue from './containers/PasswordReissue.js';
 import Activation from './containers/Activation.js';
 import MyPage from './containers/MyPage.js';
 import RegistrationInformation from './containers/RegistrationInformation.js';
@@ -37,6 +38,9 @@ const routes = (
 		<ReactRouter.Route path="contents/" component={Contents} />
 		<ReactRouter.Route path="contents/:id/" component={ContentViewer} />
 		<ReactRouter.Route path="users/:userName/" component={User} />
+		<ReactRouter.Route path="other/">
+			<ReactRouter.Route path="passwordreissue/" component={PasswordReissue} />
+		</ReactRouter.Route>
 		<ReactRouter.Route path="test" component={Contents} />
 		<ReactRouter.Route path="upload" component={ContentsUpload} />
 		<ReactRouter.Route path="signup" component={SignUp} />

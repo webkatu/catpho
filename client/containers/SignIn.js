@@ -11,6 +11,11 @@ class SignIn extends React.Component {
 			form.reset();
 			this.props.dispatch(actions.resetForm());
 		}
+		if(this.props.passwordReissueRequest.shouldResetForm) {
+			const form = ReactDOM.findDOMNode(this.refs.passwordReissueForm);
+			form.reset();
+			this.props.dispatch(actions.resetPasswordReissueForm());
+		}
 	}
 
 	handleSubmit(e) {
@@ -27,8 +32,50 @@ class SignIn extends React.Component {
 		this.props.dispatch(actions.inputPassword(e.target.value));
 	}
 
+	handlePasswordReissueAnchorClick(e) {
+		e.preventDefault();
+		this.props.dispatch(actions.togglePasswordReissueForm());
+	}
+
+	handlePasswordReissueFormSubmit(e) {
+		e.preventDefault();
+		this.props.dispatch(actions.requestPasswordReissueRequest(e.target));
+	}
+
+	handleEmailInputChange(e) {
+		this.props.dispatch(actions.inputEmail(e.target.value));
+	}
+
 	render() {
 		const signIn = this.props.signIn;
+		const passwordReissueRequest =  this.props.passwordReissueRequest;
+
+		const passwordReissueForm = (
+			<form onSubmit={::this.handlePasswordReissueFormSubmit} ref="passwordReissueForm">
+				<p>パスワードを再発行できます。以下のフォームにメールアドレスを入力して再発行のリクエストをしてください。</p>
+				<input
+					type="email"
+					className={classnames({
+						error: ! passwordReissueRequest.validationEmail
+					})}
+					name="email"
+					placeholder="メールアドレス"
+					maxLength={passwordReissueRequest.emailMaxLength}
+					value={passwordReissueRequest.email}
+					onChange={::this.handleEmailInputChange}
+				/>
+				<button
+					type="submit"
+					disabled={! passwordReissueRequest.possibleSubmit()}
+				>再発行のメールを送信	</button>
+			</form>
+		);
+
+		const passwordReissueFormNode = (
+			(signIn.shouldDisplayPasswordReissueForm)
+			? passwordReissueForm
+			: null
+		);
 
 		return (
 			<div className="signIn" >
@@ -56,6 +103,8 @@ class SignIn extends React.Component {
 						disabled={! signIn.possibleSubmit()}
 					/>
 				</form>
+				<a onClick={::this.handlePasswordReissueAnchorClick}>パスワードを忘れましたか?</a>
+				{passwordReissueFormNode}
 			</div>
 		);
 	}
@@ -64,6 +113,7 @@ class SignIn extends React.Component {
 function mapStateToProps(state) {
 	return {
 		signIn: state.signIn,
+		passwordReissueRequest: state.passwordReissueRequest,
 	}
 }
 

@@ -33,6 +33,20 @@ export default {
 		});
 	},
 
+	createPasswordReissueToken(payload) {
+		return new Promise((res, rej) => {
+			jwt.sign(
+				payload,
+				config.passwordReissueJWT.secretKey,
+				{ expiresIn: config.passwordReissueJWT.expiresIn },
+				(err, token) => {
+					if(err) return rej(err);
+					res(token);
+				}
+			);
+		});
+	},
+
 	verifyUserAuthToken(token) {
 		return new Promise((res, rej) => {
 			jwt.verify(token, config.userAuthJWT.secretKey, (err, decoded) => {
@@ -45,6 +59,15 @@ export default {
 	verifyActivationToken(token) {
 		return new Promise((res, rej) => {
 			jwt.verify(token, config.activationJWT.secretKey, (err, decoded) => {
+				if(err) return rej(err);
+				res(decoded);
+			});
+		});
+	},
+
+	verifyPasswordReissueToken(token) {
+		return new Promise((res, rej) => {
+			jwt.verify(token, config.passwordReissueJWT.secretKey, (err, decoded) => {
 				if(err) return rej(err);
 				res(decoded);
 			});

@@ -67,3 +67,62 @@ export const resetForm = () => {
 		type: 'RESET_FORM@signIn',
 	};
 }
+
+export const togglePasswordReissueForm = () => {
+	return {
+		type: 'TOGGLE_PASSWORD_REISSUE_FORM',
+	};
+}
+
+export const inputEmail = (value) => {
+	return {
+		type: 'INPUT_EMAIL@passwordReissueRequest',
+		payload: {
+			email: value,
+		},
+	};
+}
+
+const _requestPasswordReissueRequest = () => {
+	return {
+		type: 'REQUEST_PASSWORD_REISSUE_REQUEST',
+	};
+}
+
+const requestPasswordReissueRequestSuccessful = () => {
+	return {
+		type: 'REQUEST_PASSWORD_REISSUE_REQUEST_SUCCESSFUL',
+	};
+}
+
+const requestPasswordReissueRequestFailed = () => {
+	return {
+		type: 'REQUEST_PASSWORD_REISSUE_REQUEST_FAILED',
+	};
+}
+
+export const requestPasswordReissueRequest = (form) => {
+	return async (dispatch) => {
+		dispatch(_requestPasswordReissueRequest());
+
+		try {
+			const response = await fetch('/sendmail/?at=passwordReissueRequest', {
+				method: 'POST',
+				headers: { ...config.defaultHeaders },
+				body: new FormData(form),
+			});
+			if(! response.ok) throw new Error(response.status);
+
+			dispatch(requestPasswordReissueRequestSuccessful());
+		}catch(e) {
+			console.log(e);
+			dispatch(requestPasswordReissueRequestFailed());
+		}
+	}
+}
+
+export const resetPasswordReissueForm = () => {
+	return {
+		type: 'RESET_FORM@passwordReissueRequest'
+	}
+}

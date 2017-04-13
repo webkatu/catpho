@@ -36,4 +36,27 @@ export default {
 			html: `please access to <a href="${activationURL}">${activationURL}</a>`,
 		});
 	},
+
+	async sendPasswordReissueRequestMail(params) {
+		const { to, passwordReissueToken, userName } = params;
+
+		const passwordReissueURL = `${config.appServer}/other/passwordreissue/?token=${passwordReissueToken}&userName=${userName}`;
+		return await this.sendMail({
+			from: config.mail.from,
+			to,
+			subject: 'password reissue request',
+			html: `please access to <a href="${passwordReissueURL}">${passwordReissueURL}</a>`,
+		});
+	},
+
+	async sendPasswordReissueMail(params) {
+		const { to, password } = params;
+
+		return await this.sendMail({
+			from: config.mail.from,
+			to,
+			subject: 'password reissue',
+			html: `new password is "${password}"`,
+		});
+	},
 };

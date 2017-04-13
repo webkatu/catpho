@@ -8,7 +8,7 @@ const initialState = {
 	validationPassword: false,
 	isRequesting: false,
 	shouldResetForm: false,
-	shouldViewResult: false,
+	shouldDisplayPasswordReissueForm: false,
 
 	possibleSubmit() {
 		return (
@@ -44,13 +44,11 @@ export default (state = initialState, action) => {
 			return Object.assign({}, initialState, {
 				isRequesting: false,
 				shouldResetForm: true,
-				shouldViewResult: true,
 			});
 
 		case 'REQUEST_SIGN_IN_FAILED':
 			return Object.assign({}, state, {
 				isRequesting: false,
-				shouldViewResult: true,
 			});
 
 		case 'RESET_FORM@signIn':
@@ -58,9 +56,14 @@ export default (state = initialState, action) => {
 				shouldResetForm: false,
 			});
 
-		case 'HIDE_RESULT_VIEW@signIn': 
+		case 'TOGGLE_PASSWORD_REISSUE_FORM':
 			return Object.assign({}, state, {
-				shouldViewResult: false,
+				shouldDisplayPasswordReissueForm: ! state.shouldDisplayPasswordReissueForm,
+			});
+
+		case 'REQUEST_PASSWORD_REISSUE':
+			return Object.assign({}, state, {
+				shouldDisplayPasswordReissueForm: false,
 			});
 	}
 

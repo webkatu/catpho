@@ -51,4 +51,22 @@ export default class Users extends MySQLModel {
 	async activate(id) {
 		return await this.update({ activation: 1 }, '?? = ?', { id });
 	}
+
+	async reissuePassword(id) {
+		const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let password = '';
+		let i = 0;
+		while(i < 10) {
+			password += str[Math.floor(str.length * Math.random())];
+			i++;
+		}
+
+		await this.update(
+			{ password: await bcrypt.createHash(password) },
+			'?? = ?',
+			{ id }
+		);
+
+		return password;
+	}
 }

@@ -41,11 +41,15 @@ export default {
 	activationCodeTimeLimit: 1000 * 60 * 60 * 24 * 1,
 	userAuthJWT: {
 		secretKey: secret.userAuthJWT.secretKey,
-		expiresIn: 1000 * 60 * 60 * 24 * 14,
+		expiresIn: 60 * 60 * 24 * 14,
 	},
 	activationJWT: {
 		secretKey: secret.activationJWT.secretKey,
 		expiresIn: '1 days',
+	},
+	passwordReissueJWT: {
+		secretKey: secret.passwordReissueJWT.secretKey,
+		expiresIn: 60 * 10,
 	},
 	image: {
 		contentSize: 1080,

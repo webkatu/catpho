@@ -17,6 +17,8 @@ import comment from './comment.js';
 import contentsUpload from './contentsUpload.js';
 import signUp from './signUp.js';
 import signIn from './signIn.js';
+import passwordReissueRequest from './passwordReissueRequest.js';
+import passwordReissue from './passwordReissue.js';
 import activation from './activation.js';
 import myPage from './myPage.js';
 import registrationInformation from './registrationInformation.js';
@@ -38,6 +40,8 @@ const catphoApp = Redux.combineReducers({
 	contentsUpload,
 	signUp,
 	signIn,
+	passwordReissueRequest,
+	passwordReissue,
 	activation,
 	myPage,
 	registrationInformation,
