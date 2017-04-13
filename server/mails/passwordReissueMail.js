@@ -1,13 +1,13 @@
 export default {
 	render(params) {
-		return 
-`${params.userName}様
+		return (`
+<p>${params.userName}様</p>
 
-パスワードを再発行しました。
-パスワード: ${params.password}
-ログイン後、パスワードを変更するようおすすめします。
+<p>パスワードを再発行しました。</p>
+<p>パスワード: ${params.password}</p>
+<p>ログイン後、パスワードを変更するようおすすめします。</p>
 
-catpho: <a href="${params.appServer}">${params.appServer}</a>
-`;
+<p>catpho: <a href="${params.appServer}">${params.appServer}</a></p>
+		`);
 	},
 };

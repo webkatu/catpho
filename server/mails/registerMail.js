@@ -1,15 +1,15 @@
 export default {
 	render(params) {
-		return 
-`${params.userName}様
+		return (`
+<p>${params.userName}様</p>
 
-catphoへユーザー登録されました。
-メールアドレスの本人確認をするには下記のURLへアクセスしてください。
-<a href="${params.activationURL}">${params.activationURL}</a>
+<p>catphoへユーザー登録されました。</p>
+<p>メールアドレスの本人確認をするには下記のURLへアクセスしてください。</p>
+<p><a href="${params.activationURL}">${params.activationURL}</a></p>
 
-※このメールに見覚えがない場合は破棄してください。
+<p>※このメールに見覚えがない場合は破棄してください。</p>
 
-catpho: <a href="${params.appServer}">${params.appServer}</a>
-`;
+<p>catpho: <a href="${params.appServer}">${params.appServer}</a></p>
+		`);
 	},
 };

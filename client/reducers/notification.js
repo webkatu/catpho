@@ -155,6 +155,18 @@ export default (state = initialState, action) => {
 				displayTime: 5000,
 			});
 
+		case 'REQUEST_PASSWORD_REISSUE_REQUEST_SUCCESSFUL':
+			return Object.assign({}, state, {
+				text: 'メールを送信しました。メールを確認してください',
+				displayTime: 5000,
+			});
+
+		case 'REQUEST_PASSWORD_REISSUE_REQUEST_FAILED':
+			return Object.assign({}, state, {
+				text: 'メールの送信に失敗しました。やり直してください',
+				displayTime: 5000,
+			});
+
 	}
 	return state;
 }

@@ -19,21 +19,21 @@ const initialState = {
 	isAlreadyRequestingActivation: false,
 	shouldDisplayActivationDialog: false,
 	isEditMode: false,
-	validationAvatar: true,
-	validationNickname: true,
-	validationEmail: true,
-	validationCurrentPassword: true,
-	validationPassword: true,
-	validationRePassword: true,
+	validAvatar: true,
+	validNickname: true,
+	validEmail: true,
+	validCurrentPassword: true,
+	validPassword: true,
+	validRePassword: true,
 	isPatching: false,
 	possibleSubmit() {
 		return (
-			this.validationAvatar &&
-			this.validationNickname &&
-			this.validationEmail &&
-			this.validationCurrentPassword &&
-			this.validationPassword &&
-			this.validationRePassword &&
+			this.validAvatar &&
+			this.validNickname &&
+			this.validEmail &&
+			this.validCurrentPassword &&
+			this.validPassword &&
+			this.validRePassword &&
 			! this.isPatching
 		);
 	},
@@ -94,7 +94,7 @@ export default (state = initialState, action) => {
 						avatarImg: window.URL.createObjectURL(file),
 						avatar: file,
 					},
-					validationAvatar: validator.validateImageFile(file),
+					validAvatar: validator.validateImageFile(file),
 				});
 			}else {
 				return Object.assign({}, state, {
@@ -103,7 +103,7 @@ export default (state = initialState, action) => {
 						avatarImg: state.form.currentAvatarImg,
 						avatar: '',
 					},
-					validationAvatar: true,
+					validAvatar: true,
 				});
 			}
 		}
@@ -118,7 +118,7 @@ export default (state = initialState, action) => {
 						avatarDisabled: false,
 						restoringAvatarChecked: false,
 					},
-					validationAvatar: true,
+					validAvatar: true,
 				});
 			}else {
 				window.URL.revokeObjectURL(state.form.avatarImg);
@@ -130,7 +130,7 @@ export default (state = initialState, action) => {
 						avatarDisabled: true,
 						restoringAvatarChecked: true,
 					},
-					validationAvatar: true,
+					validAvatar: true,
 				})
 			}
 		}
@@ -142,7 +142,7 @@ export default (state = initialState, action) => {
 					...state.form,
 					nickname,
 				},
-				validationNickname: validator.validateNickname(nickname) || nickname.trim() === '',
+				validNickname: validator.validateNickname(nickname) || nickname.trim() === '',
 
 			});
 
@@ -153,7 +153,7 @@ export default (state = initialState, action) => {
 					...state.form,
 					email,
 				},
-				validationEmail: validator.validateEmail(email) || email.trim() === '',
+				validEmail: validator.validateEmail(email) || email.trim() === '',
 			});
 
 		case 'INPUT_CURRENT_PASSWORD@registrationInformation':
@@ -163,7 +163,7 @@ export default (state = initialState, action) => {
 					...state.form,
 					currentPassword,
 				},
-				validationCurrentPassword: validator.validatePassword(currentPassword) || (currentPassword === '' && state.form.password === ''),
+				validCurrentPassword: validator.validatePassword(currentPassword) || (currentPassword === '' && state.form.password === ''),
 			});
 
 		case 'INPUT_PASSWORD@registrationInformation':
@@ -173,9 +173,9 @@ export default (state = initialState, action) => {
 					...state.form,
 					password,
 				},
-				validationCurrentPassword: (state.form.currentPassword === '' && password === '') ? true : (state.form.currentPassword === '' && password !== '') ? false : state.validationCurrentPassword,
-				validationPassword: validator.validatePassword(password) || password === '',
-				validationRePassword: password === state.form.rePassword,
+				validCurrentPassword: (state.form.currentPassword === '' && password === '') ? true : (state.form.currentPassword === '' && password !== '') ? false : state.validCurrentPassword,
+				validPassword: validator.validatePassword(password) || password === '',
+				validRePassword: password === state.form.rePassword,
 			});
 
 		case 'INPUT_RE_PASSWORD@registrationInformation':
@@ -185,7 +185,7 @@ export default (state = initialState, action) => {
 					...state.form,
 					rePassword,
 				},
-				validationRePassword: state.form.password === rePassword,
+				validRePassword: state.form.password === rePassword,
 			});
 
 		case 'PATCH_REGISTRATION_INFORMATION':

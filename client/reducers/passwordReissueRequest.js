@@ -6,8 +6,11 @@ const initialState = {
 	validEmail: false,
 	shouldResetForm: false,
 	isRequesting: false,
+	isAlreadyRequesting: false,
 	possibleSubmit() {
-		return this.validEmail && ! this.isRequesting;
+		return this.validEmail
+			&& ! this.isRequesting
+			&& ! this.isAlreadyRequesting;
 	},
 };
 
@@ -30,6 +33,7 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				isRequesting: false,
 				shouldResetForm: true,
+				isAlreadyRequesting: true,	
 			});
 
 		case 'REQUEST_PASSWORD_REISSUE_REQUEST_FAILED':
