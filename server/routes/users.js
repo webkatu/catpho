@@ -20,8 +20,9 @@ router.get('/',
 
 		try {
 			var decoded = await jwtManager.verifyUserAuthToken(req.query.userToken);
+			if(decoded.expiresIn < new Date().getTime()) throw new Error();
 		}catch(e) {
-			console.log(e);
+			//console.log(e);
 			return res.sendStatus(401);
 		}
 		
@@ -32,15 +33,6 @@ router.get('/',
 				[decoded.userId, decoded.userName],
 			);
 			if(user === null) return res.sendStatus(401);
-
-			var userToken = (
-				(new Date().getTime() <= decoded.expiresIn)
-				? req.query.userToken
-				: await jwtManager.createUserAuthToken({
-					userId: user.id,
-					userName: user.userName,
-				})
-			);
 		}catch(e) {
 			console.log(e);
 			return res.sendStatus(500);
@@ -50,7 +42,7 @@ router.get('/',
 			payload: {
 				...user,
 				avatar: `${config.avatarsUrl}/${user.avatar}`,
-				userToken,
+				userToken: req.query.userToken,
 			},
 		});
 	},
