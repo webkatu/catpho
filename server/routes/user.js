@@ -80,13 +80,14 @@ router.patch('/',
 		try {
 			const decoded = await jwtManager.verifyPasswordReissueToken(req.body.passwordReissueToken);
 			const result = await new Users().selectOnce(
-				['id'],
+				['id', 'userName'],
 				'userName = ? and email = ?',
 				[req.params.userName, decoded.email],
 			);
 			if(result === null) throw new Error();
 
 			var userId = result.id;
+			var userName = result.userName;
 			var email = decoded.email;
 		}catch(e) {
 			return res.sendStatus(400);
@@ -96,6 +97,7 @@ router.patch('/',
 			const password = await new Users().reissuePassword(userId);
 			mailer.sendPasswordReissueMail({
 				to: email,
+				userName,
 				password,
 			}).catch((err) => { console.log(err); });
 

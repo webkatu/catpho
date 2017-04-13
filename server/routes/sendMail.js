@@ -19,14 +19,15 @@ router.post('/', upload,
 		if(req.query.at !== 'register') return next();
 
 		try {
-			const decoded = await jwtManager.verifyActivationToken(req.body.activationToken);
+			var decoded = await jwtManager.verifyActivationToken(req.body.activationToken);
 			if(decoded.email !== req.body.to) throw new Error();
 		}catch(e) {
 			console.log(e);
-			return res.sendStatus(403);
+			return res.sendStatus(400);
 		}
 		mailer.sendRegisterMail({
 			to: req.body.to,
+			userName: decoded.userName,
 			activationToken: req.body.activationToken,
 		}).catch((err) => { console.log(err); });
 
@@ -52,6 +53,7 @@ router.post('/', upload,
 
 			await mailer.sendActivationMail({
 				to: req.body.to,
+				userName: decoded.userName,
 				activationToken,
 			});
 		}catch(e) {
@@ -77,8 +79,8 @@ router.post('/', upload,
 
 			mailer.sendPasswordReissueRequestMail({
 				to: req.body.email,
-				passwordReissueToken,
 				userName: result.userName,
+				passwordReissueToken,
 			}).catch((err) => { console.log(err); });
 
 			return res.sendStatus(204);
