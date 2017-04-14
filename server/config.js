@@ -37,7 +37,7 @@ export default {
 	},
 	userAuthJWT: {
 		secretKey: secret.userAuthJWT.secretKey,
-		expiresIn: 60 * 60 * 24 * 14,
+		expiresIn: 1000 * 60 * 60 * 24 * 14, //millsecond;
 	},
 	activationJWT: {
 		secretKey: secret.activationJWT.secretKey,
@@ -45,7 +45,7 @@ export default {
 	},
 	passwordReissueJWT: {
 		secretKey: secret.passwordReissueJWT.secretKey,
-		expiresIn: 60 * 10,
+		expiresIn: 60 * 10, //second;
 	},
 	image: {
 		contentSize: 1080,

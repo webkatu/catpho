@@ -5,7 +5,6 @@ import * as ReactRouter from 'react-router';
 import * as actions from '../actions/imageListViewer.js';
 import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import SimpleImageListViewer from './SimpleImageListViewer.js';
-import ImageListViewBox from '../components/ImageListViewer/ImageListViewBox.js';
 import ImageListViewerNav from '../components/ImageListViewer/ImageListViewerNav.js';
 
 class ImageListViewer extends React.Component {
