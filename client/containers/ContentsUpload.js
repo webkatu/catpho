@@ -57,7 +57,7 @@ class ContentsUpload extends React.Component {
 						files={contentsUpload.files}
 						handleImageDeleteButtonClick={::this.handleImageDeleteButtonClick}
 					/>
-					<label>名: 
+					<label><span>名前:</span> 
 						<input
 							className={classnames({
 								error: ! contentsUpload.validName,
@@ -68,12 +68,15 @@ class ContentsUpload extends React.Component {
 							onChange={::this.handleNameInputChange}
 						/>
 					</label>
-					<select name="sex">
-						<option value="none">性</option>
-						<option value="male">♂</option>
-						<option value="female">♀</option>
-					</select>
-					<label>年: 
+					<label>
+						<span>性別:</span>
+						<select name="sex">
+							<option value="none">?</option>
+							<option value="male">♂</option>
+							<option value="female">♀</option>
+						</select>
+					</label>
+					<label><span>年齢:</span>
 						<input
 							className={classnames({
 								error: ! contentsUpload.validAge,
@@ -86,7 +89,7 @@ class ContentsUpload extends React.Component {
 							onChange={::this.handleAgeInputChange}
 						/>
 					</label>
-					<label>タグ: 
+					<label><span>タグ:</span>
 						<input
 							className={classnames({
 								error: ! contentsUpload.validTag,
@@ -98,12 +101,12 @@ class ContentsUpload extends React.Component {
 						/>
 					</label>
 					<label>
+						<span>一言:</span>
 						<textarea
 							className={classnames({
 								error: ! contentsUpload.validDescription,
 							})}
 							name="description"
-							placeholder="説明"
 							value={contentsUpload.description}
 							onChange={::this.handleDescriptionTextareaChange}
 							ref="description"
@@ -114,9 +117,8 @@ class ContentsUpload extends React.Component {
 					</label>
 					<button
 						type="submit"
-						value="Upload"
 						disabled={! possibleSubmit}
-					>Upload</button>
+					>アップロード</button>
 				</form>
 			</div>
 		);

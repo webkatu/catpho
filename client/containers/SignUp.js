@@ -62,11 +62,10 @@ class SignUp extends React.Component {
 						value={signUp.password}
 						onChange={::this.handlePasswordInputChange}
 					/>
-					<input
+					<button
 						type="submit"
-						value="アカウントを作る"
 						disabled={! signUp.possibleSubmit()}
-					/>
+					>アカウントを作る</button>
 				</form>
 			</div>
 		);

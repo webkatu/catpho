@@ -14,8 +14,12 @@ class App extends React.Component {
 		return (
 			<div>
 				<Notification />
-				<Header />
-				{this.props.children}
+				<div id="headerOuter">
+					<Header />
+				</div>
+				<div id="content">
+					{this.props.children}
+				</div>
 			</div>
 		);
 	}

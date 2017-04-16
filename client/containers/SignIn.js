@@ -78,7 +78,7 @@ class SignIn extends React.Component {
 		);
 
 		return (
-			<div className="signIn" >
+			<div className="signIn">
 				<form className="signInForm" ref="form" onSubmit={::this.handleSubmit}>
 					<input
 						type="text"
@@ -97,11 +97,10 @@ class SignIn extends React.Component {
 						value={signIn.password}
 						onChange={::this.handlePasswordInputChange}
 					/>
-					<input
+					<button
 						type="submit"
-						value="サインイン"
 						disabled={! signIn.possibleSubmit()}
-					/>
+					>サインイン</button>
 				</form>
 				<a onClick={::this.handlePasswordReissueAnchorClick}>パスワードを忘れましたか?</a>
 				{passwordReissueFormNode}

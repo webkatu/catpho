@@ -1,14 +1,253 @@
+@mixin clearfix {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+$baseColor: #fff;
+$subColor: #5C4B51;
+$accentColor: #F3B562;
+
+$mainWidth: 90%;
+
+* {
+	box-sizing: border-box;
+}
+
 html {
 	height: 100%;
 }
 
 body {
 	min-height: 100%;
+	background: $baseColor;
+	font-size: 16px;
 }
 
 #app {
-	width: 90%;
-	margin: 50px auto 0;
+	width: $mainWidth;
+	margin: 0 auto;
+}
+
+$headerOuterHeight: 35px;
+$headerOuterBorderBottomWidth: 4px;
+#headerOuter {
+	width: 100%;
+	height: $headerOuterHeight;
+	position: fixed;
+	left: 0;
+	top: 0;
+	border-bottom: $headerOuterBorderBottomWidth solid $accentColor;
+	background: $subColor;
+	
+}
+
+$headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
+#header {
+	display: flex;
+	align-items: flex-end;
+	width: $mainWidth;
+	height: $headerHeight;
+	margin: 0 auto;
+	padding-bottom: 2px;
+	color: #fff;
+
+	h1.siteTitle {
+		display: flex;
+		align-items: flex-end;
+		text-transform: capitalize;
+		a {
+			color: #fff;
+		}
+	}
+
+	nav {
+		margin-left: auto;
+		& > ul {
+			display: flex;
+			align-items: flex-end;
+
+			li {
+				margin-left: 20px;
+			}
+		}
+
+		a {
+			color: #fff;
+			cursor: pointer;
+
+			&:hover {
+				text-decoration: underline;
+				//border-bottom: 1px solid #fff;
+			}
+		}
+
+		.myPageButton {
+			overflow: hidden;
+			display: block;
+			width: 25px;
+			height: 25px;
+			position: relative;
+			border-radius: 50%;
+			background: #fff;
+
+				&:hover {
+					border: 2px solid $accentColor;
+				}
+			img {
+				width: inherit;
+				height: inherit;
+				//border-radius: 50%;
+			}
+		}
+	}
+}
+
+
+//input[type="email"],
+//input[type="text"],
+//input[type="password"],
+//input[type="age"]
+input, textarea, select {
+	padding: 7px;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+
+	&.error {
+		border-color: #f88;
+
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.signUpView, .signInView, .contentsUploadView {
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	color: #000;
+
+	.closeArea {
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;	
+		z-index: 2;
+		background: #000;
+		opacity: 0.7;
+	}
+
+}
+
+.signUp, .signIn, .contentsUpload {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	width: 400px;
+	height: 400px;
+	min-height: 400px;
+	margin: auto;
+	z-index: 3;
+	background: #fff;
+	border-radius: 5px;
+
+	& > * {
+		width: 90%;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-around;
+		flex-basis: 300px;
+	}
+}
+
+.contentsUpload {
+	width: 600px;
+	min-width: 400px;
+	height: 600px;
+	min-height: 600px;
+
+	form {
+		flex-basis: 600px;
+
+		label {
+			display: flex;
+			align-items: center;
+			position: relative;
+			& > span {
+				display: block;
+				width: 3em;
+			}
+
+			input, textarea, select {
+				flex-basis: 100%;
+			}
+
+			.characterCount {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				color: #aaa;
+			}
+		}
+
+		.selectedImageViewBox {
+			display: flex;
+
+			.selectedImage {
+				width: 100px;
+				height: 100px;
+				position: relative;
+
+				.deleteButton {
+					position: absolute;
+					right: 0;
+					top: 0;
+				}
+
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+}
+
+.notification {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 30px;
+	position: fixed;
+	top: $headerOuterHeight;
+	left: 0;
+	border-bottom: 1px solid #aaa;
+	background: #fff;
+	transition: 0.5s;
+
+	& > p {
+		width: $mainWidth;
+		margin: 0 auto;
+		text-align: center;
+	}
+}
+
+
+
+#content {
+	margin-top: $headerHeight + 40px;
 }
 
 .imageListViewer,
@@ -81,6 +320,7 @@ body {
 	}
 }
 
+/*
 .contentsUpload {
 	form {
 		& > * {
@@ -160,3 +400,5 @@ body {
 		}
 	}
 }
+
+*/

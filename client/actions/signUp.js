@@ -83,5 +83,5 @@ export const signUp = (form) => {
 export const resetForm = () => {
 	return {
 		type: 'RESET_FORM@signUp',
-	}
+	};
 }

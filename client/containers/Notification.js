@@ -18,14 +18,13 @@ class Notification extends React.Component {
 	}
 
 	render() {
-		let textNode = null;
-
-		if(this.props.notification.displayTime !== 0) {
-			textNode = this.props.notification.text;
+		if(this.props.notification.displayTime === 0) {
+			return <div className="notification" style={{opacity: 0, zIndex: -999}}></div>
 		}
+
 		return (
 			<div className="notification">
-				<p>{textNode}</p>
+				<p>{this.props.notification.text}</p>
 			</div>
 		);
 	}

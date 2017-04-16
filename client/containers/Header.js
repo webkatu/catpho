@@ -2,11 +2,9 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/header.js';
 import * as appActions from '../actions/app.js';
-import SignUp from './SignUp.js';
-import SignIn from './SignIn.js';
-import ContentsUpload from './ContentsUpload.js';
-import SiteTitle from '../components/Header/SiteTitle.js';
-
+import SignUpView from '../components/common/SignUpView.js';
+import SignInView from '../components/common/SignInView.js';
+import ContentsUploadView from '../components/common/ContentsUploadView.js';
 
 class Header extends React.Component {
 	handleSignUpButtonClick(e) {
@@ -34,6 +32,18 @@ class Header extends React.Component {
 		this.context.router.push(e.currentTarget.pathname);
 	}
 
+	handleSignUpCloseAreaClick(e) {
+		this.props.dispatch(actions.toggleSignUpView());
+	}
+
+	handleSignInCloseAreaClick(e) {
+		this.props.dispatch(actions.toggleSignInView());
+	}
+
+	handleContentsUploadCloseAreaClick(e) {
+		this.props.dispatch(actions.toggleContentsUploadView());
+	}
+
 	render() {
 		const app = this.props.app;
 		const header = this.props.header;
@@ -43,7 +53,7 @@ class Header extends React.Component {
 		);
 
 		const signInButton = (
-			<a onClick={::this.handleSignInButtonClick}>ログイン</a>
+			<a onClick={::this.handleSignInButtonClick}>サインイン</a>
 		);
 
 		const signOutButton = (
@@ -52,7 +62,9 @@ class Header extends React.Component {
 
 		const myPageButton = (
 			<a
+				className="myPageButton"
 				href="/mypage/"
+				title="マイページと設定"
 				onClick={::this.handleMyPageButtonClick}
 			>
 				<img src={this.props.myUser.avatar} />
@@ -69,42 +81,42 @@ class Header extends React.Component {
 		let contentsUploadButtonNode = null;
 		let myPageButtonNode = null;
 		if(app.isSignedIn) {
-			signOutButtonNode = signOutButton;
-			contentsUploadButtonNode = contentsUploadButton;
-			myPageButtonNode = myPageButton;
+			signOutButtonNode = <li>{signOutButton}</li>;
+			contentsUploadButtonNode = <li>{contentsUploadButton}</li>;
+			myPageButtonNode = <li>{myPageButton}</li>;
 		}else {
-			signUpButtonNode = signUpButton;
-			signInButtonNode = signInButton;
+			signUpButtonNode = <li>{signUpButton}</li>;
+			signInButtonNode = <li>{signInButton}</li>;
 		}
 
 		const signUpNode = (
 			(header.shouldDisplaySignUp)
-			? <SignUp />
+			? <SignUpView onCloseAreaClick={::this.handleSignUpCloseAreaClick} />
 			: null
 		);
 
 		const signInNode = (
 			(header.shouldDisplaySignIn)
-			? <SignIn />
+			? <SignInView onCloseAreaClick={::this.handleSignInCloseAreaClick} />
 			: null
 		);
 
 		const contentsUploadNode = (
 			(header.shouldDisplayContentsUpload)
-			? <ContentsUpload />
+			? <ContentsUploadView onCloseAreaClick={::this.handleContentsUploadCloseAreaClick} />
 			: null
 		);
 
 		return (
-			<header id="masthead" className="header">
-				<SiteTitle />
+			<header id="header" className="header">
+				<h1 className="siteTitle"><a href="/">catpho</a></h1>
 				<nav>
 					<ul>
-						<li>{signUpButtonNode}</li>
-						<li>{signInButtonNode}</li>
-						<li>{signOutButtonNode}</li>
-						<li>{contentsUploadButtonNode}</li>
-						<li>{myPageButtonNode}</li>
+						{signUpButtonNode}
+						{signInButtonNode}
+						{signOutButtonNode}
+						{contentsUploadButtonNode}
+						{myPageButtonNode}
 					</ul>
 				</nav>
 				{signUpNode}
