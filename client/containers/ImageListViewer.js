@@ -54,7 +54,7 @@ class ImageListViewer extends React.Component {
 	render() {
 		const imageListViewer = this.props.imageListViewer;
 		return (
-			<article className="imageListViewer">
+			<div className="imageListViewer">
 				<ImageListViewerNav
 					tags={this.props.tags}
 					shouldDisplayTagsView={imageListViewer.shouldDisplayTagsView}
@@ -64,7 +64,7 @@ class ImageListViewer extends React.Component {
 					handleTagAnchorClick={::this.handleTagAnchorClick}
 				/>
 				<SimpleImageListViewer ref="simpleImageListViewer" />
-			</article>
+			</div>
 		);
 	}
 

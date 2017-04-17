@@ -166,6 +166,13 @@ input, textarea, select {
 #content {
   margin-top: 71px; }
 
+.contents > h1 {
+  display: none; }
+
+.contents .imageListViewer .imageListViewerNav {
+  display: flex;
+  justify-content: space-between; }
+
 .imageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton,
 .simpleImageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton {
   width: 30px;
