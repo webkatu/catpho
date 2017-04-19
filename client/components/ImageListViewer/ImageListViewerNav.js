@@ -1,12 +1,12 @@
 import React from 'react';
-import AutoReloadButton from './AutoReloadButton.js';
+import AutoLoadButton from './AutoLoadButton.js';
 import TagArea from './TagArea.js';
 
 export default class ImageListViewerNav extends React.Component {
 	render() {
 		return (
 			<div className="imageListViewerNav">
-				<AutoReloadButton onClick={this.props.handleAutoReloadButtonClick} />
+				<AutoLoadButton onClick={this.props.handleAutoLoadButtonClick} />
 				<TagArea
 					tags={this.props.tags}
 					shouldDisplayTagsView={this.props.shouldDisplayTagsView}

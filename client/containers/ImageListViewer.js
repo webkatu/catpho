@@ -21,7 +21,7 @@ class ImageListViewer extends React.Component {
 	handleScroll(e) {
 		const { imageListViewer, simpleImageListViewer } = this.props;
 
-		if(! imageListViewer.shouldAutoReload) return;
+		if(! imageListViewer.shouldAutoLoad) return;
 		if(simpleImageListViewer.isFetching) return;
 		if(! imageListViewer.hasNextPage) return;
 		if(simpleImageListViewer.shouldDisplayContentViewer) return;
@@ -37,8 +37,8 @@ class ImageListViewer extends React.Component {
 		));
 	}
 
-	handleAutoReloadButtonClick(checked) {
-		this.props.dispatch(actions.toggleAutoReload(checked));
+	handleAutoLoadButtonClick(e) {
+		this.props.dispatch(actions.toggleAutoLoad());
 	}
 
 	handleTagsViewDisplayButtonClick(e) {
@@ -49,6 +49,7 @@ class ImageListViewer extends React.Component {
 		e.preventDefault();
 		this.context.router.push(e.target.pathname + e.target.search);
 		this.props.dispatch(simpleImageListViewerActions.changeLocation());
+		this.props.dispatch(actions.toggleTagsView());
 	}
 
 	render() {
@@ -59,7 +60,7 @@ class ImageListViewer extends React.Component {
 					tags={this.props.tags}
 					shouldDisplayTagsView={imageListViewer.shouldDisplayTagsView}
 					isFetchingTags={imageListViewer.isFetchingTags}
-					handleAutoReloadButtonClick={::this.handleAutoReloadButtonClick} 
+					handleAutoLoadButtonClick={::this.handleAutoLoadButtonClick} 
 					handleTagsViewDisplayButtonClick={::this.handleTagsViewDisplayButtonClick}
 					handleTagAnchorClick={::this.handleTagAnchorClick}
 				/>

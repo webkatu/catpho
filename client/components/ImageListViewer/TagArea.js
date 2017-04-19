@@ -14,6 +14,7 @@ export default class TagArea extends React.Component {
 				tagAnchorNodes = this.props.tags.map((tag, i) => {
 					return (
 						<a
+							className="tag"
 							href={`/contents/?tag=${tag.name}`}
 							onClick={this.props.onTagAnchorClick}
 							key={i}
@@ -29,8 +30,8 @@ export default class TagArea extends React.Component {
 		}
 
 		return (
-			<div className="tagArea">
-				<button type="button" onClick={this.props.onTagsViewDisplayButtonClick}>{tagButtonText}</button>
+			<div className="tagArea" onClick={this.props.onTagsViewDisplayButtonClick}>
+				<a className="tagButton">{tagButtonText}</a>
 				{tagsViewNode}
 			</div>
 		);

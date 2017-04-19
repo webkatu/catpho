@@ -1,11 +1,8 @@
 import config from '../config.js';
 
-export const toggleAutoReload = (checked) => {
+export const toggleAutoLoad = () => {
 	return {
-		type: 'TOGGLE_AUTO_RELOAD',
-		payload: {
-			shouldAutoReload: checked,
-		},
+		type: 'TOGGLE_AUTO_LOAD',
 	};
 }
 

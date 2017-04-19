@@ -5,8 +5,10 @@
 }
 
 $baseColor: #fff;
-$subColor: #5C4B51;
-$accentColor: #F3B562;
+$subColor: #451a03;
+$subColor2: #fdf6e3;
+
+$accentColor: #b66a2f;
 
 $mainWidth: 90%;
 
@@ -14,24 +16,41 @@ $mainWidth: 90%;
 	box-sizing: border-box;
 }
 
+a {
+	text-decoration: none;
+
+	&:link { color: $accentColor; }
+	&:visited { color: $accentColor; }
+
+	&:hover {
+		transition: 1s;
+		text-shadow: 0 0 1px;
+	}
+}
+
+
 html {
 	height: 100%;
 }
 
 body {
+	display: flex;
+	justify-content: center;
 	min-height: 100%;
 	background: $baseColor;
+	color: $subColor;
 	font-size: 16px;
 }
 
 #app {
 	width: $mainWidth;
-	margin: 0 auto;
 }
 
 $headerOuterHeight: 35px;
 $headerOuterBorderBottomWidth: 4px;
 #headerOuter {
+	display: flex;
+	justify-content: center;
 	width: 100%;
 	height: $headerOuterHeight;
 	position: fixed;
@@ -39,6 +58,7 @@ $headerOuterBorderBottomWidth: 4px;
 	top: 0;
 	border-bottom: $headerOuterBorderBottomWidth solid $accentColor;
 	background: $subColor;
+	z-index: 1;
 	
 }
 
@@ -48,7 +68,6 @@ $headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
 	align-items: flex-end;
 	width: $mainWidth;
 	height: $headerHeight;
-	margin: 0 auto;
 	padding-bottom: 2px;
 	color: #fff;
 
@@ -62,6 +81,7 @@ $headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
 	}
 
 	nav {
+		//justify-self: flex-end;
 		margin-left: auto;
 		& > ul {
 			display: flex;
@@ -126,6 +146,8 @@ input, textarea, select {
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
+	//justify-content: center;
+	//align-items: center;
 	width: 100%;
 	height: 100%;
 	position: fixed;
@@ -156,6 +178,7 @@ input, textarea, select {
 	height: 400px;
 	min-height: 400px;
 	margin: auto;
+	position: relative;
 	z-index: 3;
 	background: #fff;
 	border-radius: 5px;
@@ -227,6 +250,7 @@ input, textarea, select {
 
 .notification {
 	display: flex;
+	justify-content: center;
 	align-items: center;
 	width: 100%;
 	height: 30px;
@@ -239,7 +263,6 @@ input, textarea, select {
 
 	& > p {
 		width: $mainWidth;
-		margin: 0 auto;
 		text-align: center;
 	}
 }
@@ -254,70 +277,144 @@ input, textarea, select {
 	& > h1 {
 		display: none;
 	}
+}
 
-	.imageListViewer {
-		.imageListViewerNav {
+.imageListViewerNav {
+	$imageListViewerNavHeight: 40px;
+	display: flex;
+	height: $imageListViewerNavHeight;
+	background: $subColor2;
+
+	& > * {
+		display: flex;
+		align-items: center;
+		height: $imageListViewerNavHeight;
+		padding: 0 10px;
+		border-right: 2px solid $accentColor;
+
+		&:first-child {
+			border-left: 2px solid $accentColor;
+		}
+
+		&:hover {
+			background: $subColor;
+			color: #fff;
+		}
+	}
+
+	.autoLoadButtonLabel {
+		cursor: default;
+		.autoLoadButton {
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	.tagArea {
+		position: relative;
+		cursor: pointer;
+
+		.tagButton {
 			display: flex;
-			justify-content: space-between;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			padding: 5px;
+			border-radius: 2px;
+			//background: $accentColor;
+			//color: #fff;
+			cursor: pointer;
+			transition: none;
+		}
+
+		.tagsView {
+			display: flex;
+			flex-wrap: wrap;
+			//justify-content: space-between;
+			align-items: center;
+			align-self: flex-start;
+			width: 300%;
+			min-height: 150px;
+			padding: 10px;
+			border: 2px solid #000;
+			position: absolute;
+			left: -110%;
+			top: $imageListViewerNavHeight + 5px;
+			background: $subColor2;
+			cursor: default;
+
+			&::before {
+				content: '';
+				width: 0;
+				height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				border-bottom: 10px solid #000;
+				position: absolute;
+				left: 50%;
+				top: -10px;
+			}
+
+			.tag {
+				display: flex;
+				justify-content: center;
+				flex-grow: 1;
+				padding: 5px;
+			}
 		}
 	}
 }
 
-.imageListViewer,
+
 .simpleImageListViewer {
-	
-	.imageListViewerNav {
-		$imageListViewerNavHeight: 30px;
-		//height: $imageListViewerNavHeight;
+	.imageList {}
 
-		.autoReloadButtonLabel {
-			.autoReloadButton {
-				width: $imageListViewerNavHeight;
-				height: $imageListViewerNavHeight;
-				margin: 0;
-			}
-		}
-	}
-
-	.imageList {
-		margin-top: 20px;
-	}
 	.images {
+		$imagesMargin: 5px;
 		display: flex;
 		flex-wrap: wrap;
-		overflow: hidden;
-		margin-left: -10px;
+		margin-left: -$imagesMargin;
+		
 		.image {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			flex-grow: 1;
 			flex-basis: 150px;
-			margin-left: 10px;
-			margin-bottom: 10px;
-			max-height: 200px;
-			border-radius: 10px;
-			background: #eee;
+			max-width: 300px;
+			height: 200px;
+			margin-left: $imagesMargin;
+			margin-top: $imagesMargin;
+	
 			a {
 				display: block;
 				width: 100%;
-				height: 85%;
+				height: 100%;
 			}
+	
 			img {
 				width: 100%;
 				height: 100%;
 			}
 		}
 	}
+	
 	.pager {
+		display: flex;
+		justify-content: center;
+	
 		& > ul {
 			display: flex;
-			list-style: none;
+			flex-grow: 1;
+			flex-basis: 340px;
 			max-width: 340px;
-			margin: 20px auto 0;
+			margin: 20px 0;
+			list-style: none;
+	
 			.pagerItem {
-				flex: 1;
-				text-align: center;
+				display: flex;
+				justify-content: center;
+				flex-grow: 1;
 			}
 		}
 	}

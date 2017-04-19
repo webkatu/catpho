@@ -1,5 +1,5 @@
 const initialState = {
-	shouldAutoReload: true,
+	shouldAutoLoad: true,
 	hasNextPage: false,
 	shouldDisplayTagsView: false,
 	isFetchingTags: false,
@@ -12,9 +12,9 @@ const imageListViewer = (state = initialState, action) => {
 				hasNextPage: action.payload.currentPage < action.payload.maxPage,
 			});
 
-		case 'TOGGLE_AUTO_RELOAD':
+		case 'TOGGLE_AUTO_LOAD':
 			return Object.assign({}, state, {
-				shouldAutoReload: action.payload.shouldAutoReload,
+				shouldAutoLoad: ! state.shouldAutoLoad,
 			});
 
 		case 'TOGGLE_TAGS_VIEW':

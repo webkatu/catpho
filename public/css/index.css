@@ -1,33 +1,47 @@
 * {
   box-sizing: border-box; }
 
+a {
+  text-decoration: none; }
+  a:link {
+    color: #b66a2f; }
+  a:visited {
+    color: #b66a2f; }
+  a:hover {
+    transition: 1s;
+    text-shadow: 0 0 1px; }
+
 html {
   height: 100%; }
 
 body {
+  display: flex;
+  justify-content: center;
   min-height: 100%;
   background: #fff;
+  color: #451a03;
   font-size: 16px; }
 
 #app {
-  width: 90%;
-  margin: 0 auto; }
+  width: 90%; }
 
 #headerOuter {
+  display: flex;
+  justify-content: center;
   width: 100%;
   height: 35px;
   position: fixed;
   left: 0;
   top: 0;
-  border-bottom: 4px solid #F3B562;
-  background: #5C4B51; }
+  border-bottom: 4px solid #b66a2f;
+  background: #451a03;
+  z-index: 1; }
 
 #header {
   display: flex;
   align-items: flex-end;
   width: 90%;
   height: 31px;
-  margin: 0 auto;
   padding-bottom: 2px;
   color: #fff; }
   #header h1.siteTitle {
@@ -57,7 +71,7 @@ body {
       border-radius: 50%;
       background: #fff; }
       #header nav .myPageButton:hover {
-        border: 2px solid #F3B562; }
+        border: 2px solid #b66a2f; }
       #header nav .myPageButton img {
         width: inherit;
         height: inherit; }
@@ -101,6 +115,7 @@ input, textarea, select {
   height: 400px;
   min-height: 400px;
   margin: auto;
+  position: relative;
   z-index: 3;
   background: #fff;
   border-radius: 5px; }
@@ -149,6 +164,7 @@ input, textarea, select {
 
 .notification {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 30px;
@@ -160,7 +176,6 @@ input, textarea, select {
   transition: 0.5s; }
   .notification > p {
     width: 90%;
-    margin: 0 auto;
     text-align: center; }
 
 #content {
@@ -169,58 +184,104 @@ input, textarea, select {
 .contents > h1 {
   display: none; }
 
-.contents .imageListViewer .imageListViewerNav {
+.imageListViewerNav {
   display: flex;
-  justify-content: space-between; }
+  height: 40px;
+  background: #fdf6e3; }
+  .imageListViewerNav > * {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 10px;
+    border-right: 2px solid #b66a2f; }
+    .imageListViewerNav > *:first-child {
+      border-left: 2px solid #b66a2f; }
+    .imageListViewerNav > *:hover {
+      background: #451a03;
+      color: #fff; }
+  .imageListViewerNav .autoLoadButtonLabel {
+    cursor: default; }
+    .imageListViewerNav .autoLoadButtonLabel .autoLoadButton {
+      width: 20px;
+      height: 20px; }
+  .imageListViewerNav .tagArea {
+    position: relative;
+    cursor: pointer; }
+    .imageListViewerNav .tagArea .tagButton {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 5px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: none; }
+    .imageListViewerNav .tagArea .tagsView {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      align-self: flex-start;
+      width: 300%;
+      min-height: 150px;
+      padding: 10px;
+      border: 2px solid #000;
+      position: absolute;
+      left: -110%;
+      top: 45px;
+      background: #fdf6e3;
+      cursor: default; }
+      .imageListViewerNav .tagArea .tagsView::before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 10px solid #000;
+        position: absolute;
+        left: 50%;
+        top: -10px; }
+      .imageListViewerNav .tagArea .tagsView .tag {
+        display: flex;
+        justify-content: center;
+        flex-grow: 1;
+        padding: 5px; }
 
-.imageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton,
-.simpleImageListViewer .imageListViewerNav .autoReloadButtonLabel .autoReloadButton {
-  width: 30px;
-  height: 30px;
-  margin: 0; }
-
-.imageListViewer .imageList,
-.simpleImageListViewer .imageList {
-  margin-top: 20px; }
-
-.imageListViewer .images,
 .simpleImageListViewer .images {
   display: flex;
   flex-wrap: wrap;
-  overflow: hidden;
-  margin-left: -10px; }
-  .imageListViewer .images .image,
+  margin-left: -5px; }
   .simpleImageListViewer .images .image {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
     flex-basis: 150px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    max-height: 200px;
-    border-radius: 10px;
-    background: #eee; }
-    .imageListViewer .images .image a,
+    max-width: 300px;
+    height: 200px;
+    margin-left: 5px;
+    margin-top: 5px; }
     .simpleImageListViewer .images .image a {
       display: block;
       width: 100%;
-      height: 85%; }
-    .imageListViewer .images .image img,
+      height: 100%; }
     .simpleImageListViewer .images .image img {
       width: 100%;
       height: 100%; }
 
-.imageListViewer .pager > ul,
-.simpleImageListViewer .pager > ul {
+.simpleImageListViewer .pager {
   display: flex;
-  list-style: none;
-  max-width: 340px;
-  margin: 20px auto 0; }
-  .imageListViewer .pager > ul .pagerItem,
-  .simpleImageListViewer .pager > ul .pagerItem {
-    flex: 1;
-    text-align: center; }
+  justify-content: center; }
+  .simpleImageListViewer .pager > ul {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 340px;
+    max-width: 340px;
+    margin: 20px 0;
+    list-style: none; }
+    .simpleImageListViewer .pager > ul .pagerItem {
+      display: flex;
+      justify-content: center;
+      flex-grow: 1; }
 
 .simpleContentViewer .catContent .contentImg,
 .contentViewer .catContent .contentImg {
