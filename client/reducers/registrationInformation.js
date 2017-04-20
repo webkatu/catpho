@@ -49,19 +49,19 @@ export default (state = initialState, action) => {
 			window.URL.revokeObjectURL(state.form.avatarImg);
 			return Object.assign({}, initialState);
 
-		case 'REQUEST_ACTIVATION':
+		case 'REQUEST_ACTIVATION_REQUEST':
 			return Object.assign({}, state, {
 				isRequestingActivation: true,
 			});
 
-		case 'REQUEST_ACTIVATION_SUCCESSFUL':
+		case 'REQUEST_ACTIVATION_REQUEST_SUCCESSFUL':
 			return Object.assign({}, state, {
 				isRequestingActivation: false,
 				shouldDisplayActivationDialog: true,
 				isAlreadyRequestingActivation: true,
 			});
 
-		case 'REQUEST_ACTIVATION_FAILED':
+		case 'REQUEST_ACTIVATION_REQUEST_FAILED':
 			return Object.assign({}, state, {
 				isRequestingActivation: false,
 			});

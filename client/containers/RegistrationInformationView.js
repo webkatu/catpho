@@ -14,7 +14,7 @@ class RegistrationInformationView extends React.Component {
 		if(this.props.registrationInformation.isRequestingActivation) return;
 		if(this.props.registrationInformation.isAlreadyRequestingActivation) return;
 
-		this.props.dispatch(actions.requestActivation(this.props.myUser.email));
+		this.props.dispatch(actions.requestActivationRequest(this.props.myUser.email));
 	}
 
 	handleActivationDialogCloseButtonClick() {

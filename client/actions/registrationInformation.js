@@ -6,27 +6,27 @@ export const mount = () => {
 	};
 }
 
-const _requestActivation = () => {
+const _requestActivationRequest = () => {
 	return {
-		type: 'REQUEST_ACTIVATION',
+		type: 'REQUEST_ACTIVATION_REQUEST',
 	};
 }
 
-const requestActivationSuccessful = () => {
+const requestActivationRequestSuccessful = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_SUCCESSFUL',
+		type: 'REQUEST_ACTIVATION_REQUEST_SUCCESSFUL',
 	};
 }
 
-const requestActivationFailed = () => {
+const requestActivationRequestFailed = () => {
 	return {
-		type: 'REQUEST_ACTIVATION_FAILED',
+		type: 'REQUEST_ACTIVATION_REQUEST_FAILED',
 	};
 }
 
-export const requestActivation = (email) => {
+export const requestActivationRequest = (email) => {
 	return async (dispatch) => {
-		dispatch(_requestActivation());
+		dispatch(_requestActivationRequest());
 
 		try {
 			const response = await fetch('/sendmail/?at=activation' , {
@@ -43,9 +43,9 @@ export const requestActivation = (email) => {
 			});
 
 			if(! response.ok) throw new Error(response.status);
-			dispatch(requestActivationSuccessful());
+			dispatch(requestActivationRequestSuccessful());
 		}catch(e) {
-			dispatch(requestActivationFailed());
+			dispatch(requestActivationRequestFailed());
 		}
 	}
 }
