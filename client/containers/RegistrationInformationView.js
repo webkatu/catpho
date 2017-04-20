@@ -49,6 +49,7 @@ class RegistrationInformationView extends React.Component {
 
 		const activationButton = (
 			<button
+				className="activationButton"
 				type="button"
 				disabled={registrationInformation.isAlreadyRequestingActivation || registrationInformation.isRequestingActivation}
 				onClick={::this.handleActivationButtonClick}
@@ -56,22 +57,28 @@ class RegistrationInformationView extends React.Component {
 		);
 
 		const activationDialog = (
-			<aside className="dialog">
-				<p>所有権確認のメールを送りました。メールを確認してください。</p>
-				<button type="button" onClick={::this.handleActivationDialogCloseButtonClick}>閉じる</button>
+			<aside className="dialog activationDialog">
+				<div>
+					<p>所有権確認のメールを送りました。メールを確認してください。</p>
+					<button type="button" onClick={::this.handleActivationDialogCloseButtonClick}>閉じる</button>
+				</div>
 			</aside>
 		);
 
 		const withdrawalDialog = (
-			<aside className="dialog">
-				<p>本当に退会しますか？退会すると、今まで投稿したコンテンツが全て削除されます。この操作は取り消せません。</p>
-				<button type="button" onClick={::this.handleWithdrawalButtonClick}>退会する(確認)</button>
-				<button type="button" onClick={::this.handleWithdrawalCancelButtonClick}>退会しない</button>
+			<aside className="dialog withdrawalDialog">
+				<div>
+					<p>本当に退会しますか？退会すると、今まで投稿したコンテンツが全て削除されます。この操作は取り消せません。</p>
+					<div>
+						<button type="button" onClick={::this.handleWithdrawalCancelButtonClick}>退会しない</button>
+						<button type="button" onClick={::this.handleWithdrawalButtonClick}>退会する(確認)</button>
+					</div>
+				</div>
 			</aside>
 		);
 
 		const activationButtonNode = (myUser.hasBeenActivated)
-			? <span>認証済み</span>
+			? <span className="activated">認証済</span>
 			: activationButton;
 
 		const activationDialogNode = (
@@ -89,14 +96,32 @@ class RegistrationInformationView extends React.Component {
 		return (
 			<div className="registrationInformationView">
 				<dl>
-					<dt>アバター: </dt><dd><img src={myUser.avatar} alt="" /></dd>
-					<dt>ニックネーム: </dt><dd>{myUser.nickname}</dd>
-					<dt>ユーザー名: </dt><dd>{myUser.userName}</dd>
-					<dt>メールアドレス: </dt><dd><span>{myUser.email}</span>{activationButtonNode}</dd>
+					<div>
+						<dt>アバター:</dt>
+						<dd><img src={myUser.avatar} alt="" /></dd>
+					</div>
+					<div>
+						<dt>ニックネーム:</dt>
+						<dd>{myUser.nickname}</dd>
+					</div>
+					<div>
+						<dt>ユーザー名:</dt>
+						<dd>{myUser.userName}</dd>
+					</div>
+					<div>
+						<dt>メールアドレス:</dt>
+						<dd><span>{myUser.email}</span>{activationButtonNode}</dd>
+					</div>
 				</dl>
 
-				<a href="" onClick={::this.handleEditButtonClick}>登録情報を変更する</a>
-				<button type="button" onClick={::this.handleWithdrawalDialogDisplayButtonClick}>退会する</button>
+				<button
+					className="registrationInformationChangeButton"
+					type="button"
+					onClick={::this.handleEditButtonClick}>登録情報を変更する</button>
+				<button
+					className="withdrawalButton"
+					type="button"
+					onClick={::this.handleWithdrawalDialogDisplayButtonClick}>退会する</button>
 
 				{activationDialogNode}
 				{withdrawalDialogNode}

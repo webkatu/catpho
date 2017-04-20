@@ -11,6 +11,9 @@ $subColor2: #fdf6e3;
 $accentColor: #b66a2f;
 
 $mainWidth: 90%;
+$defaultMargin: 20px;
+
+$modalWindowColor: rgba(0, 0, 0, 0.7);
 
 * {
 	box-sizing: border-box;
@@ -37,6 +40,7 @@ body {
 	display: flex;
 	justify-content: center;
 	min-height: 100%;
+	line-height: 1.5;
 	background: $baseColor;
 	color: $subColor;
 	font-size: 16px;
@@ -69,7 +73,6 @@ $headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
 	width: $mainWidth;
 	height: $headerHeight;
 	padding-bottom: 2px;
-	color: #fff;
 
 	h1.siteTitle {
 		display: flex;
@@ -154,7 +157,7 @@ input, textarea, select {
 	left: 0;
 	top: 0;
 	z-index: 1;
-	color: #000;
+	background: $modalWindowColor;
 
 	.closeArea {
 		width: 100%;
@@ -163,8 +166,6 @@ input, textarea, select {
 		left: 0;
 		top: 0;	
 		z-index: 2;
-		background: #000;
-		opacity: 0.7;
 	}
 
 }
@@ -419,6 +420,138 @@ input, textarea, select {
 		}
 	}
 }
+
+
+.myPage {
+	& > header {
+		border-bottom: 2px solid $accentColor;
+	
+		ul.myPageNav {
+			margin-top: 20px;
+			list-style-position: inside;
+		}
+	}
+
+	.myPageContent {
+		margin-top: 20px;
+	}
+}
+
+.registrationInformation {
+	.registrationInformationContent {
+		margin-top: 20px;
+	}
+
+	.registrationInformationView {
+		& > dl > div {
+			display: flex;
+			margin-top: 10px;
+
+			&:first-child { margin-top: 0; }
+
+			& > dt {
+				flex-basis: 200px;
+			}
+
+			& > dd {
+				flex-basis: 200px;
+			}
+		}
+
+		.activationButton {
+			display: block;
+		}
+
+		.activated {
+			display: block;
+			color: $accentColor;
+		}
+
+		& > .registrationInformationChangeButton {
+			display: block;
+			margin-top: 20px;
+		}
+
+		& > .withdrawalButton {
+			display: block;
+			margin-top: $defaultMargin * 3
+		}
+	}
+
+	.registrationInformationEdit {
+		& > dl > div {
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 10px;
+
+			&:first-child { margin-top: 0; }
+
+			& > dt {
+				flex-basis: 200px;
+			}
+
+			& > dd {
+				flex-basis: 200px;
+
+				& > input {
+					width: 100%;
+				}
+			}
+
+			dd.avatar {
+				display: flex;
+				flex-direction: column;
+				
+				img {
+					width: 50px;
+					height: 50px;
+				}
+			}
+		}
+	
+		button[type="submit"] {
+			margin-top: 20px;
+		}
+
+		button:nth-of-type(2) {
+			margin-left: 20px;
+		}
+	}
+
+	.dialog {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		left: 0;
+		top: 0;
+		background: $modalWindowColor;
+		z-index: 1;
+
+		& > div {
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			width: 70%;
+			height: 400px;
+			margin: auto;
+			padding: 40px;
+			top: 50%;
+			background: #fff;
+		}
+	}
+
+	.withdrawalDialog {
+		& > div > div {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 20px;
+		}
+	}
+
+}
+
 
 .simpleContentViewer,
 .contentViewer {

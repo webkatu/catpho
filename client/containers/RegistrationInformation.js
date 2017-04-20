@@ -13,8 +13,12 @@ class RegistrationInformation extends React.Component {
 		);
 		return (
 			<article className="registrationInformation">
-				<h1>登録情報</h1>
-				{RegistrationInformationContentNode}
+				<header>
+					<h1>登録情報</h1>
+				</header>
+				<div className="registrationInformationContent">
+					{RegistrationInformationContentNode}
+				</div>
 			</article>
 		);
 	}

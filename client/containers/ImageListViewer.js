@@ -28,8 +28,8 @@ class ImageListViewer extends React.Component {
 
 		const simpleImageListViewerNode = ReactDOM.findDOMNode(this.refs.simpleImageListViewer);
 		const rect = simpleImageListViewerNode.getBoundingClientRect();
-		//一番下までスクロールされているか
-		if(window.innerHeight < rect.bottom) return;
+		//一番下までスクロールされているか (-1はedgeのバグ対策)
+		if(window.innerHeight < rect.bottom - 1) return;
 
 		this.props.dispatch(simpleImageListViewerActions.fetchContents(
 			simpleImageListViewer.basePathOfFetch,

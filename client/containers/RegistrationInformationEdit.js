@@ -52,91 +52,112 @@ class RegistrationInformationEdit extends React.Component {
 		return (
 			<form className="registrationInformationEdit" onSubmit={::this.handleSubmit}>
 				<dl>
-					<dt>アバター: </dt><dd>
-						<input 
-							className={classnames({
-								error: ! registrationInformation.validAvatar
-							})}
-							type="file"
-							name="avatar"
-							accept={form.allowedImageTypes.join()}
-							disabled={form.avatarDisabled}
-							onChange={::this.handleAvatarChange}
-							ref="avatar"
-						/>
-						<label>
-							<input
-								type="checkbox"
-								name="restoringAvatar"
-								checked={form.restoringAvatarChecked}
-								value="checked"
-								onChange={::this.handleRestoringAvatarChange}
+					<div>
+						<dt>アバター:</dt>
+						<dd className="avatar">
+							<input 
+								className={classnames({
+									error: ! registrationInformation.validAvatar
+								})}
+								type="file"
+								name="avatar"
+								accept={form.allowedImageTypes.join()}
+								disabled={form.avatarDisabled}
+								onChange={::this.handleAvatarChange}
+								ref="avatar"
 							/>
-							<span>初期アバターに戻す</span>
-						</label>
-						<img src={form.avatarImg} alt="" />
-					</dd>
-					<dt>ニックネーム: </dt><dd>
-						<input
-							className={classnames({
-								error: ! registrationInformation.validNickname
-							})}
-							type="text"
-							name="nickname"
-							value={form.nickname}
-							onChange={::this.handleNicknameChange}
-						/>
-					</dd>
-					<dt>ユーザー名: </dt><dd>
-						<input
-							type="text"
-							disabled={true}
-							defaultValue={myUser.userName}
-						/>
-					</dd>
-					<dt>メールアドレス: </dt><dd>
-						<input
-							className={classnames({
-								error: ! registrationInformation.validEmail
-							})}
-							type="email"
-							name="email"
-							value={form.email}
-							onChange={::this.handleEmailChange}
-						/>
-					</dd>
-					<dt>現在のパスワード: </dt><dd>
-						<input
-							className={classnames({
-								error: ! registrationInformation.validCurrentPassword
-							})}
-							type="password"
-							name="currentPassword"
-							value={form.currentPassword}
-							onChange={::this.handleCurrentPasswordChange}
-						/>
-					</dd>
-					<dt>新しいパスワード: </dt><dd>
-						<input
-							className={classnames({
-								error: ! registrationInformation.validPassword
-							})}
-							type="password"
-							name="password"
-							value={form.password}
-							onChange={::this.handlePasswordChange}
-						/>
-					</dd>
-					<dt>新しいパスワード(確認): </dt><dd>
-						<input
-							className={classnames({
-								error: ! registrationInformation.validRePassword
-							})}
-							type="password"
-							value={form.rePassword}
-							onChange={::this.handleRePasswordChange}
-						/>
-					</dd>
+							<label>
+								<input
+									type="checkbox"
+									name="restoringAvatar"
+									checked={form.restoringAvatarChecked}
+									value="checked"
+									onChange={::this.handleRestoringAvatarChange}
+								/>
+								<span>初期アバターに戻す</span>
+							</label>
+							<img src={form.avatarImg} alt="" />
+						</dd>
+					</div>
+					<div>
+						<dt>ニックネーム:</dt>
+						<dd>
+							<input
+								className={classnames({
+									error: ! registrationInformation.validNickname
+								})}
+								type="text"
+								name="nickname"
+								value={form.nickname}
+								onChange={::this.handleNicknameChange}
+							/>
+						</dd>
+					</div>
+					<div>
+						<dt>ユーザー名:</dt>
+						<dd>
+							<input
+								type="text"
+								disabled={true}
+								defaultValue={myUser.userName}
+							/>
+						</dd>
+					</div>
+					<div>
+						<dt>メールアドレス:</dt>
+						<dd>
+							<input
+								className={classnames({
+									error: ! registrationInformation.validEmail
+								})}
+								type="email"
+								name="email"
+								value={form.email}
+								onChange={::this.handleEmailChange}
+							/>
+						</dd>
+					</div>
+					<div>
+						<dt>現在のパスワード:</dt>
+						<dd>
+							<input
+								className={classnames({
+									error: ! registrationInformation.validCurrentPassword
+								})}
+								type="password"
+								name="currentPassword"
+								value={form.currentPassword}
+								onChange={::this.handleCurrentPasswordChange}
+							/>
+						</dd>
+					</div>
+					<div>
+						<dt>新しいパスワード:</dt>
+						<dd>
+							<input
+								className={classnames({
+									error: ! registrationInformation.validPassword
+								})}
+								type="password"
+								name="password"
+								value={form.password}
+								onChange={::this.handlePasswordChange}
+							/>
+						</dd>
+					</div>
+					<div>
+						<dt>新しいパスワード(確認):</dt>
+						<dd>
+							<input
+								className={classnames({
+									error: ! registrationInformation.validRePassword
+								})}
+								type="password"
+								value={form.rePassword}
+								onChange={::this.handleRePasswordChange}
+							/>
+						</dd>
+					</div>
 				</dl>
 				<button
 					type="submit"

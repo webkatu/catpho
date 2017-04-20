@@ -24,14 +24,19 @@ class MyPage extends React.Component {
 
 		return (
 			<article className="myPage">
-				<ul className="myPageNav">
-					<li><a href="/mypage/" onClick={::this.handleRegistrationInformationAnchorClick}>登録情報</a></li>
-					<li><a href="/mypage/myposts/" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>投稿した画像</a></li>
-					<li><a href="/mypage/favorites/" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>お気に入り</a></li>
-					<li><a href="/mypage/mycomments/" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>コメントした画像</a></li>
-				</ul>
+				<header>
+					<h1>マイページ</h1>
+					<ul className="myPageNav">
+						<li><a href="/mypage/" onClick={::this.handleRegistrationInformationAnchorClick}>登録情報</a></li>
+						<li><a href="/mypage/myposts/" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>投稿した画像</a></li>
+						<li><a href="/mypage/favorites/" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>お気に入り</a></li>
+						<li><a href="/mypage/mycomments/" onClick={::this.handleAnchorContainingSimpleImageListViewerClick}>コメントした画像</a></li>
+					</ul>
+				</header>
 
-				{this.props.children}
+				<div className="myPageContent">
+					{this.props.children}
+				</div>
 			</article>
 		);
 	}
