@@ -6,8 +6,12 @@ class Favorites extends React.Component {
 	render() {
 		return (
 			<article className="favorites">
-				<h1>お気に入り</h1>
-				<SimpleImageListViewer />
+				<header>
+					<h1>お気に入り</h1>
+				</header>
+				<div>
+					<SimpleImageListViewer />
+				</div>
 			</article>
 		);
 	}

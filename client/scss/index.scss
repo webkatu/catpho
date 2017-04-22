@@ -434,14 +434,14 @@ input, textarea, select {
 
 	.myPageContent {
 		margin-top: 20px;
+
+		& > article > div {
+			margin-top: 20px;
+		}
 	}
 }
 
 .registrationInformation {
-	.registrationInformationContent {
-		margin-top: 20px;
-	}
-
 	.registrationInformationView {
 		& > dl > div {
 			display: flex;

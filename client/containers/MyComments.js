@@ -6,8 +6,12 @@ class MyComments extends React.Component {
 	render() {
 		return (
 			<article className="myComments">
-				<h1>コメントした画像</h1>
-				<SimpleImageListViewer />
+				<header>
+					<h1>コメントした画像</h1>
+				</header>
+				<div>
+					<SimpleImageListViewer />
+				</div>
 			</article>
 		);
 	}

@@ -289,9 +289,8 @@ input, textarea, select {
 
 .myPage .myPageContent {
   margin-top: 20px; }
-
-.registrationInformation .registrationInformationContent {
-  margin-top: 20px; }
+  .myPage .myPageContent > article > div {
+    margin-top: 20px; }
 
 .registrationInformation .registrationInformationView > dl > div {
   display: flex;

@@ -70,8 +70,8 @@ class RegistrationInformationView extends React.Component {
 				<div>
 					<p>本当に退会しますか？退会すると、今まで投稿したコンテンツが全て削除されます。この操作は取り消せません。</p>
 					<div>
-						<button type="button" onClick={::this.handleWithdrawalCancelButtonClick}>退会しない</button>
 						<button type="button" onClick={::this.handleWithdrawalButtonClick}>退会する(確認)</button>
+						<button type="button" onClick={::this.handleWithdrawalCancelButtonClick}>退会しない</button>
 					</div>
 				</div>
 			</aside>

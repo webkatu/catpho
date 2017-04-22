@@ -6,8 +6,12 @@ class MyPosts extends React.Component {
 	render() {
 		return (
 			<article className="myPosts">
-				<h1>投稿した画像</h1>
-				<SimpleImageListViewer />
+				<header>
+					<h1>投稿した画像</h1>
+				</header>
+				<div>
+					<SimpleImageListViewer />
+				</div>
 			</article>
 		);
 	}
