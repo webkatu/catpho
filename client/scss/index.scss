@@ -697,8 +697,29 @@ input, textarea, select {
 					border: 1px solid #aaa;
 					border-radius: 5px;
 
+					.shareUrlCopyButton {
+						margin-left: 20px;
+						border: none;
+						cursor: pointer;
+					}
+
 					ul {
 						list-style: none;
+					}
+
+					.shareButtons {
+						display: flex;
+
+						& > * {
+							margin-top: 20px;
+							margin-left: 20px;
+							&:first-child { margin-left: 0; }
+						}
+
+						img {
+							width: 48px;
+							height: 48px;
+						}
 					}
 				}
 

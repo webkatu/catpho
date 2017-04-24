@@ -164,6 +164,12 @@ export const toggleShareView = () => {
 	};
 }
 
+export const copyShareUrl = () => {
+	return {
+		type: 'COPY_SHARE_URL',
+	};
+}
+
 const _fetchComments = () => {
 	return {
 		type: 'FETCH_COMMENTS',

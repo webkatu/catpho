@@ -57,6 +57,10 @@ class CatContent extends React.Component {
 		this.props.dispatch(actions.toggleShareView());
 	}
 
+	handleShareUrlCopyButtonClick(e) {
+		this.props.dispatch(actions.copyShareUrl());
+	}
+
 	handleCommentBoxDisplayButtonClick() {
 		if(this.props.catContent.isFetchingComment) return;
 		
@@ -156,7 +160,10 @@ class CatContent extends React.Component {
 		const shareViewNode = (
 			(! catContent.shouldDisplayShareView)
 			? null
-			: <ShareView url={`${location.origin}/contents/${this.props.content.id}/`}/>
+			: <ShareView
+				url={`${location.origin}/contents/${this.props.content.id}/`}
+				onShareUrlCopyButtonClick={::this.handleShareUrlCopyButtonClick}
+			/>
 		);
 
 		const commentBoxNode = (

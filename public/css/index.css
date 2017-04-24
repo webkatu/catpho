@@ -474,8 +474,22 @@ input, textarea, select {
           margin-top: 20px;
           border: 1px solid #aaa;
           border-radius: 5px; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .shareView .shareUrlCopyButton {
+            margin-left: 20px;
+            border: none;
+            cursor: pointer; }
           .simpleContentViewer > .wrapper .catContent .contentInfo .shareView ul {
             list-style: none; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .shareView .shareButtons {
+            display: flex; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .shareView .shareButtons > * {
+              margin-top: 20px;
+              margin-left: 20px; }
+              .simpleContentViewer > .wrapper .catContent .contentInfo .shareView .shareButtons > *:first-child {
+                margin-left: 0; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .shareView .shareButtons img {
+              width: 48px;
+              height: 48px; }
         .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox {
           margin-top: 20px;
           border-top: 1px solid #aaa; }
