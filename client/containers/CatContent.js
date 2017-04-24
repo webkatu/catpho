@@ -177,7 +177,7 @@ class CatContent extends React.Component {
 
 		const name = (content.name === '') ? '?' : content.name;
 		const age = (content.age === null) ? '?' : content.age;
-		console.log(content);
+		const postedDate = content.postedDate.split(' ')[0];
 
 		return (
 			<article className="catContent">
@@ -188,6 +188,7 @@ class CatContent extends React.Component {
 					<h1>{content.id}</h1>
 					<ul className="contentInfoList">
 						<li className="poster">{posterNode}</li>
+						<li className="postedDate">{postedDate}</li>
 						<li className="favoritesCount"><span>お気に入り数: {content.favoritesCount}</span></li>
 						<li className="tags"><span>タグ: {tagNodes}</span></li>
 						<li className="name"><span>名前: {name}</span></li>

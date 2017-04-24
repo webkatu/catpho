@@ -6,4 +6,5 @@ export default mysql.createConnection({
 	user: config.mysql.user,
 	password: config.mysql.password,
 	database: config.mysql.database,
+	dateStrings: true,
 });
