@@ -481,6 +481,13 @@ input, textarea, select {
           border-top: 1px solid #aaa; }
           .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section {
             margin-top: 20px; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section > header {
+              display: flex;
+              align-items: flex-end; }
+              .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section > header > * {
+                margin-left: 20px; }
+                .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section > header > *:first-child {
+                  margin-left: 0; }
             .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section .userView img {
               width: 30px;
               height: 30px; }

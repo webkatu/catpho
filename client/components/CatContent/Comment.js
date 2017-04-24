@@ -20,15 +20,17 @@ export default class Comment extends React.Component {
 
 		return (
 			<section data-id={this.props.comment.id} ref="comment">
-				<h1 className="commentAuthor">
-					<UserView
-						avatar={this.props.comment.avatar}
-						userName={this.props.comment.userName}
-						nickname={this.props.comment.nickname}
-						onUserAnchorClick={this.props.onUserAnchorClick}
-					/>
-				</h1>
-				<p>{this.props.comment.created}</p>
+				<header>
+					<h1 className="commentAuthor">
+						<UserView
+							avatar={this.props.comment.avatar}
+							userName={this.props.comment.userName}
+							nickname={this.props.comment.nickname}
+							onUserAnchorClick={this.props.onUserAnchorClick}
+						/>
+					</h1>
+					<p>{this.props.comment.created}</p>
+				</header>
 				<p>{commentTextNode}</p>
 				<aside>
 					{deleteButtonNode}

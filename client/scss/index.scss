@@ -709,6 +709,16 @@ input, textarea, select {
 					.commentList > section {
 						margin-top: 20px;
 
+						& > header {
+							display: flex;
+							align-items: flex-end;
+
+							& > * {
+								margin-left: 20px;
+								&:first-child { margin-left: 0; }
+							}
+						}
+
 						.userView {
 							img {
 								width: 30px;
