@@ -263,6 +263,7 @@ input, textarea, select {
 	border-bottom: 1px solid #aaa;
 	background: #fff;
 	transition: 0.5s;
+	z-index: 2;
 
 	& > p {
 		width: $mainWidth;

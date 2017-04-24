@@ -172,7 +172,7 @@ export default (state = initialState, action) => {
 		case 'COPY_SHARE_URL':
 			return Object.assign({}, state, {
 				text: 'コピーしました',
-				displayTime: defaultDisplayTime,
+				displayTime: 3000,
 			});
 
 	}

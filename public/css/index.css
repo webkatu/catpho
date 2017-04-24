@@ -173,7 +173,8 @@ input, textarea, select {
   left: 0;
   border-bottom: 1px solid #aaa;
   background: #fff;
-  transition: 0.5s; }
+  transition: 0.5s;
+  z-index: 2; }
   .notification > p {
     width: 90%;
     text-align: center; }
