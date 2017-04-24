@@ -7,7 +7,7 @@ import CommentBoxDisplayButton from '../components/CatContent/CommentBoxDisplayB
 import DeletionConfirmation from '../components/CatContent/DeletionConfirmation.js'
 import ShareView from '../components/CatContent/ShareView.js'
 import CommentBox from '../components/CatContent/CommentBox.js'
-import User from '../components/common/User.js'
+import UserView from '../components/common/UserView.js'
 
 class CatContent extends React.Component {
 	handleTagAnchorClick(e) {
@@ -18,7 +18,7 @@ class CatContent extends React.Component {
 
 	handleUserAnchorClick(e) {
 		e.preventDefault();
-		this.context.router.push(e.target.pathname);
+		this.context.router.push(e.currentTarget.pathname);
 	}
 
 	handleFavoriteButtonClick() {
@@ -117,7 +117,7 @@ class CatContent extends React.Component {
 		const posterNode = (
 			(content.poster.userName === '')
 			? null
-			: <User
+			: <UserView
 				avatar={content.poster.avatar}
 				userName={content.poster.userName}
 				nickname={content.poster.nickname}
@@ -127,9 +127,8 @@ class CatContent extends React.Component {
 
 		const tagNodes = content.tags.map((tag, i) => {
 			return (
-				<span key={i}>
+				<span className="tag" key={i}>
 					<a href={'/contents/?tag=' + tag} onClick={::this.handleTagAnchorClick}>{tag}</a>
-					{' '}
 				</span>
 			);
 		});
@@ -175,48 +174,59 @@ class CatContent extends React.Component {
 				onDeletionConfirmationCancelButtonClick={::this.handleCommentDeletionConfirmationCancelButtonClick}
 			/>
 		);
+
+		const name = (content.name === '') ? '?' : content.name;
+		const age = (content.age === null) ? '?' : content.age;
+		console.log(content);
+
 		return (
 			<article className="catContent">
-				<h1>{content.id}</h1>
-				<img className="contentImg" src={content.imageURL} alt=""/>
-				<ul className="contentInfo">
-					<li className="poster">{posterNode}</li>
-					<li className="favoritesCount">{content.favoriteCount}</li>
-					<li className="tags">{tagNodes}</li>
-					<li className="name">{content.name}</li>
-					<li className="age">{content.age}</li>
-					<li className="sex">{(() => {
-						switch(content.sex) {
-							case 'none':
-								return 'none';
-							case 'male':
-								return '♂';
-							case 'female':
-								return '♀';
-						}
-					})()}</li>
-					<li className="description">{content.description}</li>
-				</ul>
-				<FavoriteButton
-					isFavorite={catContent.isFavorite}
-					isSignedIn={this.props.app.isSignedIn}
-					isRequesting={catContent.isRequestingFavorite}
-					onClick={::this.handleFavoriteButtonClick}
-				/>
-				{deleteButtonNode}
-				<button
-					type="button"
-					onClick={::this.handleShareButtonClick}
-				>共有する</button>
-				<CommentBoxDisplayButton
-					isDisplayingCommentBox={catContent.shouldDisplayCommentBox}
-					commentsCount={catContent.commentsCount}
-					disabled={catContent.isFetchingComment}
-					onClick={::this.handleCommentBoxDisplayButtonClick}
-				/>
-				{deletionConfirmationNode}
-				{shareViewNode}
-				{commentBoxNode}
+				<div className="contentImg" href={content.imageURL} target="_blank">
+					<img src={content.imageURL} alt=""/>
+				</div>
+				<div className="contentInfo">
+					<h1>{content.id}</h1>
+					<ul className="contentInfoList">
+						<li className="poster">{posterNode}</li>
+						<li className="favoritesCount"><span>お気に入り数: {content.favoritesCount}</span></li>
+						<li className="tags"><span>タグ: {tagNodes}</span></li>
+						<li className="name"><span>名前: {name}</span></li>
+						<li className="age"><span>年齢: {age}</span></li>
+						<li className="sex"><span>性別: {(() => {
+							switch(content.sex) {
+								case 'none':
+									return '?';
+								case 'male':
+									return '♂';
+								case 'female':
+									return '♀';
+							}
+						})()}</span></li>
+						<li className="description"><span>一言: {content.description}</span></li>
+					</ul>
+					<div className="contentButtons">
+						<FavoriteButton
+							isFavorite={catContent.isFavorite}
+							isSignedIn={this.props.app.isSignedIn}
+							isRequesting={catContent.isRequestingFavorite}
+							onClick={::this.handleFavoriteButtonClick}
+						/>
+						{deleteButtonNode}
+						<button
+							type="button"
+							onClick={::this.handleShareButtonClick}
+						>共有する</button>
+						<CommentBoxDisplayButton
+							isDisplayingCommentBox={catContent.shouldDisplayCommentBox}
+							commentsCount={catContent.commentsCount}
+							disabled={catContent.isFetchingComment}
+							onClick={::this.handleCommentBoxDisplayButtonClick}
+						/>
+					</div>
+					{deletionConfirmationNode}
+					{shareViewNode}
+					{commentBoxNode}
+				</div>
 			</article>
 		);
 	}

@@ -6,7 +6,7 @@ export default class CommentForm extends React.Component {
 		const textToPromptSignIn = (
 			(this.props.isSignedIn)
 			? null
-			: <p>サインインが必要です。</p>
+			: <p>コメントをするにはサインインが必要です。</p>
 		);
 		return (
 			<form className="commentForm" onSubmit={this.props.onSubmit}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import User from '../common/User.js';
+import UserView from '../common/UserView.js';
 
 export default class Comment extends React.Component {
 	handleDeleteButtonClick(e) {
@@ -21,7 +21,7 @@ export default class Comment extends React.Component {
 		return (
 			<section data-id={this.props.comment.id} ref="comment">
 				<h1 className="commentAuthor">
-					<User
+					<UserView
 						avatar={this.props.comment.avatar}
 						userName={this.props.comment.userName}
 						nickname={this.props.comment.nickname}

@@ -35,20 +35,22 @@ class SimpleContentViewer extends React.Component {
 					className="closeArea"
 					onClick={::this.handleCloseButtonClick}
 				/>
-				<button
-					className="closeButton"
-					type="button"
-					onClick={::this.handleCloseButtonClick}
-				>×</button>
-				<CatContent />
-				<NavigationButton
-					contentId={simpleContentViewer.previousId}
-					onClick={::this.handlePreviousButtonClick}
-				>&lt;</NavigationButton>
-				<NavigationButton
-					contentId={simpleContentViewer.nextId}
-					onClick={::this.handleNextButtonClick}
-				>&gt;</NavigationButton>
+				<div className="wrapper">
+					<button
+						className="closeButton"
+						type="button"
+						onClick={::this.handleCloseButtonClick}
+					>×</button>
+					<CatContent />
+					<NavigationButton
+						contentId={simpleContentViewer.previousId}
+						onClick={::this.handlePreviousButtonClick}
+					>&lt;</NavigationButton>
+					<NavigationButton
+						contentId={simpleContentViewer.nextId}
+						onClick={::this.handleNextButtonClick}
+					>&gt;</NavigationButton>
+				</div>
 			</div>
 		);
 	}

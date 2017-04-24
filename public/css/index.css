@@ -2,7 +2,9 @@
   box-sizing: border-box; }
 
 a {
-  text-decoration: none; }
+  text-decoration: none;
+  color: #b66a2f;
+  cursor: pointer; }
   a:link {
     color: #b66a2f; }
   a:visited {
@@ -368,90 +370,127 @@ input, textarea, select {
   justify-content: space-between;
   margin-top: 20px; }
 
-.simpleContentViewer .catContent .contentImg,
-.contentViewer .catContent .contentImg {
-  width: 200px;
-  height: 200px; }
-
-/*
-.contentsUpload {
-	form {
-		& > * {
-			display: block;
-		}
-		input[name="name"] {
-			width: 5em;
-		}
-		input[name="tag"] {
-			width: 5em;
-		}
-		input[name="age"] {
-			width: 3em;
-		}
-
-		.selectedImageViewBox {
-			display: flex;
-			flex-wrap: wrap;
-			.selectedImage {
-				position: relative;
-				width: 100px;
-				height: 100px;
-
-				.deleteButton {
-					position: absolute;
-					top: 5px;
-					right: 5px;
-					color: #fff;
-					background: #333;
-					cursor: pointer;
-				}
-
-				img {
-					width: 100%;
-					height: 100%;
-				}
-			}
-		}
-	}
-}
-
-.signUp {
-	.signUpForm {
-		& > * {
-			display: block;
-			margin-top: 10px;
-
-			&:first-child { margin-top: 0 }
-		}
-
-		input[type="email"],
-		input[type="text"],
-		input[type="password"] {
-			padding: 7px;
-			border: 1px solid #ddd;
-			border-radius: 2px;
-
-			&.error {
-				border-color: #f22;
-
-				&:focus {
-					outline: none;
-				}
-			}
-		}
-	}
-}
-
-.registrationInformation {
-	.registrationInformationEdit {
-		input[type="email"],
-		input[type="text"],
-		input[type="password"] {
-			&.error {
-				border-color: #f22;
-			}
-		}
-	}
-}
-
-*/
+.simpleContentViewer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.7); }
+  .simpleContentViewer > .closeArea {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    opacity: 0; }
+  .simpleContentViewer > .wrapper {
+    display: flex;
+    width: 100%;
+    height: 90%;
+    margin: auto;
+    position: relative;
+    z-index: 1; }
+    .simpleContentViewer > .wrapper .closeButton {
+      order: 4;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      position: absolute;
+      left: 90%;
+      top: 0;
+      font-size: 24px; }
+    .simpleContentViewer > .wrapper .navigationButton {
+      width: 10%; }
+      .simpleContentViewer > .wrapper .navigationButton > * {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        font-size: 24px; }
+      .simpleContentViewer > .wrapper .navigationButton > a:hover {
+        transition: none;
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff; }
+      .simpleContentViewer > .wrapper .navigationButton:nth-of-type(1) {
+        order: 1; }
+      .simpleContentViewer > .wrapper .navigationButton:nth-of-type(2) {
+        order: 3; }
+    .simpleContentViewer > .wrapper .catContent {
+      overflow: auto;
+      order: 2;
+      width: 80%;
+      min-height: 100%;
+      background: #fff; }
+      .simpleContentViewer > .wrapper .catContent .contentImg {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 70%;
+        background: #000; }
+        .simpleContentViewer > .wrapper .catContent .contentImg img {
+          width: 80%;
+          height: 100%; }
+      .simpleContentViewer > .wrapper .catContent .contentInfo {
+        padding: 10px;
+        background: #fff; }
+        .simpleContentViewer > .wrapper .catContent .contentInfo > h1 {
+          display: none; }
+        .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList {
+          display: flex;
+          flex-wrap: wrap;
+          list-style: none; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList > li {
+            margin-left: 20px; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList > li:first-child {
+              margin-left: 0; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList .poster .userView {
+            display: flex;
+            align-items: flex-start; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList .poster .userView img {
+              width: 50px;
+              height: 50px; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList .tags .tag {
+            margin-left: 5px; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .contentInfoList .description {
+            order: -1;
+            width: 100%;
+            margin-left: 0;
+            margin-bottom: 20px; }
+        .simpleContentViewer > .wrapper .catContent .contentInfo .contentButtons {
+          margin-top: 20px; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .contentButtons > * {
+            margin-left: 20px; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .contentButtons > *:first-child {
+              margin-left: 0; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .contentButtons > button {
+            border: none;
+            cursor: pointer; }
+        .simpleContentViewer > .wrapper .catContent .contentInfo .shareView {
+          margin-top: 20px;
+          border: 1px solid #aaa;
+          border-radius: 5px; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .shareView ul {
+            list-style: none; }
+        .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox {
+          margin-top: 20px;
+          border-top: 1px solid #aaa; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section {
+            margin-top: 20px; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section .userView img {
+              width: 30px;
+              height: 30px; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentList > section button {
+              border: none; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentForm {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentForm textarea {
+              width: 100%; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .commentBox .commentForm button[type="submit"] {
+              margin-left: auto; }
