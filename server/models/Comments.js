@@ -8,14 +8,15 @@ export default class Comments extends MySQLModel {
 			id int not null auto_increment primary key,
 			contentId int not null,
 			userId int not null,
-			comment text
+			comment text,
+			created datetime
 		);`;
 
 		return await this.query(sql);
 	}
 
 	async selectComments(contentId) {
-		const sql = `select c.id, c.userId, c.comment, u.userName, u.nickname, u.avatar from ${this.tableName} c join ${new Users().tableName} u on c.userId = u.id where c.contentId = ?;`;
+		const sql = `select c.id, c.userId, c.comment, c.created, u.userName, u.nickname, u.avatar from ${this.tableName} c join ${new Users().tableName} u on c.userId = u.id where c.contentId = ?;`;
 		const [ results ] = await this.query(sql, [contentId]);
 		results.forEach((result) => {
 			result.avatar = `${config.avatarsUrl}/${result.avatar}`;

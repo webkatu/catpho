@@ -28,6 +28,7 @@ export default class Comment extends React.Component {
 						onUserAnchorClick={this.props.onUserAnchorClick}
 					/>
 				</h1>
+				<p>{this.props.comment.created}</p>
 				<p>{commentTextNode}</p>
 				<aside>
 					{deleteButtonNode}
