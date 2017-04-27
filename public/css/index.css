@@ -88,16 +88,16 @@ input, textarea, select {
       outline: none; }
 
 .signUpView, .signInView, .contentsUploadView {
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
   width: 100%;
   height: 100%;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.7); }
+  background: rgba(0, 0, 0, 0.7);
+  overflow: auto;
+  display: flex;
+  flex-direction: column; }
   .signUpView .closeArea, .signInView .closeArea, .contentsUploadView .closeArea {
     width: 100%;
     height: 100%;
@@ -174,7 +174,7 @@ input, textarea, select {
   border-bottom: 1px solid #aaa;
   background: #fff;
   transition: 0.5s;
-  z-index: 2; }
+  z-index: 100; }
   .notification > p {
     width: 90%;
     text-align: center; }
@@ -346,14 +346,14 @@ input, textarea, select {
   margin-left: 20px; }
 
 .registrationInformation .dialog {
-  display: flex;
   width: 100%;
   height: 100%;
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.7);
-  z-index: 1; }
+  display: flex; }
   .registrationInformation .dialog > div {
     overflow: auto;
     display: flex;
@@ -372,28 +372,29 @@ input, textarea, select {
   margin-top: 20px; }
 
 .simpleContentViewer {
-  display: flex;
   width: 100%;
   height: 100%;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.7); }
+  background: rgba(0, 0, 0, 0.7);
+  display: flex; }
   .simpleContentViewer > .closeArea {
     width: 100%;
     height: 100%;
     position: fixed;
     left: 0;
     top: 0;
-    opacity: 0; }
+    opacity: 0;
+    z-index: 2; }
   .simpleContentViewer > .wrapper {
     display: flex;
     width: 100%;
     height: 90%;
     margin: auto;
     position: relative;
-    z-index: 1; }
+    z-index: 3; }
     .simpleContentViewer > .wrapper .closeButton {
       order: 4;
       width: 40px;
@@ -471,6 +472,31 @@ input, textarea, select {
           .simpleContentViewer > .wrapper .catContent .contentInfo .contentButtons > button {
             border: none;
             cursor: pointer; }
+        .simpleContentViewer > .wrapper .catContent .contentInfo .deletionConfirmation {
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          left: 0;
+          top: 0;
+          z-index: 1;
+          background: rgba(0, 0, 0, 0.7);
+          display: flex; }
+          .simpleContentViewer > .wrapper .catContent .contentInfo .deletionConfirmation > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            height: 200px;
+            margin: auto;
+            background: #fff; }
+            .simpleContentViewer > .wrapper .catContent .contentInfo .deletionConfirmation > div form {
+              display: flex;
+              margin-top: 20px; }
+              .simpleContentViewer > .wrapper .catContent .contentInfo .deletionConfirmation > div form > * {
+                margin-left: 20px; }
+                .simpleContentViewer > .wrapper .catContent .contentInfo .deletionConfirmation > div form > *:first-child {
+                  margin-left: 0; }
         .simpleContentViewer > .wrapper .catContent .contentInfo .shareView {
           margin-top: 20px;
           border: 1px solid #aaa;

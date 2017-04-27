@@ -9,6 +9,7 @@ export default class CommentBox extends React.Component {
 			(! this.props.comment.shouldDisplayDeletionConfirmation)
 			? null
 			: <DeletionConfirmation
+				text="このコメントを削除しますか？"
 				requesting={this.props.comment.isDeletingComment}
 				onSubmit={this.props.onDeletionConfirmationSubmit}
 				onCancelButtonClick={this.props.onDeletionConfirmationCancelButtonClick}

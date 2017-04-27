@@ -151,6 +151,7 @@ class CatContent extends React.Component {
 			(! catContent.shouldDisplayDeletionConfirmation)
 			? null
 			: <DeletionConfirmation
+				text="このコンテンツを削除しますか？"
 				requesting={catContent.isDeletingContent}
 				onSubmit={::this.handleDeletionConfirmationSubmit}
 				onCancelButtonClick={::this.handleDeletionConfirmationCancelButtonClick}

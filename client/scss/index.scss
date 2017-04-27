@@ -1,9 +1,3 @@
-@mixin clearfix {
-	content: '';
-	display: block;
-	clear: both;
-}
-
 $baseColor: #fff;
 $subColor: #451a03;
 $subColor2: #fdf6e3;
@@ -13,7 +7,21 @@ $accentColor: #b66a2f;
 $mainWidth: 90%;
 $defaultMargin: 20px;
 
-$modalWindowColor: rgba(0, 0, 0, 0.7);
+@mixin clearfix {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+@mixin modalWindow {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.7);
+}
 
 * {
 	box-sizing: border-box;
@@ -148,18 +156,12 @@ input, textarea, select {
 }
 
 .signUpView, .signInView, .contentsUploadView {
+	@include modalWindow;
 	overflow: auto;
 	display: flex;
 	flex-direction: column;
 	//justify-content: center;
 	//align-items: center;
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 1;
-	background: $modalWindowColor;
 
 	.closeArea {
 		width: 100%;
@@ -263,7 +265,7 @@ input, textarea, select {
 	border-bottom: 1px solid #aaa;
 	background: #fff;
 	transition: 0.5s;
-	z-index: 2;
+	z-index: 100;
 
 	& > p {
 		width: $mainWidth;
@@ -522,14 +524,8 @@ input, textarea, select {
 	}
 
 	.dialog {
+		@include modalWindow;
 		display: flex;
-		width: 100%;
-		height: 100%;
-		position: fixed;
-		left: 0;
-		top: 0;
-		background: $modalWindowColor;
-		z-index: 1;
 
 		& > div {
 			overflow: auto;
@@ -555,14 +551,8 @@ input, textarea, select {
 }
 
 .simpleContentViewer {
+	@include modalWindow;
 	display: flex;
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	left: 0;
-	top: 0;
-	z-index: 1;
-	background: $modalWindowColor;
 
 	& > .closeArea {
 		width: 100%;
@@ -571,6 +561,7 @@ input, textarea, select {
 		left: 0;
 		top: 0;
 		opacity: 0;
+		z-index: 2;
 	}
 	
 	& > .wrapper {
@@ -579,7 +570,7 @@ input, textarea, select {
 		height: 90%;
 		margin: auto;
 		position: relative;
-		z-index: 1;
+		z-index: 3;
 	
 		.closeButton {
 			order: 4;
@@ -693,6 +684,32 @@ input, textarea, select {
 					}
 				}
 
+				.deletionConfirmation {
+					@include modalWindow;
+					display: flex;
+
+					& > div {
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						align-items: center;
+						width: 80%;
+						height: 200px;
+						margin: auto;
+						background: #fff;
+
+						form {
+							display: flex;
+							margin-top: 20px;
+
+							& > * {
+								margin-left: 20px;
+								&:first-child { margin-left: 0; }
+							}
+						}
+					}
+				}
+
 				.shareView {
 					margin-top: 20px;
 					border: 1px solid #aaa;
@@ -767,7 +784,6 @@ input, textarea, select {
 						}
 					}
 				}
-
 			}
 		}
 	}
