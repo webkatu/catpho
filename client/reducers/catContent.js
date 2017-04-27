@@ -79,7 +79,10 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 				isFavorite: true,
-				favoritesCount: state.favoritesCount + 1,
+				content: {
+					...state.content,
+					favoritesCount: state.content.favoritesCount + 1,
+				},
 			});
 
 		case 'ADD_FAVORITE_FAILED':
@@ -96,7 +99,11 @@ export default (state = initialState, action) => {
 			return Object.assign({}, state, {
 				isRequestingFavorite: false,
 				isFavorite: false,
-				favoritesCount: state.favoritesCount - 1,
+				content: {
+					...state.content,
+					favoritesCount: state.content.favoritesCount - 1,
+					
+				}
 			});
 
 		case 'REMOVE_FAVORITE_FAILED':

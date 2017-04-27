@@ -40,6 +40,7 @@ router.post('/', upload, async (req, res) => {
 			contentId: req.params.contentId,
 			userId: decoded.userId,
 			comment: req.body.comment,
+			created: new Date(),
 		});
 
 		const results = await comments.selectComments(req.params.contentId);

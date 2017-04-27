@@ -290,7 +290,6 @@ router.delete('/favorites/:contentId', async (req, res) => {
 	}catch(e) { return res.sendStatus(400); }
 
 	try {
-		const sql = `delete from ${this.tableName} where userId = ? and contentId = ?;`;
 		const [ OkPacket ] = await new Favorites().delete(
 			'userId = ? and contentId = ?',
 			[decoded.userId, contentId],

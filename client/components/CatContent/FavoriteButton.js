@@ -5,7 +5,7 @@ export default (props) => {
 	if(props.isFavorite) {
 		textNode = 'お気に入りから外す';
 	}else {
-		textNode = 'お気に入り';
+		textNode = 'お気に入りに追加';
 	}
 
 	if(! props.isSignedIn) {
