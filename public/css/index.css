@@ -564,3 +564,6 @@ input, textarea, select {
           width: 100%; }
         .catContent .contentInfo .commentBox .commentForm button[type="submit"] {
           margin-left: auto; }
+
+.user > .articleContent {
+  margin-top: 20px; }

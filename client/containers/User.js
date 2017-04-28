@@ -40,11 +40,13 @@ class User extends React.Component {
 		return (
 			<article className="user">
 				<h1>{user.userName}</h1>
-				<img src={user.avatar} alt=""/>
-				<p>{user.nickname}</p>
-				<p>{'登録月 ' + user.created}</p>
-				<p>{'投稿数 ' + user.postCount}</p>
-				<p><a href={`/contents/?poster=${user.userName}`} onClick={::this.handlePostAnchorClick}>投稿した画像を見る</a></p>
+				<div className="articleContent">
+					<p>{user.nickname}</p>
+					<img src={user.avatar} alt=""/>
+					<p>{'登録月 ' + user.created}</p>
+					<p>{'投稿数 ' + user.postCount}</p>
+					<p><a href={`/contents/?poster=${user.userName}`} onClick={::this.handlePostAnchorClick}>投稿した画像を見る</a></p>
+				</div>
 			</article>
 		);
 	}

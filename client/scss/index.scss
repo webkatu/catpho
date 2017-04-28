@@ -901,3 +901,9 @@ input, textarea, select {
 		}
 	}
 }
+
+.user {
+	& > .articleContent {
+		margin-top: 20px;
+	}
+}
