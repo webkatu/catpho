@@ -43,12 +43,12 @@ class ContentViewer extends React.Component {
 			<div className="contentViewer">
 				<CatContent />
 				<NavigationButton
-					contentId={this.props.contentViewer.prevId}
-					onClick={::this.handlePreviousButtonClick}
-				>&lt;</NavigationButton>
-				<NavigationButton
 					contentId={this.props.contentViewer.nextId}
 					onClick={::this.handleNextButtonClick}
+				>&lt;</NavigationButton>
+				<NavigationButton
+					contentId={this.props.contentViewer.prevId}
+					onClick={::this.handlePreviousButtonClick}
 				>&gt;</NavigationButton>
 			</div>
 		);

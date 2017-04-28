@@ -550,6 +550,7 @@ input, textarea, select {
 	}
 }
 
+
 .simpleContentViewer {
 	@include modalWindow;
 	display: flex;
@@ -584,208 +585,319 @@ input, textarea, select {
 			font-size: 24px;
 		}
 
-		.navigationButton {
-			width: 10%;
-
-			& > * {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				width: 100%;
-				height: 100%;
-				font-size: 24px;
-			}
-
-			& > a:hover {
-				transition: none;
-				background: rgba(0, 0, 0, 0.3);
-				color: #fff;
-			}
-
-			&:nth-of-type(1) { order: 1; }
-			&:nth-of-type(2) { order: 3; }
-		}
+		& > *:nth-child(2) { order: 2; }
+		& > *:nth-child(3) { order: 1; }
+		& > *:nth-child(4) { order: 3; }
 
 		.catContent {
 			overflow: auto;
-			order: 2;
-			width: 80%;
-			min-height: 100%;
-			background: #fff;
 
 			.contentImg {
-				display: flex;
-				justify-content: center;
-				width: 100%;
-				height: 70%;
-				background: #000;
-
 				img {
-					width: 80%;
-					height: 100%;
 				}
 			}
 
 			.contentInfo {
-				padding: 10px;
-				background: #fff;
 
 				& > h1 { display: none; }
 
 				.contentInfoList {
-					display: flex;
-					flex-wrap: wrap;
-					list-style: none;
 
 					& > li {
-						margin-left: 20px;
-
 						&:first-child {
-							margin-left: 0;
 						}
 					}
 
 					.poster {
 						.userView {
-							display: flex;
-							align-items: flex-start;
-	
 							img {
-								width: 50px;
-								height: 50px;
 							}
 						}
 
 					}
 
 					.tags .tag {
-						margin-left: 5px;
 					}
 
 					.description {
-						order: -1;
-						width: 100%;
-						margin-left: 0;
-						margin-bottom: 20px;
 					}
 				}
 
 				.contentButtons {
-					margin-top: 20px;
-
 					& > * {
-						margin-left: 20px;
-						&:first-child { margin-left: 0; }
 					}
 
 					& > button {
-						border: none;
-						cursor: pointer;
 					}
 				}
 
 				.deletionConfirmation {
-					@include modalWindow;
-					display: flex;
-
 					& > div {
-						display: flex;
-						flex-direction: column;
-						justify-content: center;
-						align-items: center;
-						width: 80%;
-						height: 200px;
-						margin: auto;
-						background: #fff;
-
 						form {
-							display: flex;
-							margin-top: 20px;
-
 							& > * {
-								margin-left: 20px;
-								&:first-child { margin-left: 0; }
 							}
 						}
 					}
 				}
 
 				.shareView {
-					margin-top: 20px;
-					border: 1px solid #aaa;
-					border-radius: 5px;
-
 					.shareUrlCopyButton {
-						margin-left: 20px;
-						border: none;
-						cursor: pointer;
 					}
 
 					ul {
-						list-style: none;
 					}
 
 					.shareButtons {
-						display: flex;
-
 						& > * {
-							margin-top: 20px;
-							margin-left: 20px;
-							&:first-child { margin-left: 0; }
 						}
 
 						img {
-							width: 48px;
-							height: 48px;
 						}
 					}
 				}
 
 				.commentBox {
-					margin-top: 20px;
-					border-top: 1px solid #aaa;
-
 					.commentList > section {
-						margin-top: 20px;
-
 						& > header {
-							display: flex;
-							align-items: flex-end;
-
 							& > * {
-								margin-left: 20px;
-								&:first-child { margin-left: 0; }
 							}
 						}
 
 						.userView {
 							img {
-								width: 30px;
-								height: 30px;
 							}
 						}
 
 						button {
-							border: none;
 						}
 					}
 
 					.commentForm {
-						margin-top: 20px;
-						display: flex;
-						flex-wrap: wrap;
-
 						textarea {
-							width: 100%;
 						}
 
 						button[type="submit"] {
-							margin-left: auto;
 						}
 					}
 				}
 			}
 		}
 	}
+}
 
+.contentViewer {
+	display: flex;
+	width: 100%;
+
+	& > *:nth-child(1) { order: 2; }
+	& > *:nth-child(2) { order: 1; }
+	& > *:nth-child(3) { order: 3; }
+
+	.navigationButton {}
+
+	.catContent {
+		width: 85%;
+	}
+}
+
+.simpleContentViewer,
+.contentViewer {
+	.navigationButton {
+		flex-grow: 1;
+
+		& > * {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+			font-size: 24px;
+		}
+
+		& > a:hover {
+			transition: none;
+			background: rgba(0, 0, 0, 0.3);
+			color: #fff;
+		}
+	}
+}
+
+.catContent {
+	width: 80%;
+	min-height: 100%;
+	background: #fff;
+
+	.contentImg {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		min-height: 300px;
+		background: #000;
+
+		img {
+			max-width: 100%;
+			max-height: 70vh;
+		}
+	}
+
+	.contentInfo {
+		padding: 10px;
+		background: #fff;
+
+		& > h1 { display: none; }
+
+		.contentInfoList {
+			display: flex;
+			flex-wrap: wrap;
+			list-style: none;
+
+			& > li {
+				margin-left: 10px;
+
+				&:first-child {
+					margin-left: 0;
+				}
+			}
+
+			.poster {
+				.userView {
+					display: flex;
+					align-items: flex-start;
+
+					img {
+						width: 50px;
+						height: 50px;
+					}
+				}
+
+			}
+
+			.tags .tag {
+				margin-left: 5px;
+			}
+
+			.description {
+				order: -1;
+				width: 100%;
+				margin-left: 0;
+				margin-bottom: 20px;
+			}
+		}
+
+		.contentButtons {
+			margin-top: 20px;
+
+			& > * {
+				margin-left: 10px;
+				&:first-child { margin-left: 0; }
+			}
+
+			& > button {
+				border: none;
+				cursor: pointer;
+			}
+		}
+
+		.deletionConfirmation {
+			@include modalWindow;
+			display: flex;
+
+			& > div {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				width: 80%;
+				height: 200px;
+				margin: auto;
+				background: #fff;
+
+				form {
+					display: flex;
+					margin-top: 20px;
+
+					& > * {
+						margin-left: 20px;
+						&:first-child { margin-left: 0; }
+					}
+				}
+			}
+		}
+
+		.shareView {
+			margin-top: 20px;
+			border: 1px solid #aaa;
+			border-radius: 5px;
+
+			.shareUrlCopyButton {
+				margin-left: 20px;
+				border: none;
+				cursor: pointer;
+			}
+
+			ul {
+				list-style: none;
+			}
+
+			.shareButtons {
+				display: flex;
+
+				& > * {
+					margin-top: 20px;
+					margin-left: 20px;
+					&:first-child { margin-left: 0; }
+				}
+
+				img {
+					width: 48px;
+					height: 48px;
+				}
+			}
+		}
+
+		.commentBox {
+			margin-top: 20px;
+			border-top: 1px solid #aaa;
+
+			.commentList > section {
+				margin-top: 20px;
+
+				& > header {
+					display: flex;
+					align-items: flex-end;
+
+					& > * {
+						margin-left: 20px;
+						&:first-child { margin-left: 0; }
+					}
+				}
+
+				.userView {
+					img {
+						width: 30px;
+						height: 30px;
+					}
+				}
+
+				button {
+					border: none;
+				}
+			}
+
+			.commentForm {
+				margin-top: 20px;
+				display: flex;
+				flex-wrap: wrap;
+
+				textarea {
+					width: 100%;
+				}
+
+				button[type="submit"] {
+					margin-left: auto;
+				}
+			}
+		}
+	}
 }
