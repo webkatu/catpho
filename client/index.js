@@ -22,6 +22,7 @@ import MyPosts from './containers/MyPosts.js';
 import Favorites from './containers/Favorites.js';
 import MyComments from './containers/MyComments.js';
 import UserOnly from './containers/UserOnly.js';
+import About from './containers/About.js';
 
 const store = Redux.createStore(
 	catphoApp,
@@ -41,6 +42,7 @@ const routes = (
 		<ReactRouter.Route path="other/">
 			<ReactRouter.Route path="passwordreissue/" component={PasswordReissue} />
 		</ReactRouter.Route>
+		<ReactRouter.Route path="about/" component={About} />
 		<ReactRouter.Route component={UserOnly}>
 			<ReactRouter.Route path="mypage/" component={MyPage}>
 				<ReactRouter.IndexRoute component={RegistrationInformation} />

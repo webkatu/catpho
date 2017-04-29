@@ -5,6 +5,7 @@ import * as appActions from '../actions/app.js';
 import SignUpView from '../components/common/SignUpView.js';
 import SignInView from '../components/common/SignInView.js';
 import ContentsUploadView from '../components/common/ContentsUploadView.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class Header extends React.Component {
 	handleSignUpButtonClick(e) {
@@ -75,16 +76,25 @@ class Header extends React.Component {
 			<a onClick={::this.handleContentsUploadButtonClick}>アップロード</a>
 		);
 
+		const aboutAnchor = (
+			<a
+				href="/about/"
+				onClick={handleAnchorClick}
+			>catphoって？</a>
+		);
+
 		let signUpButtonNode = null;
 		let signInButtonNode = null;
 		let signOutButtonNode = null;
 		let contentsUploadButtonNode = null;
 		let myPageButtonNode = null;
+		let aboutAnchorNode = null;
 		if(app.isSignedIn) {
 			signOutButtonNode = <li>{signOutButton}</li>;
 			contentsUploadButtonNode = <li>{contentsUploadButton}</li>;
 			myPageButtonNode = <li>{myPageButton}</li>;
 		}else {
+			aboutAnchorNode = <li>{aboutAnchor}</li>
 			signUpButtonNode = <li>{signUpButton}</li>;
 			signInButtonNode = <li>{signInButton}</li>;
 		}
@@ -112,6 +122,7 @@ class Header extends React.Component {
 				<h1 className="siteTitle"><a href="/">catpho</a></h1>
 				<nav>
 					<ul>
+						{aboutAnchorNode}
 						{signUpButtonNode}
 						{signInButtonNode}
 						{signOutButtonNode}
