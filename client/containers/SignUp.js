@@ -45,15 +45,18 @@ class SignUp extends React.Component {
 						value={signUp.email}
 						onChange={::this.handleEmailInputChange}
 					/>
-					<input
-						type="text"
-						className={classnames({error: ! signUp.validUserName})}
-						name="userName"
-						placeholder="ユーザー名(半角英数字4文字以上)"
-						maxLength={signUp.userNameMaxLength}
-						value={signUp.userName}
-						onChange={::this.handleUserNameInputChange}
-					/>
+					<div>
+						<input
+							type="text"
+							className={classnames({error: ! signUp.validUserName})}
+							name="userName"
+							placeholder="ユーザー名(半角英数字4文字以上)"
+							maxLength={signUp.userNameMaxLength}
+							value={signUp.userName}
+							onChange={::this.handleUserNameInputChange}
+						/>
+						<span>ユーザー名は後から変更できません</span>
+					</div>
 					<input
 						type="password"
 						className={classnames({error: ! signUp.validPassword})}

@@ -2,12 +2,18 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/header.js';
 import * as appActions from '../actions/app.js';
+import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import SignUpView from '../components/common/SignUpView.js';
 import SignInView from '../components/common/SignInView.js';
 import ContentsUploadView from '../components/common/ContentsUploadView.js';
 import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class Header extends React.Component {
+	handleTitleAnchorClick(e) {
+		handleAnchorClick(e);
+		this.props.dispatch(simpleImageListViewerActions.changeLocation());
+	}
+
 	handleSignUpButtonClick(e) {
 		e.preventDefault();
 		this.props.dispatch(actions.toggleSignUpView());
@@ -119,7 +125,7 @@ class Header extends React.Component {
 
 		return (
 			<header id="header" className="header">
-				<h1 className="siteTitle"><a href="/">catpho</a></h1>
+				<h1 className="siteTitle"><a href="/" onClick={::this.handleTitleAnchorClick}>catpho</a></h1>
 				<nav>
 					<ul>
 						{aboutAnchorNode}

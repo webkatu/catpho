@@ -1,8 +1,8 @@
 $baseColor: #fff;
-$subColor: #451a03;
-$subColor2: #fdf6e3;
-
+$subColor: #fdf6e3;
+$subColor2: #fffffa;
 $accentColor: #b66a2f;
+$fontColor: #451a03;
 
 $mainWidth: 90%;
 $defaultMargin: 20px;
@@ -52,7 +52,7 @@ body {
 	min-height: 100%;
 	line-height: 1.5;
 	background: $baseColor;
-	color: $subColor;
+	color: $fontColor;
 	font-size: 16px;
 }
 
@@ -61,7 +61,7 @@ body {
 }
 
 $headerOuterHeight: 35px;
-$headerOuterBorderBottomWidth: 4px;
+$headerOuterBorderBottomWidth: 1px;
 #headerOuter {
 	display: flex;
 	justify-content: center;
@@ -71,7 +71,7 @@ $headerOuterBorderBottomWidth: 4px;
 	left: 0;
 	top: 0;
 	border-bottom: $headerOuterBorderBottomWidth solid $accentColor;
-	background: $subColor;
+	background: $subColor2;
 	z-index: 1;
 	
 }
@@ -88,9 +88,6 @@ $headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
 		display: flex;
 		align-items: flex-end;
 		text-transform: capitalize;
-		a {
-			color: #fff;
-		}
 	}
 
 	nav {
@@ -106,7 +103,6 @@ $headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
 		}
 
 		a {
-			color: #fff;
 			cursor: pointer;
 
 			&:hover {
@@ -200,6 +196,12 @@ input, textarea, select {
 	}
 }
 
+.signUp {
+	form > div > input {
+		width: 100%;
+	}
+}
+
 .contentsUpload {
 	width: 600px;
 	min-width: 400px;
@@ -290,24 +292,30 @@ input, textarea, select {
 
 .imageListViewerNav {
 	$imageListViewerNavHeight: 40px;
+	$imageListViewerNavBorderColor: $accentColor;
 	display: flex;
 	height: $imageListViewerNavHeight;
 	background: $subColor2;
+	border-left: 1px solid $imageListViewerNavBorderColor;
+	border-right: 1px solid $imageListViewerNavBorderColor;
 
-	& > * {
+	& > li {
 		display: flex;
-		align-items: center;
 		height: $imageListViewerNavHeight;
-		padding: 0 10px;
-		border-right: 2px solid $accentColor;
+		border-right: 1px solid $imageListViewerNavBorderColor;
 
 		&:first-child {
-			border-left: 2px solid $accentColor;
+			//border-left: 1px solid $imageListViewerNavBorderColor;
 		}
 
 		&:hover {
 			background: $subColor;
-			color: #fff;
+		}
+
+		& > * {
+			display: flex;
+			align-items: center;
+			padding: 0 10px;
 		}
 	}
 
@@ -594,96 +602,6 @@ input, textarea, select {
 
 		.catContent {
 			overflow: auto;
-
-			.contentImg {
-				img {
-				}
-			}
-
-			.contentInfo {
-
-				& > h1 { display: none; }
-
-				.contentInfoList {
-
-					& > li {
-						&:first-child {
-						}
-					}
-
-					.poster {
-						.userView {
-							img {
-							}
-						}
-
-					}
-
-					.tags .tag {
-					}
-
-					.description {
-					}
-				}
-
-				.contentButtons {
-					& > * {
-					}
-
-					& > button {
-					}
-				}
-
-				.deletionConfirmation {
-					& > div {
-						form {
-							& > * {
-							}
-						}
-					}
-				}
-
-				.shareView {
-					.shareUrlCopyButton {
-					}
-
-					ul {
-					}
-
-					.shareButtons {
-						& > * {
-						}
-
-						img {
-						}
-					}
-				}
-
-				.commentBox {
-					.commentList > section {
-						& > header {
-							& > * {
-							}
-						}
-
-						.userView {
-							img {
-							}
-						}
-
-						button {
-						}
-					}
-
-					.commentForm {
-						textarea {
-						}
-
-						button[type="submit"] {
-						}
-					}
-				}
-			}
 		}
 	}
 }
@@ -731,16 +649,21 @@ input, textarea, select {
 	background: #fff;
 
 	.contentImg {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		//IE11のためにflexboxは使わない;
+		overflow: hidden;
 		width: 100%;
 		min-height: 300px;
+		max-height: 70vh;
+		position: relative;
 		background: #000;
 
 		img {
 			max-width: 100%;
-			max-height: 70vh;
+			max-height: 100%;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
 		}
 	}
 
@@ -898,6 +821,7 @@ input, textarea, select {
 				}
 
 				button[type="submit"] {
+					margin-top: 10px;
 					margin-left: auto;
 				}
 			}
@@ -957,7 +881,6 @@ input, textarea, select {
 	width: $mainWidth;
 	margin: 0 auto;
 	padding-bottom: 20px;
-	color: #fff;
 
 	& > ul > li {
 		display: flex;

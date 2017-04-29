@@ -7,6 +7,11 @@ const initialState = {
 
 const imageListViewer = (state = initialState, action) => {
 	switch(action.type) {
+		case 'FETCH_CONTENTS':
+			return Object.assign({}, state, {
+				shouldDisplayTagsView: false,
+			});
+			
 		case 'FETCH_CONTENTS_SUCCESSFUL':
 			return Object.assign({}, state, {
 				hasNextPage: action.payload.currentPage < action.payload.maxPage,

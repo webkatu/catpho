@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import handleAnchorClick from '../../common/handleAnchorClick.js';
 
 export default class ShareView extends React.Component {
 	handleShareUrlCopyButtonClick(e) {
@@ -18,7 +19,7 @@ export default class ShareView extends React.Component {
 	render() {
 		return (
 			<aside className="shareView">
-				<p>URL: <span ref="shareUrl">{this.props.url}</span><button className="shareUrlCopyButton" type="button" onClick={::this.handleShareUrlCopyButtonClick}>コピー</button></p>
+				<p>URL: <a href={this.props.url} onClick={handleAnchorClick} ref="shareUrl">{this.props.url}</a><button className="shareUrlCopyButton" type="button" onClick={::this.handleShareUrlCopyButtonClick}>コピー</button></p>
 				<ul className="shareButtons">
 					<li>
 						<a href={`https://twitter.com/share?url=${this.props.url}`} target="_blank"><img src="/img/icons/twitter.png" /></a>

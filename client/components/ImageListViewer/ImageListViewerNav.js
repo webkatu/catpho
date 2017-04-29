@@ -5,16 +5,16 @@ import TagArea from './TagArea.js';
 export default class ImageListViewerNav extends React.Component {
 	render() {
 		return (
-			<div className="imageListViewerNav">
-				<AutoLoadButton onClick={this.props.handleAutoLoadButtonClick} />
-				<TagArea
+			<ul className="imageListViewerNav">
+				<li><AutoLoadButton onClick={this.props.handleAutoLoadButtonClick} /></li>
+				<li><TagArea
 					tags={this.props.tags}
 					shouldDisplayTagsView={this.props.shouldDisplayTagsView}
 					isFetchingTags={this.props.isFetchingTags}
 					onTagsViewDisplayButtonClick={this.props.handleTagsViewDisplayButtonClick}
 					onTagAnchorClick={this.props.handleTagAnchorClick}
-				/>
-			</div>
+				/></li>
+			</ul>
 		);
 	}
 }

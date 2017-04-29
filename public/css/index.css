@@ -36,22 +36,20 @@ body {
   position: fixed;
   left: 0;
   top: 0;
-  border-bottom: 4px solid #b66a2f;
-  background: #451a03;
+  border-bottom: 1px solid #b66a2f;
+  background: #fffffa;
   z-index: 1; }
 
 #header {
   display: flex;
   align-items: flex-end;
   width: 90%;
-  height: 31px;
+  height: 34px;
   padding-bottom: 2px; }
   #header h1.siteTitle {
     display: flex;
     align-items: flex-end;
     text-transform: capitalize; }
-    #header h1.siteTitle a {
-      color: #fff; }
   #header nav {
     margin-left: auto; }
     #header nav > ul {
@@ -60,7 +58,6 @@ body {
       #header nav > ul li {
         margin-left: 20px; }
     #header nav a {
-      color: #fff;
       cursor: pointer; }
       #header nav a:hover {
         text-decoration: underline; }
@@ -127,6 +124,9 @@ input, textarea, select {
     justify-content: space-around;
     flex-basis: 300px; }
 
+.signUp form > div > input {
+  width: 100%; }
+
 .contentsUpload {
   width: 600px;
   min-width: 400px;
@@ -181,7 +181,7 @@ input, textarea, select {
 
 #content {
   width: 90%;
-  margin-top: 71px;
+  margin-top: 74px;
   margin-left: auto;
   margin-right: auto; }
 
@@ -191,18 +191,19 @@ input, textarea, select {
 .imageListViewerNav {
   display: flex;
   height: 40px;
-  background: #fdf6e3; }
-  .imageListViewerNav > * {
+  background: #fffffa;
+  border-left: 1px solid #b66a2f;
+  border-right: 1px solid #b66a2f; }
+  .imageListViewerNav > li {
     display: flex;
-    align-items: center;
     height: 40px;
-    padding: 0 10px;
-    border-right: 2px solid #b66a2f; }
-    .imageListViewerNav > *:first-child {
-      border-left: 2px solid #b66a2f; }
-    .imageListViewerNav > *:hover {
-      background: #451a03;
-      color: #fff; }
+    border-right: 1px solid #b66a2f; }
+    .imageListViewerNav > li:hover {
+      background: #fdf6e3; }
+    .imageListViewerNav > li > * {
+      display: flex;
+      align-items: center;
+      padding: 0 10px; }
   .imageListViewerNav .autoLoadButtonLabel {
     cursor: default; }
     .imageListViewerNav .autoLoadButtonLabel .autoLoadButton {
@@ -232,7 +233,7 @@ input, textarea, select {
       position: absolute;
       left: -110%;
       top: 45px;
-      background: #fdf6e3;
+      background: #fffffa;
       cursor: default; }
       .imageListViewerNav .tagArea .tagsView::before {
         content: '';
@@ -416,8 +417,6 @@ input, textarea, select {
       order: 3; }
     .simpleContentViewer > .wrapper .catContent {
       overflow: auto; }
-      .simpleContentViewer > .wrapper .catContent .contentInfo > h1 {
-        display: none; }
 
 .contentViewer {
   display: flex;
@@ -453,15 +452,19 @@ input, textarea, select {
   min-height: 100%;
   background: #fff; }
   .catContent .contentImg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
     width: 100%;
     min-height: 300px;
+    max-height: 70vh;
+    position: relative;
     background: #000; }
     .catContent .contentImg img {
       max-width: 100%;
-      max-height: 70vh; }
+      max-height: 100%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%); }
   .catContent .contentInfo {
     padding: 10px;
     background: #fff; }
@@ -566,6 +569,7 @@ input, textarea, select {
         .catContent .contentInfo .commentBox .commentForm textarea {
           width: 100%; }
         .catContent .contentInfo .commentBox .commentForm button[type="submit"] {
+          margin-top: 10px;
           margin-left: auto; }
 
 .user > .articleContent {
@@ -586,7 +590,7 @@ input, textarea, select {
 #footerOuter {
   margin-top: 60px;
   width: 100%;
-  background: #451a03; }
+  background: #fdf6e3; }
   #footerOuter::before {
     content: '';
     display: block;
@@ -595,7 +599,7 @@ input, textarea, select {
     position: relative;
     top: -15px;
     transform: rotate(1deg);
-    background: #451a03; }
+    background: #fdf6e3; }
 
 #footer {
   display: flex;
@@ -603,8 +607,7 @@ input, textarea, select {
   align-items: flex-end;
   width: 90%;
   margin: 0 auto;
-  padding-bottom: 20px;
-  color: #fff; }
+  padding-bottom: 20px; }
   #footer > ul > li {
     display: flex;
     justify-content: flex-end;
