@@ -577,6 +577,9 @@ input, textarea, select {
 .about footer {
   margin-top: 20px; }
 
+.contact > .articleContent {
+  margin-top: 20px; }
+
 #footerOuter {
   margin-top: 60px;
   width: 100%;

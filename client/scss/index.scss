@@ -920,6 +920,12 @@ input, textarea, select {
 	}
 }
 
+.contact {
+	& > .articleContent {
+		margin-top: 20px;
+	}
+}
+
 
 #footerOuter {
 	margin-top: 60px;
