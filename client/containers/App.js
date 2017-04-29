@@ -3,6 +3,7 @@ import * as ReactRedux from 'react-redux';
 import * as signInActions from '../actions/signIn.js';
 import Notification from './Notification.js';
 import Header from './Header.js';
+import Footer from './Footer.js';
 
 class App extends React.Component {
 	componentWillMount() {
@@ -19,6 +20,9 @@ class App extends React.Component {
 				</div>
 				<div id="content">
 					{this.props.children}
+				</div>
+				<div id="footerOuter">
+					<Footer />
 				</div>
 			</div>
 		);
