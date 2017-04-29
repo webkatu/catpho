@@ -580,6 +580,9 @@ input, textarea, select {
 .contact > .articleContent {
   margin-top: 20px; }
 
+.terms section {
+  margin-top: 20px; }
+
 #footerOuter {
   margin-top: 60px;
   width: 100%;

@@ -15,8 +15,8 @@ class Footer extends React.Component {
 				<ul>
 					<li><a href="/" onClick={::this.handleHomeAnchorClick}>ホーム</a></li>
 					<li><a href="/about/" onClick={handleAnchorClick}>Catphoって?</a></li>
+					<li><a href="/terms/" onClick={handleAnchorClick}>利用規約</a></li>
 					<li><a href="/contact/" onClick={handleAnchorClick}>お問い合わせ</a></li>
-					<li><a href="/" onClick={handleAnchorClick}>免責事項</a></li>
 				</ul>
 				<p className="copyright"><small>Copyright&copy; 2017 catpho</small></p>
 			</footer>
