@@ -45,8 +45,8 @@ const routes = (
 			<ReactRouter.Route path="passwordreissue/" component={PasswordReissue} />
 		</ReactRouter.Route>
 		<ReactRouter.Route path="about/" component={About} />
-		<ReactRouter.Route path="contact/" component={Contact} />
 		<ReactRouter.Route path="terms/" component={Terms} />
+		<ReactRouter.Route path="contact/" component={Contact} />
 		<ReactRouter.Route component={UserOnly}>
 			<ReactRouter.Route path="mypage/" component={MyPage}>
 				<ReactRouter.IndexRoute component={RegistrationInformation} />

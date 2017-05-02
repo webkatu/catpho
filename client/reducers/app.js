@@ -44,6 +44,12 @@ export default (state = initialState, action) => {
 				title += `ユーザー ~ ${matched[1]} | `;
 			}else if(pathname === '/other/passwordreissue/') {
 				title += 'パスワード再発行 | ';
+			}else if(pathname === '/about/') {
+				title += 'About | ';
+			}else if(pathname === '/contact/') {
+				title += 'お問い合わせ | ';
+			}else if(pathname === '/terms/') {
+				title += '利用規約 | ';
 			}
 
 			if(query.page) {
