@@ -1,24 +1,35 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/catContent';
 import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
-import FavoriteButton from '../components/CatContent/FavoriteButton.js'
-import CommentBoxDisplayButton from '../components/CatContent/CommentBoxDisplayButton.js'
-import DeletionConfirmation from '../components/CatContent/DeletionConfirmation.js'
-import ShareView from '../components/CatContent/ShareView.js'
-import CommentBox from '../components/CatContent/CommentBox.js'
-import UserView from '../components/common/UserView.js'
+import FavoriteButton from '../components/CatContent/FavoriteButton.js';
+import CommentBoxDisplayButton from '../components/CatContent/CommentBoxDisplayButton.js';
+import DeletionConfirmation from '../components/CatContent/DeletionConfirmation.js';
+import ShareView from '../components/CatContent/ShareView.js';
+import CommentBox from '../components/CatContent/CommentBox.js';
+import UserView from '../components/common/UserView.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class CatContent extends React.Component {
-	handleTagAnchorClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname + e.target.search);
-		this.props.dispatch(simpleImageListViewerActions.changeLocation());
+	constructor() {
+		super();
+		this.state = { contentImgHeight: '' };
 	}
 
-	handleUserAnchorClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.currentTarget.pathname);
+	handleImgLoad(e) {
+		console.log(this.state);
+		//IEのFlexboxバグ対策のためにHeightを指定;
+		const img = e.target;
+		const contentImg = this.refs.contentImg;
+		const minHeight = Number.parseFloat(window.getComputedStyle(contentImg).minHeight);
+		if(img.height < minHeight) this.setState({ contentImgHeight: minHeight + 'px' });
+		else this.setState({ contentImgHeight: img.height + 'px' });
+	}
+
+	handleTagAnchorClick(e) {
+		handleAnchorClick(e);
+		this.props.dispatch(simpleImageListViewerActions.changeLocation());
 	}
 
 	handleFavoriteButtonClick() {
@@ -125,7 +136,7 @@ class CatContent extends React.Component {
 				avatar={content.poster.avatar}
 				userName={content.poster.userName}
 				nickname={content.poster.nickname}
-				onUserAnchorClick={::this.handleUserAnchorClick}
+				onUserAnchorClick={handleAnchorClick}
 			/>
 		);
 
@@ -173,7 +184,7 @@ class CatContent extends React.Component {
 			: <CommentBox
 				comment={this.props.comment}
 				myUser={this.props.myUser}
-				onUserAnchorClick={::this.handleUserAnchorClick}
+				onUserAnchorClick={handleAnchorClick}
 				onCommentDeleteButtonClick={::this.handleCommentDeleteButtonClick}
 				isSignedIn={this.props.app.isSignedIn}
 				onPostCommentTextChange={::this.handlePostCommentTextChange}
@@ -189,8 +200,8 @@ class CatContent extends React.Component {
 
 		return (
 			<article className="catContent">
-				<div className="contentImg" href={content.imageURL} target="_blank">
-					<img src={content.imageURL} alt=""/>
+				<div className="contentImg" href={content.imageURL} target="_blank" style={{ height: this.state.contentImgHeight }} ref="contentImg">
+					<img src={content.imageURL} alt="" onLoad={::this.handleImgLoad} />
 				</div>
 				<div className="contentInfo">
 					<h1>{content.id}</h1>
@@ -239,10 +250,6 @@ class CatContent extends React.Component {
 			</article>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 function mapStateToProps(state) {
