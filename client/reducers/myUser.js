@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
 				email: action.payload.email,
 				nickname: action.payload.nickname,
 				avatar: action.payload.avatar,
-				hasBeenActivated: Boolean(action.payload.activation)
+				hasBeenActivated: Boolean(action.payload.activation),
 			});
 
 		case 'DELETE_USER_SUCCESSFUL':
@@ -25,7 +25,10 @@ export default (state = initialState, action) => {
 			return { ...initialState };
 
 		case 'PATCH_REGISTRATION_INFORMATION_SUCCESSFUL':
-			return Object.assign({}, state, action.payload);
+			return Object.assign({}, state, {
+				...action.payload,
+				hasBeenActivated: Boolean(action.payload.activation),
+			});
 
 		case 'REQUEST_ACTIVATION_SUCCESSFUL':
 			return Object.assign({}, state, {

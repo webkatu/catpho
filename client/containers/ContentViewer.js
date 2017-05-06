@@ -3,6 +3,7 @@ import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/content.js';
 import CatContent from './CatContent.js';
 import NavigationButton from '../components/ContentViewer/NavigationButton.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class ContentViewer extends React.Component {
 	componentWillMount() {
@@ -26,15 +27,8 @@ class ContentViewer extends React.Component {
 		this.props.dispatch(actions.changeLocation())
 	}
 
-	handlePreviousButtonClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname);
-		this.props.dispatch(actions.changeLocation());
-	}
-
-	handleNextButtonClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname);
+	handleNavigationButtonClick(e) {
+		handleAnchorClick(e);
 		this.props.dispatch(actions.changeLocation());
 	}
 
@@ -44,19 +38,15 @@ class ContentViewer extends React.Component {
 				<CatContent />
 				<NavigationButton
 					contentId={this.props.contentViewer.nextId}
-					onClick={::this.handleNextButtonClick}
+					onClick={::this.handleNavigationButtonClick}
 				>&lt;</NavigationButton>
 				<NavigationButton
 					contentId={this.props.contentViewer.prevId}
-					onClick={::this.handlePreviousButtonClick}
+					onClick={::this.handleNavigationButtonClick}
 				>&gt;</NavigationButton>
 			</div>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 function mapStateToProps(state) {

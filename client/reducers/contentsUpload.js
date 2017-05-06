@@ -49,7 +49,6 @@ export default (state = initialState, action) => {
 		case 'DELETE_FILE@contentsUpload': {
 			const files = [...state.files];
 			const removed = files.splice(action.payload.index, 1);
-			console.log(removed[0].url);
 			window.URL.revokeObjectURL(removed[0].url);
 
 			return Object.assign({}, state, {

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = [
 	{
@@ -26,7 +27,7 @@ module.exports = [
 			}),
 			*/
 		],
-		devtool: 'inline-source-map',
+		//devtool: 'inline-source-map',
 	},
 
 	{

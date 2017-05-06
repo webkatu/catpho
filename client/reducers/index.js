@@ -7,7 +7,6 @@ import tags from './tags.js';
 import notification from './notification.js';
 import header from './header.js';
 import user from './user.js';
-import contents from './contents.js';
 import imageListViewer from './imageListViewer.js';
 import simpleImageListViewer from './simpleImageListViewer.js';
 import simpleContentViewer from './simpleContentViewer.js';
@@ -30,7 +29,6 @@ const catphoApp = Redux.combineReducers({
 	notification,
 	header,
 	user,
-	contents,
 	imageListViewer,
 	simpleImageListViewer,
 	simpleContentViewer,
@@ -48,5 +46,4 @@ const catphoApp = Redux.combineReducers({
 	routing: ReactRouterRedux.routerReducer,
 });
 
-//const catphoApp = imageListViewer;
 export default catphoApp;

@@ -22,10 +22,10 @@ export default class ShareView extends React.Component {
 				<p>URL: <a href={this.props.url} onClick={handleAnchorClick} ref="shareUrl">{this.props.url}</a><button className="shareUrlCopyButton" type="button" onClick={::this.handleShareUrlCopyButtonClick}>コピー</button></p>
 				<ul className="shareButtons">
 					<li>
-						<a href={`https://twitter.com/share?url=${this.props.url}`} target="_blank"><img src="/img/icons/twitter.png" /></a>
+						<a href={`https://twitter.com/share?url=${this.props.url}`} target="_blank"><img src="/img/icons/twitter.png" alt="" /></a>
 					</li>
 					<li>
-						<a href={`https://www.facebook.com/sharer/sharer.php?u=${this.props.url}`} target="_blank"><img src="/img/icons/facebook.png" /></a>
+						<a href={`https://www.facebook.com/sharer/sharer.php?u=${this.props.url}`} target="_blank"><img src="/img/icons/facebook.png" alt="" /></a>
 					</li>
 				</ul>
 			</aside>

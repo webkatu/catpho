@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as ReactRedux from 'react-redux';
-import * as ReactRouter from 'react-router';
 import * as actions from '../actions/imageListViewer.js';
 import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import SimpleImageListViewer from './SimpleImageListViewer.js';
 import ImageListViewerNav from '../components/ImageListViewer/ImageListViewerNav.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class ImageListViewer extends React.Component {
 	componentWillMount() {
@@ -46,10 +46,8 @@ class ImageListViewer extends React.Component {
 	}
 
 	handleTagAnchorClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname + e.target.search);
+		handleAnchorClick(e);
 		this.props.dispatch(simpleImageListViewerActions.changeLocation());
-		this.props.dispatch(actions.toggleTagsView());
 	}
 
 	render() {
@@ -68,10 +66,6 @@ class ImageListViewer extends React.Component {
 			</div>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 

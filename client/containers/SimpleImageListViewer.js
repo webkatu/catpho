@@ -5,6 +5,7 @@ import * as actions from '../actions/simpleImageListViewer.js';
 import SimpleContentViewer from './SimpleContentViewer.js';
 import ImageList from '../components/ImageListViewer/ImageList.js';
 import LoadingEffect from '../components/ImageListViewer/LoadingEffect.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class SimpleImageListViewer extends React.Component {
 	componentWillMount() {
@@ -40,12 +41,7 @@ class SimpleImageListViewer extends React.Component {
 	}
 
 	handlePagerItemClick(e) {
-		e.preventDefault();
-		const url = e.target;
-		this.context.router.push({
-			pathname: url.pathname,
-			search: url.search,
-		});
+		handleAnchorClick(e);
 		this.props.dispatch(actions.changeLocation());
 	}
 
@@ -83,10 +79,6 @@ class SimpleImageListViewer extends React.Component {
 			</div>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 function mapStateToProps(state) {

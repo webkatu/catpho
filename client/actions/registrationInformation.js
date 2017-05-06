@@ -212,9 +212,3 @@ export const deleteUser = (userName) => {
 		}
 	};
 }
-
-export const moveToHome = () => {
-	return {
-		type: 'MOVE_TO_HOME@registrationInformation',
-	};
-}

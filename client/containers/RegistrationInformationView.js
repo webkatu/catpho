@@ -3,13 +3,6 @@ import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/registrationInformation.js';
 
 class RegistrationInformationView extends React.Component {
-	componentDidUpdate() {
-		if(this.props.registrationInformation.didWithdraw) {
-			this.props.dispatch(actions.moveToHome());
-			this.context.router.push('/');
-		}
-	}
-
 	handleActivationButtonClick() {
 		if(this.props.registrationInformation.isRequestingActivation) return;
 		if(this.props.registrationInformation.isAlreadyRequestingActivation) return;
@@ -128,10 +121,6 @@ class RegistrationInformationView extends React.Component {
 			</div>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 function mapStateToProps(state) {

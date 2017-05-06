@@ -15,10 +15,10 @@ class NavigationButton extends React.Component {
 			</div>
 		);
 	}
-}
 
-NavigationButton.defaultProps = {
-	contentId: 0,
-};
+	static defaultProps = {
+		contentId: 0,
+	};
+}
 
 export default NavigationButton;

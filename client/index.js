@@ -31,7 +31,6 @@ const store = Redux.createStore(
 	Redux.applyMiddleware(thunk),
 	Redux.compose(Redux.applyMiddleware(ReactRouterRedux.routerMiddleware(ReactRouter.browserHistory)))
 );
-console.log(store.getState());
 
 const history = ReactRouterRedux.syncHistoryWithStore(ReactRouter.browserHistory, store);
 

@@ -3,17 +3,16 @@ import * as ReactRedux from 'react-redux';
 import * as simpleImageListViewerActions from '../actions/simpleImageListViewer.js';
 import * as registrationInfromationActions from '../actions/registrationInformation.js';
 import RegistrationInformation from './RegistrationInformation.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class MyPage extends React.Component {
 	handleRegistrationInformationAnchorClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname + e.target.search);
+		handleAnchorClick(e);
 		this.props.dispatch(registrationInfromationActions.mount());
 	}
 
 	handleAnchorContainingSimpleImageListViewerClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname + e.target.search);
+		handleAnchorClick(e);
 		if(location.pathname === e.target.pathname) {
 			this.props.dispatch(simpleImageListViewerActions.changeLocation());
 		}
@@ -40,11 +39,6 @@ class MyPage extends React.Component {
 			</article>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
-
 }
 
 function mapStateToProps(state) {

@@ -34,11 +34,6 @@ class Header extends React.Component {
 		this.props.dispatch(appActions.signOut());
 	}
 
-	handleMyPageButtonClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.currentTarget.pathname);
-	}
-
 	handleSignUpCloseAreaClick(e) {
 		this.props.dispatch(actions.toggleSignUpView());
 	}
@@ -72,7 +67,7 @@ class Header extends React.Component {
 				className="myPageButton"
 				href="/mypage/"
 				title="マイページと設定"
-				onClick={::this.handleMyPageButtonClick}
+				onClick={handleAnchorClick}
 			>
 				<img src={this.props.myUser.avatar} />
 			</a>
@@ -142,10 +137,6 @@ class Header extends React.Component {
 			</header>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 function mapStateToProps(state) {

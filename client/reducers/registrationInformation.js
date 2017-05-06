@@ -40,7 +40,6 @@ const initialState = {
 	shouldDisplayWithdrawalDialog: false,
 	didConfirmToWithdraw: false,
 	isDeletingUser: false,
-	didWithdraw: false,
 }
 
 export default (state = initialState, action) => {
@@ -86,7 +85,6 @@ export default (state = initialState, action) => {
 		case 'INPUT_AVATAR@registrationInformation': {
 			window.URL.revokeObjectURL(state.form.avatarImg);
 			const file = action.payload.file;
-			console.log(file);
 			if(file instanceof File) {
 				return Object.assign({}, state, {
 					form: {
@@ -224,18 +222,12 @@ export default (state = initialState, action) => {
 			});
 
 		case 'DELETE_USER_SUCCESSFUL':
-			return Object.assign({}, state, {
-				isDeletingUser: false,
-				didWithdraw: true,
-			});
+			return Object.assign({}, initialState);
 
 		case 'DELETE_USER_FAILED':
 			return Object.assign({}, state, {
 				isDeletingUser: false,
 			});
-
-		case 'MOVE_TO_HOME@registrationInformation':
-			return Object.assign({}, initialState);
 	}
 	return state;
 }

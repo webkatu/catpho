@@ -114,12 +114,3 @@ export const clear = () => {
 		type: 'CLEAR@simpleImageListViewer',
 	};
 }
-
-export const mount = (path) => {
-	return {
-		type: 'MOUNT@simpleImageListViewer',
-		payload: {
-			basePathOfFetch: path,
-		},
-	};
-}

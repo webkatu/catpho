@@ -1,6 +1,7 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 import * as actions from '../actions/user.js';
+import handleAnchorClick from '../common/handleAnchorClick.js';
 
 class User extends React.Component {
 	componentWillMount() {
@@ -9,11 +10,6 @@ class User extends React.Component {
 
 	componentWillUnmount() {
 		this.props.dispatch(actions.unmount());
-	}
-
-	handlePostAnchorClick(e) {
-		e.preventDefault();
-		this.context.router.push(e.target.pathname + e.target.search);
 	}
 
 	render() {
@@ -45,15 +41,11 @@ class User extends React.Component {
 					<img src={user.avatar} alt=""/>
 					<p>{'登録月 ' + user.created}</p>
 					<p>{'投稿数 ' + user.postCount}</p>
-					<p><a href={`/contents/?poster=${user.userName}`} onClick={::this.handlePostAnchorClick}>投稿した画像を見る</a></p>
+					<p><a href={`/contents/?poster=${user.userName}`} onClick={handleAnchorClick}>投稿した画像を見る</a></p>
 				</div>
 			</article>
 		);
 	}
-
-	static contextTypes = {
-		router: React.PropTypes.object.isRequired,
-	};
 }
 
 function mapStateToProps(state) {

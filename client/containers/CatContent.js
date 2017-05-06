@@ -18,7 +18,6 @@ class CatContent extends React.Component {
 	}
 
 	handleImgLoad(e) {
-		console.log(this.state);
 		//IEのFlexboxバグ対策のためにHeightを指定;
 		const img = e.target;
 		const contentImg = this.refs.contentImg;

@@ -1,6 +1,9 @@
+import sendPageView from '../common/sendPageView.js';
+
 const initialState = {
 	isSignedIn: false,
 	title: 'catpho',
+	shouldBackHome: false,
 }
 
 export default (state = initialState, action) => {
@@ -12,11 +15,22 @@ export default (state = initialState, action) => {
 				isSignedIn: true,
 			});
 
-		case 'DELETE_USER_SUCCESSFUL':
 		case 'SIGN_OUT':
 			localStorage.removeItem('userToken');
 			return Object.assign({}, state, {
 				isSignedIn: false,
+			});
+
+		case 'DELETE_USER_SUCCESSFUL': 
+			localStorage.removeItem('userToken');
+			return Object.assign({}, state, {
+				isSignedIn: false,
+				shouldBackHome: true,
+			});
+
+		case 'BACK_HOME@app':
+			return Object.assign({}, state, {
+				shouldBackHome: false,
 			});
 
 		case '@@router/LOCATION_CHANGE':
@@ -58,6 +72,7 @@ export default (state = initialState, action) => {
 
 			title += 'catpho';
 
+			sendPageView(title);
 			return Object.assign({}, state, {
 				title,
 			});

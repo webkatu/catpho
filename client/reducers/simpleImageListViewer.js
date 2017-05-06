@@ -96,11 +96,6 @@ export default (state = initialState, action) => {
 				shouldFetchContents: true,
 			});
 
-		case 'MOUNT@simpleImageListViewer':
-			return Object.assign({}, state, {
-				basePathOfFetch: action.payload.basePathOfFetch,
-			});
-
 		case 'OPEN_VIEWER':
 			return Object.assign({}, state, {
 				shouldDisplayContentViewer: true,

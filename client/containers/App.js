@@ -1,5 +1,6 @@
 import React from 'react';
 import * as ReactRedux from 'react-redux';
+import * as actions from '../actions/app.js';
 import * as signInActions from '../actions/signIn.js';
 import Notification from './Notification.js';
 import Header from './Header.js';
@@ -10,6 +11,14 @@ class App extends React.Component {
 		if(localStorage.getItem('userToken') === null) return;
 		this.props.dispatch(signInActions.signIn());
 	}
+
+	componentDidUpdate() {
+		if(this.props.app.shouldBackHome) {
+			this.props.dispatch(actions.backHome());
+			this.context.router.push('/');
+		}
+	}
+
 	render() {
 		document.title = this.props.app.title;
 		return (
@@ -27,6 +36,10 @@ class App extends React.Component {
 			</div>
 		);
 	}
+
+	static contextTypes = {
+		router: React.PropTypes.object.isRequired,
+	};
 }
 
 function mapStateToProps(state) {

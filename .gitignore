@@ -1,5 +1,7 @@
 node_modules/
 dev/
 server/uploads/
-server/secret.js
+server/src/secret.js
+server/dest/secret.js
+public/js/analytics.js
 npm-debug.log
