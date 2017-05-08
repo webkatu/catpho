@@ -1,6 +1,6 @@
 import secret from './secret.js';
-const appServer = 'http://catpho.webkatu.com';
-const apiServer = 'http://api.catpho.webkatu.com';
+const appServer = 'https://catpho.webkatu.com';
+const apiServer = 'https://api.catpho.webkatu.com';
 
 export default {
 	appServer,

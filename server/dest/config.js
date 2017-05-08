@@ -10,8 +10,8 @@ var _secret2 = _interopRequireDefault(_secret);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var appServer = 'http://catpho.webkatu.com';
-var apiServer = 'http://api.catpho.webkatu.com';
+var appServer = 'https://catpho.webkatu.com';
+var apiServer = 'https://api.catpho.webkatu.com';
 
 exports.default = {
 	appServer: appServer,
