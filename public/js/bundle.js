@@ -37957,7 +37957,7 @@
 										activationToken: json.payload.activationToken
 									})
 								}).then(function (res) {
-									console.log(res);
+									//console.log(res);
 								});
 								dispatch(requestSignUpSuccessful(json.payload));
 								_context.next = 19;

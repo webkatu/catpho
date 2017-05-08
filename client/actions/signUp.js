@@ -71,7 +71,9 @@ export const signUp = (form) => {
 					to: json.payload.email,
 					activationToken: json.payload.activationToken,
 				}),
-			}).then((res) => { console.log(res); });
+			}).then((res) => {
+				//console.log(res);
+			});
 			dispatch(requestSignUpSuccessful(json.payload));
 		}catch(e) {
 			console.log(e);
