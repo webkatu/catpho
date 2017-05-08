@@ -21,7 +21,7 @@ exports.default = {
 	passwordMaxLength: 64,
 	passwordPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
 	commentMaxLength: 1024,
-	fileMaxSize: Math.pow(Math.pow(2, 10), 2) * 2, //20MB;
+	fileMaxSize: 20000000, //20MB;
 	fileMaxLength: 10,
 	allowedImageTypes: ['image/jpeg', 'image/png', 'image/gif']
 };
