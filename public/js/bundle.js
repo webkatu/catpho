@@ -45089,7 +45089,7 @@
 						_react2.default.createElement(
 							"address",
 							null,
-							"\u4F55\u304B\u3042\u308A\u307E\u3057\u305F\u3089\u3001mail@catpho.webkatu.com\u306B\u30E1\u30FC\u30EB\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
+							"\u4F55\u304B\u3042\u308A\u307E\u3057\u305F\u3089\u3001catpho@webkatu.com\u306B\u30E1\u30FC\u30EB\u3057\u3066\u304F\u3060\u3055\u3044\u3002"
 						)
 					)
 				);
