@@ -11,15 +11,21 @@ router.get('/', async (req, res, next) => {
 	const url = `${config.appServer}/contents/${contentId}/`;
 	if(Number.isNaN(contentId)) return res.redirect(`${config.appServer}/contents/${req.params.contentId}/`);
 
-	const result = await new Contents().selectOnce(['filename'], '?? = ?', { id: contentId });
+	const result = await new Contents().selectOnce(
+		['filename', 'description'],
+		'?? = ?',
+		{ id: contentId }
+	);
 	if(result === null) return res.redirect(url);
 
 	const imageSrc = `${config.contentsUrl}/${result.filename}`;
+	const description = (result.description === '') ? 'none' : result.description;
 
 	res.send(html({
 		contentId,
 		url,
 		imageSrc,
+		description,
 	}));
 });
 
@@ -32,7 +38,7 @@ const html = (params) => {
 	<meta property="og:url" content="${params.url}" />
 	<meta property="og:image" content="${params.imageSrc}" />
 	<meta property="og:site_name" content="catpho" />
-	<meta property="og:description" content="" />
+	<meta property="og:description" content="${params.description}" />
 	<meta property="twitter:card" content="photo" />
 	<script>
 		location.href = '${params.url}';
