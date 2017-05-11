@@ -172,7 +172,7 @@ class CatContent extends React.Component {
 			(! catContent.shouldDisplayShareView)
 			? null
 			: <ShareView
-				url={`${location.origin}/contents/${this.props.content.id}/`}
+				url={`${location.origin}/contents/${this.props.content.id}/?share=true`}
 				onShareUrlCopyButtonClick={::this.handleShareUrlCopyButtonClick}
 			/>
 		);

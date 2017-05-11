@@ -16,6 +16,10 @@ var _sendMail = require('./routes/sendMail.js');
 
 var _sendMail2 = _interopRequireDefault(_sendMail);
 
+var _contentShare = require('./routes/contentShare.js');
+
+var _contentShare2 = _interopRequireDefault(_contentShare);
+
 var _config = require('./config.js');
 
 var _config2 = _interopRequireDefault(_config);
@@ -30,6 +34,8 @@ app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use('/', _express2.default.static(_config2.default.publicDir, { index: false }));
 
 app.use('/sendmail', _sendMail2.default);
+
+app.use('/contents/:contentId', _contentShare2.default);
 
 app.get('*', function (req, res, next) {
 	res.sendFile('/index.html', { root: _config2.default.publicDir });

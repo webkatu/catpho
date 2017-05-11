@@ -40424,7 +40424,7 @@
 				});
 
 				var shareViewNode = !catContent.shouldDisplayShareView ? null : _react2.default.createElement(_ShareView2.default, {
-					url: location.origin + '/contents/' + this.props.content.id + '/',
+					url: location.origin + '/contents/' + this.props.content.id + '/?share=true',
 					onShareUrlCopyButtonClick: this.handleShareUrlCopyButtonClick.bind(this)
 				});
 
