@@ -32,6 +32,7 @@ const html = (params) => {
 	<meta property="og:url" content="${params.url}" />
 	<meta property="og:image" content="${params.imageSrc}" />
 	<meta property="og:site_name" content="catpho" />
+	<meta property="og:description" content="" />
 	<meta property="twitter:card" content="photo" />
 	<script>
 		location.href = '${params.url}';
