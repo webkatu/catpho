@@ -34,7 +34,7 @@ var router = _express2.default.Router({ mergeParams: true });
 
 router.get('/', function () {
 	var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(req, res, next) {
-		var contentId, url, result, imageSrc, description;
+		var contentId, url, result, imageSrc, name, description;
 		return _regenerator2.default.wrap(function _callee$(_context) {
 			while (1) {
 				switch (_context.prev = _context.next) {
@@ -59,7 +59,7 @@ router.get('/', function () {
 
 					case 6:
 						_context.next = 8;
-						return new _Contents2.default().selectOnce(['filename', 'description'], '?? = ?', { id: contentId });
+						return new _Contents2.default().selectOnce(['filename', 'name', 'description'], '?? = ?', { id: contentId });
 
 					case 8:
 						result = _context.sent;
@@ -73,17 +73,18 @@ router.get('/', function () {
 
 					case 11:
 						imageSrc = _config2.default.contentsUrl + '/' + result.filename;
+						name = result.name === '' ? 'none' : result.name;
 						description = result.description === '' ? 'none' : result.description;
 
 
 						res.send(html({
-							contentId: contentId,
+							name: name,
 							url: url,
 							imageSrc: imageSrc,
 							description: description
 						}));
 
-					case 14:
+					case 15:
 					case 'end':
 						return _context.stop();
 				}
@@ -97,7 +98,7 @@ router.get('/', function () {
 }());
 
 var html = function html(params) {
-	return '\n<head>\n\t<meta property="og:title" content="' + params.contentId + '" />\n\t<meta property="og:type" content="website" />\n\t<meta property="og:url" content="' + params.url + '" />\n\t<meta property="og:image" content="' + params.imageSrc + '" />\n\t<meta property="og:site_name" content="catpho" />\n\t<meta property="og:description" content="' + params.description + '" />\n\t<meta property="twitter:card" content="photo" />\n\t<script>\n\t\tlocation.href = \'' + params.url + '\';\n\t</script>\n</head>\n';
+	return '\n<head>\n\t<meta property="og:title" content="' + params.name + '" />\n\t<meta property="og:type" content="website" />\n\t<meta property="og:url" content="' + params.url + '" />\n\t<meta property="og:image" content="' + params.imageSrc + '" />\n\t<meta property="og:site_name" content="catpho" />\n\t<meta property="og:description" content="' + params.description + '" />\n\t<meta property="twitter:card" content="photo" />\n\t<script>\n\t\tlocation.href = \'' + params.url + '\';\n\t</script>\n</head>\n';
 };
 
 exports.default = router;

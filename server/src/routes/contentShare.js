@@ -12,17 +12,18 @@ router.get('/', async (req, res, next) => {
 	if(Number.isNaN(contentId)) return res.redirect(`${config.appServer}/contents/${req.params.contentId}/`);
 
 	const result = await new Contents().selectOnce(
-		['filename', 'description'],
+		['filename', 'name', 'description'],
 		'?? = ?',
 		{ id: contentId }
 	);
 	if(result === null) return res.redirect(url);
 
 	const imageSrc = `${config.contentsUrl}/${result.filename}`;
+	const name = (result.name === '') ? 'none' : result.name;
 	const description = (result.description === '') ? 'none' : result.description;
 
 	res.send(html({
-		contentId,
+		name,
 		url,
 		imageSrc,
 		description,
@@ -33,7 +34,7 @@ const html = (params) => {
 	return (
 `
 <head>
-	<meta property="og:title" content="${params.contentId}" />
+	<meta property="og:title" content="${params.name}" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="${params.url}" />
 	<meta property="og:image" content="${params.imageSrc}" />
