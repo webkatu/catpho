@@ -89,7 +89,7 @@ class ContentsUpload extends React.Component {
 							onChange={::this.handleAgeInputChange}
 						/>
 					</label>
-					<label><span>タグ:</span>
+					<label><span>タグ(スペース区切り,3つまで):</span>
 						<input
 							className={classnames({
 								error: ! contentsUpload.validTag,
@@ -101,7 +101,7 @@ class ContentsUpload extends React.Component {
 						/>
 					</label>
 					<label>
-						<span>一言:</span>
+						<span>一言(紹介文など):</span>
 						<textarea
 							className={classnames({
 								error: ! contentsUpload.validDescription,

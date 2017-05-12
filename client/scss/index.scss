@@ -66,7 +66,7 @@ $headerOuterBorderBottomWidth: 1px;
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	height: $headerOuterHeight;
+	min-height: $headerOuterHeight;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -81,7 +81,7 @@ $headerHeight: $headerOuterHeight - $headerOuterBorderBottomWidth;
 	display: flex;
 	align-items: flex-end;
 	width: $mainWidth;
-	height: $headerHeight;
+	min-height: $headerHeight;
 	padding-bottom: 2px;
 
 	h1.siteTitle {
@@ -175,8 +175,11 @@ input, textarea, select {
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	width: 400px;
-	height: 400px;
+	width: 90%;
+	max-width: 400px;
+	min-width: 240px;
+	height: 90%;
+	max-height: 400px;
 	min-height: 400px;
 	margin: auto;
 	position: relative;
@@ -203,10 +206,8 @@ input, textarea, select {
 }
 
 .contentsUpload {
-	width: 600px;
-	min-width: 400px;
-	height: 600px;
-	min-height: 600px;
+	max-width: 600px;
+	max-height: 600px;
 
 	form {
 		flex-basis: 600px;
@@ -217,7 +218,7 @@ input, textarea, select {
 			position: relative;
 			& > span {
 				display: block;
-				width: 3em;
+				flex-basis: 40%;
 			}
 
 			input, textarea, select {
@@ -226,7 +227,7 @@ input, textarea, select {
 
 			.characterCount {
 				position: absolute;
-				right: 0;
+				right: 10px;
 				bottom: 0;
 				color: #aaa;
 			}
@@ -886,6 +887,16 @@ input, textarea, select {
 
 	.copyright {
 		margin-top: 20px;
+		font-size: 12px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	body {
+		font-size: 14px;
+	}
+
+	#header {
 		font-size: 12px;
 	}
 }

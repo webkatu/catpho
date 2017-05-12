@@ -16,7 +16,7 @@ export default class About extends React.Component {
 					<section>
 						<h1>画像の投稿の仕方</h1>
 						<div className="sectionContent">
-							<p>猫の画像を投稿するにはユーザー登録をする必要があります。上の登録ボタンから登録してください。</p>
+							<p>画像を投稿するにはユーザー登録をする必要があります。上の登録ボタンから登録してください。</p>
 							<p>ユーザー登録をしてサインインすると、上に投稿するボタンが表示されます。投稿するボタンを押して投稿したい画像を選択し投稿してください。</p>
 						</div>
 					</section>

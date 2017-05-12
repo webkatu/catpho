@@ -38532,7 +38532,7 @@
 							_react2.default.createElement(
 								'span',
 								null,
-								'\u30BF\u30B0:'
+								'\u30BF\u30B0(\u30B9\u30DA\u30FC\u30B9\u533A\u5207\u308A,3\u3064\u307E\u3067):'
 							),
 							_react2.default.createElement('input', {
 								className: (0, _classnames2.default)({
@@ -38550,7 +38550,7 @@
 							_react2.default.createElement(
 								'span',
 								null,
-								'\u4E00\u8A00:'
+								'\u4E00\u8A00(\u7D39\u4ECB\u6587\u306A\u3069):'
 							),
 							_react2.default.createElement('textarea', {
 								className: (0, _classnames2.default)({
@@ -44977,7 +44977,7 @@
 								_react2.default.createElement(
 									'p',
 									null,
-									'\u732B\u306E\u753B\u50CF\u3092\u6295\u7A3F\u3059\u308B\u306B\u306F\u30E6\u30FC\u30B6\u30FC\u767B\u9332\u3092\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002\u4E0A\u306E\u767B\u9332\u30DC\u30BF\u30F3\u304B\u3089\u767B\u9332\u3057\u3066\u304F\u3060\u3055\u3044\u3002'
+									'\u753B\u50CF\u3092\u6295\u7A3F\u3059\u308B\u306B\u306F\u30E6\u30FC\u30B6\u30FC\u767B\u9332\u3092\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002\u4E0A\u306E\u767B\u9332\u30DC\u30BF\u30F3\u304B\u3089\u767B\u9332\u3057\u3066\u304F\u3060\u3055\u3044\u3002'
 								),
 								_react2.default.createElement(
 									'p',
