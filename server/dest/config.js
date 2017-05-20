@@ -45,7 +45,7 @@ exports.default = {
 				ciphers: 'SSLv3'
 			}
 		},
-		from: 'mail@catpho.webkatu.com'
+		from: 'Catpho <mail@catpho.webkatu.com>'
 	},
 	userAuthJWT: {
 		secretKey: _secret2.default.userAuthJWT.secretKey,
