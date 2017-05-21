@@ -410,6 +410,8 @@ input, textarea, select {
       left: 90%;
       top: 0;
       font-size: 24px; }
+    .simpleContentViewer > .wrapper .navigationButton {
+      height: 100%; }
     .simpleContentViewer > .wrapper > *:nth-child(2) {
       order: 2; }
     .simpleContentViewer > .wrapper > *:nth-child(3) {
