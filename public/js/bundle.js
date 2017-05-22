@@ -32213,7 +32213,7 @@
 		passwordMaxLength: 64,
 		passwordPattern: /^[a-zA-Z0-9!-/:-@¥[-`{-~]+$/,
 		filesMaxLength: 10,
-		fileMaxSize: Math.pow(Math.pow(2, 10), 2) * 2, //20MB
+		fileMaxSize: 20000000, //20MB
 		allowedImageTypes: ['image/jpeg', 'image/png', 'image/gif'],
 		nameMaxLength: 32,
 		ageMax: 38,
