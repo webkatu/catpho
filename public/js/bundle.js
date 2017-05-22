@@ -30567,7 +30567,7 @@
 			case 'POST_CONTENTS':
 				return (0, _assign2.default)({}, state, {
 					text: 'コンテンツを投稿しています...',
-					displayTime: defaultDisplayTime
+					displayTime: 60000
 				});
 
 			case 'POST_CONTENTS_SUCCESSFUL':

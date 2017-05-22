@@ -52,7 +52,7 @@ export default (state = initialState, action) => {
 		case 'POST_CONTENTS':
 			return Object.assign({}, state, {
 				text: 'コンテンツを投稿しています...',
-				displayTime: defaultDisplayTime,
+				displayTime: 60000,
 			});
 
 		case 'POST_CONTENTS_SUCCESSFUL':
